@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scalea Digital - Propuesta B2B</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Outfit:wght@600;800&display=swap');
+
+        /* RESET & PRINT SETTINGS */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            background: #f1f5f9;
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .a4-page {
+            width: 210mm;
+            height: 297mm;
+            background: #ffffff;
+            position: relative;
+            padding: 12mm 15mm;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            /* Reducido */
+            margin-bottom: 15px;
+            /* Reducido */
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            color: #0f172a;
+        }
+
+        .logo span {
+            color: #2563eb;
+        }
+
+        .header-tagline {
+            font-size: 11px;
+            color: #64748b;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        /* HERO TITLE */
+        .hero {
+            text-align: center;
+            margin-bottom: 15px;
+            /* Reducido */
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 30px;
+            /* Reducido */
+            line-height: 1.1;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 span {
+            color: #2563eb;
+        }
+
+        .hero p {
+            font-size: 14px;
+            color: #475569;
+            max-width: 90%;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* PROBLEMA */
+        .problem-section {
+            background: #f8fafc;
+            border-left: 4px solid #ef4444;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 30px;
+        }
+
+        .problem-section h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            color: #0f172a;
+            margin-bottom: 15px;
+        }
+
+        .problem-list {
+            list-style: none;
+        }
+
+        .problem-list li {
+            font-size: 13px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .problem-list li::before {
+            content: '❌';
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .warning-text {
+            font-weight: 700;
+            color: #ef4444;
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        /* CASO DE ESTUDIO (NUEVO) */
+        .case-study {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .case-col {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 11px;
+        }
+
+        .case-bad {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+
+        .case-good {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+
+        .case-study h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .case-study ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .case-study li {
+            margin-bottom: 4px;
+        }
+
+        /* SOLUCIONES */
+        .solutions-section h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            /* Reducido */
+            color: #0f172a;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            /* Reduje el gap para que quede más espacio */
+            margin-bottom: 20px;
+            /* Reduje margen inferior */
+        }
+
+        .solution-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            /* Reduje el padding interno */
+            border-radius: 8px;
+        }
+
+        .solution-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+            display: inline-block;
+            background: #eff6ff;
+            color: #2563eb;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .solution-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .solution-card p {
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.4;
+        }
+
+        /* MÉTODO */
+        .methodology {
+            margin-bottom: 10px;
+        }
+
+        .methodology h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .step-num {
+            font-weight: 800;
+            color: #2563eb;
+            font-size: 16px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .step-title {
+            font-weight: 700;
+            font-size: 11px;
+            color: #0f172a;
+        }
+
+        /* CTA FINAL */
+        .cta-box {
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            /* Cambiado de absolute a relative para que no flote encima de nada */
+        }
+
+        .cta-box h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .cta-box p {
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 15px;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            background: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        /* Ocultar en impresión web general si fuera necesario */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .a4-page {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="a4-page">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">Scalea<span>Digital</span></div>
+            <div class="header-tagline">
+                Especialistas B2B en Barcelona<br>
+                Automatización e I.A.
+            </div>
+        </div>
+
+        <!-- HERO -->
+        <div class="hero">
+            <h1>Deja de perder ventas <span>mientras duermes.</span></h1>
+            <p>Automatizamos los procesos de tu PyME o Inmobiliaria para atender clientes 24/7 con Inteligencia
+                Artificial.</p>
+        </div>
+
+        <!-- EJEMPLO PRÁCTICO -->
+        <div class="case-study">
+            <div class="case-col case-bad">
+                <h3 style="color: #ef4444;">❌ El Problema Actual</h3>
+                <ul>
+                    <li>• Tardas horas en responder WhatsApp.</li>
+                    <li>• Copias datos a mano a un Excel (Pérdida de tiempo).</li>
+                    <li>• Pagas software genérico (CRM) caro y complejo.</li>
+                </ul>
+            </div>
+            <div class="case-col case-good">
+                <h3 style="color: #10b981;">✅ Con Scalea Digital</h3>
+                <ul>
+                    <li>• El Robot responde en 3 seg y agenda la cita.</li>
+                    <li>• Los datos se guardan solos en tu base.</li>
+                    <li>• Software a medida: pagas solo lo que usas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SOLUCIONES -->
+        <div class="solutions-section">
+            <h2>Hacemos que la tecnología trabaje por ti</h2>
+            <div class="solutions-grid">
+
+                <div class="solution-card">
+                    <div class="solution-icon">🤖</div>
+                    <h3>Bots de Atención (WhatsApp)</h3>
+                    <p>Asesores virtuales que atienden 24/7 en < 3 segundos, responden consultas frecuentes y agendan
+                            citas en tu calendario automáticamente.</p>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">💻</div>
+                    <h3>Desarrollo a tu Medida</h3>
+                    <p>Construimos sistemas web únicos. Solo pagas por los módulos que tu negocio realmente necesita.
+                        Cero cuotas absurdas por software genérico.</p>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">🌐</div>
+                    <h3>Páginas Web Optimizadas</h3>
+                    <p>Dejamos atrás las webs "bonitas pero muertas". Creamos entornos digitales rapidísimos enfocados
+                        en capturar prospectos y redirigirlos a venta.</p>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">📈</div>
+                    <h3>Indicadores y Dashboards</h3>
+                    <p>Mide la rentabilidad de las captaciones y las ventas en tiempo real en una sola pantalla visual.
+                        Información clave para tu toma de decisiones.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PROCEDIMIENTO -->
+        <div class="methodology">
+            <h2>El Método Scalea Digital</h2>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-num">01</span>
+                    <span class="step-title">Auditoría<br>Gratuita</span>
+                </div>
+                <div class="step">
+                    <span class="step-num">02</span>
+                    <span class="step-title">Propuesta de<br>Automatización</span>
+                </div>
+                <div class="step">
+                    <span class="step-num">03</span>
+                    <span class="step-title">Puesta en<br>Marcha Rápida</span>
+                </div>
+                <div class="step">
+                    <span class="step-num">04</span>
+                    <span class="step-title">Atención 24/7<br>Activa</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-box">
+            <h2>El primer paso no te cuesta nada</h2>
+            <p>Agendemos una Auditoría de 20 minutos (Presencial o Zoom). Te diremos de forma transparente dónde estás
+                perdiendo horas y cómo un sistema simple (y económico) puede hacerlo por ti.</p>
+            <a href="https://wa.me/34631651232" class="btn btn-primary" target="_blank">Solicitar Auditoría por WhatsApp
+                -></a>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div>📞 WhatsApp: +34 631 65 12 32</div>
+            <div>📧 scaleadigital@gmail.com</div>
+            <div>📍 Sant Andreu - Santa Coloma de Gramenet - Barcelona</div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

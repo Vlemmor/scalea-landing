@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Bot WhatsApp - Scalea Digital</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        /* Contenedor principal para poder acomodar el chat y el backend */
+        .demo-layout {
+            display: flex;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            height: 90vh;
+        }
+
+        .phone-container {
+            width: 350px;
+            min-width: 350px;
+            height: 100%;
+            max-height: 800px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 8px solid #333;
+            /* Borde del móvil */
+        }
+
+        /* Cabecera del chat */
+        .chat-header {
+            background-color: #075e54;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        .contact-info h2 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .contact-info p {
+            font-size: 13px;
+            color: #d1d1d1;
+        }
+
+        /* Área de mensajes */
+        .chat-area {
+            flex: 1;
+            background-image: url('https://i.pinimg.com/originals/8f/ba/cb/8fbacbd464e996966eb9d4a6b7a9c21e.jpg');
+            /* Textura WhatsApp */
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 14.5px;
+            position: relative;
+            line-height: 1.4;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bot-msg {
+            background-color: #ffffff;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-msg {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .typing-indicator {
+            font-size: 12px;
+            color: #888;
+            font-style: italic;
+            margin-bottom: 5px;
+            display: none;
+        }
+
+        /* Zona de escritura */
+        .input-area {
+            background-color: #f0f0f0;
+            padding: 10px 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-box {
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            padding: 12px 15px;
+            border: none;
+            outline: none;
+            font-size: 14.5px;
+        }
+
+        .send-btn {
+            background-color: #128C7E;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* BACKEND DASHBOARD (Sheets & Calendar) */
+        .backend-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .backend-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1e4e8;
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e1e4e8;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sheet-container {
+            padding: 20px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Tabla Estilo Google Sheets */
+        .spreadsheet {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .spreadsheet th {
+            background: #f8f9fa;
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            color: #5f6368;
+            font-weight: 600;
+        }
+
+        .spreadsheet td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            color: #202124;
+            transition: background-color 0.5s ease;
+        }
+
+        .row-highlight td {
+            background-color: #e6f4ea;
+            /* Verde claro éxito */
+        }
+
+        /* Calendario Estilo Google Calendar */
+        .calendar-container {
+            padding: 20px;
+            flex: 1;
+            background: #fff;
+            position: relative;
+        }
+
+        .cal-grid {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            border-top: 1px solid #dadce0;
+        }
+
+        .time-col {
+            border-right: 1px solid #dadce0;
+            color: #70757a;
+            font-size: 12px;
+            text-align: right;
+            padding-right: 10px;
+            padding-top: 10px;
+        }
+
+        .event-col {
+            position: relative;
+            padding: 10px;
+            height: 200px;
+            background-image: linear-gradient(#f1f3f4 1px, transparent 1px);
+            background-size: 100% 50px;
+        }
+
+        .calendar-event {
+            position: absolute;
+            top: 60px;
+            /* Aparece en una hora X */
+            left: 10px;
+            right: 10px;
+            background-color: #039be5;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+        }
+
+        .calendar-reminder {
+            top: 5px;
+            /* Una hora antes (visualmente arriba) */
+            background-color: #fbbc04;
+            /* Amarillo de recordatorio de Calendar */
+            color: #333;
+            height: 45px;
+            border-left: 4px solid #f29900;
+        }
+
+        .calendar-event.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Selector de Nicho (Solo para tu uso, no sale en el video si lo recortas) */
+        .nicho-selector {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .nicho-selector select {
+            padding: 8px;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Selector de Industria para que cambies el bot al instante -->
+    <div class="nicho-selector">
+        <h3>Escoge el Bot de Prueba:</h3>
+        <select id="bot-type" onchange="cambiarBot()">
+            <option value="clinica">🦷 Clínica Dental (Sofía)</option>
+            <option value="inmobiliaria">🏡 Inmobiliaria (Carlos)</option>
+        </select>
+        <p style="font-size: 12px; margin-top: 10px; color: #666;">
+            💡 <strong>Tip:</strong> Pon a grabar la pantalla de tu<br>móvil o PC y recorta este menú blanco.
+        </p>
+    </div>
+
+    <div class="demo-layout">
+        <!-- Interfaz del Móvil -->
+        <div class="phone-container">
+            <div class="chat-header">
+                <div class="avatar" id="bot-avatar">🦷</div>
+                <div class="contact-info">
+                    <h2 id="bot-name">Sofía - Clínica Dental</h2>
+                    <p id="bot-status">En línea</p>
+                </div>
+            </div>
+
+            <div class="chat-area" id="chat">
+                <!-- Los mensajes aparecerán aquí -->
+            </div>
+
+            <div class="typing-indicator" id="typing">💬 Escribiendo...</div>
+
+            <div class="input-area">
+                <input type="text" id="user-input" class="input-box" placeholder="Escribe un mensaje"
+                    onkeypress="handleEnter(event)">
+                <button class="send-btn" onclick="sendMessage()">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Interactivo (Sheets y Calendar) -->
+        <div class="backend-container">
+
+            <!-- Google Sheets Simulado -->
+            <div class="backend-panel">
+                <div class="panel-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Google_Sheets_logo_%282014-2020%29.svg"
+                        width="20" height="20">
+                    <span id="sheet-title">Leads_Clinica.xlsx</span>
+                </div>
+                <div class="sheet-container">
+                    <table class="spreadsheet">
+                        <thead id="sheet-head">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Nombre</th>
+                                <th>Teléfono</th>
+                                <th>Servicio</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sheet-body">
+                            <tr>
+                                <td>08/03/2026</td>
+                                <td>María García</td>
+                                <td>+34 600 111</td>
+                                <td>Limpieza</td>
+                                <td>Atendido</td>
+                            </tr>
+                            <tr>
+                                <td>08/03/2026</td>
+                                <td>Juan Pérez</td>
+                                <td>+34 650 222</td>
+                                <td>Ortodoncia</td>
+                                <td>Atendido</td>
+                            </tr>
+                            <tr id="new-row" style="opacity: 0.3;">
+                                <td colspan="5" style="text-align: center; color: #aaa; font-style: italic;">Esperando
+                                    nuevos datos del Bot...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Google Calendar Simulado -->
+            <div class="backend-panel">
+                <div class="panel-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg"
+                        width="20" height="20">
+                    <span>Google Calendar - Citas Nuevas</span>
+                </div>
+                <div class="calendar-container">
+                    <div style="margin-bottom: 10px; font-weight: 600; color: #3c4043;">Mañana</div>
+                    <div class="cal-grid">
+                        <div class="time-col">
+                            <div>15:00</div>
+                            <div style="margin-top: 35px;">16:00</div>
+                            <div style="margin-top: 35px;">17:00</div>
+                        </div>
+                        <div class="event-col">
+                            <!-- Recordatorio 1 hora antes -->
+                            <div class="calendar-event calendar-reminder" id="new-reminder">
+                                <strong>🔔 Enviar Recordatorio WhatsApp</strong><br>
+                                <span id="reminder-name" style="font-size: 11px;">Automatizado a -1h</span>
+                            </div>
+
+                            <!-- Evento Principal -->
+                            <div class="calendar-event" id="new-event">
+                                <strong>[NUEVO] Valoración Inicial</strong><br>
+                                <span id="event-name">Paciente: </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const chat = document.getElementById("chat");
+        const input = document.getElementById("user-input");
+        const typing = document.getElementById("typing");
+
+        // Estado del flujo
+        let currentStep = 0;
+        let botType = "clinica";
+
+        // Flujos pre-programados simulando IA para poder grabar el video perfecto
+        const flujos = {
+            clinica: [
+                {
+                    delay: 1500,
+                    msg: "¡Hola! Soy Sofía, la asistente virtual de Clínica Dental Sonrisas 🦷. ¿En qué puedo ayudarte hoy?"
+                },
+                {
+                    delay: 2000,
+                    msg: "Contamos con limpiezas dentales profesionales y valoración gratuita para ortodoncia. 🌟\n\n¿Te gustaría que te agende una Cita de Valoración Gratuita para revisarlo personalmente con el doctor?"
+                },
+                {
+                    delay: 1500,
+                    msg: "¡Perfecto! Para buscarte un hueco, ¿me podrías confirmar tu nombre completo por favor?"
+                },
+                {
+                    delay: 1200,
+                    msg: "Gracias. ¿Prefieres venir mañana por la mañana (10:00 - 13:00) o por la tarde (16:00 - 19:00)?"
+                },
+                {
+                    delay: 2500,
+                    msg: "¡Genial! 📅 Tienes la cita confirmada para mañana por la tarde. Recibirás un SMS recordatorio 2 horas antes de tu visita.\n\nTambién he guardado tus datos en nuestra base para evitar esperas. ¡Nos vemos en la clínica! 👋"
+                }
+            ],
+            inmobiliaria: [
+                {
+                    delay: 1500,
+                    msg: "¡Hola! Soy Carlos, tu asesor virtual de Fincas Premium 🏡. ¿Buscas comprar, alquilar o quieres vender una propiedad?"
+                },
+                {
+                    delay: 2000,
+                    msg: "Perfecto, tenemos gran demanda en esa zona ahora mismo. 📍 Para enviarte a un agente que te ayude a vender rápido, ¿tu vivienda es un piso o una casa independiente?"
+                },
+                {
+                    delay: 1500,
+                    msg: "Anotado. 📝 ¿La idea es vender lo antes posible o estás mirando opciones sin prisa?"
+                },
+                {
+                    delay: 1500,
+                    msg: "Entiendo. Finalmente, ¿cuál es tu nombre para que uno de nuestros agentes te llame hoy mismo con una valoración gratuita?"
+                },
+                {
+                    delay: 2500,
+                    msg: "¡Mil gracias! He enviado tus datos y los del piso a nuestro equipo de ventas comerciales. 🚀 Te llamaremos desde este mismo número en menos de 30 minutos para organizar una visita sin compromiso. ¡Hasta pronto!"
+                }
+            ]
+        };
+
+        function cambiarBot() {
+            botType = document.getElementById("bot-type").value;
+            currentStep = 0;
+            chat.innerHTML = "";
+            document.getElementById("new-row").innerHTML = `<td colspan="5" style="text-align: center; color: #aaa; font-style: italic;">Esperando nuevos datos del Bot...</td>`;
+            document.getElementById("new-row").className = "";
+            document.getElementById("new-row").style.opacity = "0.3";
+            document.getElementById("new-event").classList.remove("show");
+            document.getElementById("new-reminder").classList.remove("show");
+
+            if (botType === "clinica") {
+                document.getElementById("bot-avatar").innerText = "🦷";
+                document.getElementById("bot-name").innerText = "Sofía - Clínica Dental";
+                document.getElementById("sheet-title").innerText = "Pacientes_Clinica.xlsx";
+                document.getElementById("sheet-head").innerHTML = `<tr><th>Fecha</th><th>Nombre</th><th>Teléfono</th><th>Servicio</th><th>Estado</th></tr>`;
+
+            } else {
+                document.getElementById("bot-avatar").innerText = "🏡";
+                document.getElementById("bot-name").innerText = "Carlos - Fincas Premium";
+                document.getElementById("sheet-title").innerText = "Leads_Inmobiliaria.xlsx";
+                document.getElementById("sheet-head").innerHTML = `<tr><th>Fecha</th><th>Nombre</th><th>Teléfono</th><th>Tipo Inmueble</th><th>Interés</th></tr>`;
+            }
+
+            // Iniciar flujo con mensaje inicial
+            triggerBotResponse();
+        }
+
+        function appendMessage(text, sender) {
+            const div = document.createElement("div");
+            div.className = `message ${sender}-msg`;
+
+            // Reemplazar saltos de línea por <br>
+            div.innerHTML = text.replace(/\n/g, '<br>');
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function handleEnter(e) {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const text = input.value.trim();
+            if (!text) return;
+
+            appendMessage(text, "user");
+            input.value = "";
+            currentStep++;
+
+            if (currentStep < flujos[botType].length) {
+                // Simular que está "Escribiendo..."
+                chat.appendChild(typing);
+                typing.style.display = "block";
+                chat.scrollTop = chat.scrollHeight;
+
+                setTimeout(() => {
+                    typing.style.display = "none";
+                    appendMessage(flujos[botType][currentStep].msg, "bot");
+
+                    // Si es el último mensaje, simular inyección en Sheets y Calendar
+                    if (currentStep === flujos[botType].length - 1) {
+                        simulateBackendData();
+                    }
+                }, flujos[botType][currentStep].delay);
+            }
+        }
+
+        function simulateBackendData() {
+            // Extraer info básica para el efecto WOW visual
+            const today = new Date().toLocaleDateString();
+
+            // 1. Simular Sheets (Entra rápido)
+            setTimeout(() => {
+                const row = document.getElementById("new-row");
+                row.style.opacity = "1";
+                row.className = "row-highlight";
+
+                if (botType === "clinica") {
+                    row.innerHTML = `<td>${today}</td><td>Rommel</td><td>+34 ***</td><td>Ortodoncia</td><td><strong>Agendado ✅</strong></td>`;
+                } else {
+                    row.innerHTML = `<td>${today}</td><td>Rommel</td><td>+34 ***</td><td>Piso</td><td><strong>Vender Urgente ✅</strong></td>`;
+                }
+            }, 800);
+
+            // 2. Simular Evento Principal en Calendar
+            setTimeout(() => {
+                const event = document.getElementById("new-event");
+
+                if (botType === "clinica") {
+                    event.innerHTML = `<strong>🦷 Valoración Ortodoncia</strong><br><span>Paciente: Rommel</span>`;
+                    event.style.backgroundColor = "#039be5";
+                } else {
+                    event.innerHTML = `<strong>🏡 Visita Valoración Piso</strong><br><span>Propietario: Rommel</span>`;
+                    event.style.backgroundColor = "#e67c73";
+                }
+
+                event.classList.add("show");
+            }, 1400);
+
+            // 3. Simular Recordatorio de SMS/WhatsApp Automático
+            setTimeout(() => {
+                const reminder = document.getElementById("new-reminder");
+                reminder.classList.add("show");
+            }, 2000); // Entra un poco después causando mayor efecto WOW
+        }
+
+        // Simular primer mensaje al cargar
+        cambiarBot();
+
+        function triggerBotResponse() {
+            chat.appendChild(typing);
+            typing.style.display = "block";
+
+            setTimeout(() => {
+                typing.style.display = "none";
+                appendMessage(flujos[botType][0].msg, "bot");
+            }, flujos[botType][0].delay);
+        }
+
+    </script>
+</body>
+
+</html>
