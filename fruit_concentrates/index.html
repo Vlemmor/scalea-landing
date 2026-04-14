@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doña Nela v3 | Tradición y Salud Peruana</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-flavor="chicha">
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="assets/logo.png" alt="Doña Nela Logo" class="logo-img">
+        </div>
+        <div class="nav-links">
+            <a href="#flavors">Sabores</a>
+            <a href="#benefits">Salud</a>
+            <a href="#contact" class="btn-cta">Pide Ahora</a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="story-wrapper">
+            <section id="hero" class="hero-section" style="position: sticky; top: 0; min-height: 100vh; z-index: 10;">
+                <div class="hero-content">
+                    <span class="badge">¡Muy pronto en España!</span>
+                    <h1 id="hero-title">Tradición Peruana <br> en cada gota.</h1>
+                    <p id="hero-desc">Concentrados de fruta 100% natural. El sabor de casa en formato familiar de 1 Litro.</p>
+                    
+                    <div id="benefit-box" class="benefit-box">
+                        <span class="benefit-icon">✨</span>
+                        <p id="benefit-text">Antioxidante natural del maíz morado.</p>
+                    </div>
+
+                    <a href="#contact" class="btn-primary">Pide Ahora</a>
+                </div>
+                <div class="hero-image-container">
+                    <div class="product-frame">
+                        <video autoplay muted loop playsinline id="product-video">
+                            <source src="assets/hero_video.mp4" type="video/mp4">
+                        </video>
+                        <!-- No image here, video is the main focus as requested -->
+                    </div>
+                </div>
+            </section>
+
+            <div class="scroll-triggers" style="margin-top: -100vh; position: relative; z-index: 15; pointer-events: none;">
+                <section id="flavors" class="section-trigger" data-flavor="chicha" style="height: 100vh;"></section>
+                <section class="section-trigger" data-flavor="maracuya" style="height: 100vh;"></section>
+                <section class="section-trigger" data-flavor="camu_camu" style="height: 100vh;"></section>
+            </div>
+        </div>
+
+        <section id="benefits" class="benefits-section" style="position: relative; z-index: 20;">
+            <div class="benefit-item">
+                <div class="icon">🏠</div>
+                <h3>100% Natural</h3>
+                <p>Sin colorantes artificiales. Sabor real a fruta peruana.</p>
+            </div>
+            <div class="benefit-item">
+                <div class="icon">👨‍👩-👧‍👦</div>
+                <h3>Formato 1 Litro</h3>
+                <p>Ideal para compartir en familia o reuniones.</p>
+            </div>
+            <div class="benefit-item">
+                <div class="icon">🚀</div>
+                <h3>Fácil Preparación</h3>
+                <p>Solo diluye y disfruta del refresco más fresco.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="contact-card">
+                <h2>¿Listo para probar Doña Nela?</h2>
+                <p>Estamos llegando a España. Haz tu pedido previo por WhatsApp.</p>
+                <a href="https://wa.me/34678083881" class="btn-whatsapp">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="24">
+                    Contactar por WhatsApp
+                </a>
+                <p class="phone">O llámanos: 678 083 881</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/dona.nela.pe">@dona.nela.pe</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Doña Nela - Sabores con Alma.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
