@@ -27,13 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const vcard = `BEGIN:VCARD
 VERSION:3.0
-FN:${contact.name}
-ORG:${contact.company}
-TITLE:${contact.title}
-TEL;TYPE=CELL:${contact.phone}
-EMAIL:${contact.email}
-URL:${contact.web}
+FN:Rommel Villafana
+N:Villafana;Rommel;;;
+ORG:Scalea Digital
+TITLE:Gerente
+TEL;TYPE=CELL:631651232
+EMAIL:scaleadigital@gmail.com
+URL:https://vlemmor.github.io/scalea-landing/
 END:VCARD`;
+
 
         const blob = new Blob([vcard], { type: "text/vcard" });
         const url = window.URL.createObjectURL(blob);
