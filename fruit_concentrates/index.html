@@ -3,94 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doña Nela v3 | Tradición y Salud Peruana</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Doña Nela | Importador de Productos Peruanos en España</title>
+    <meta name="description" content="Doña Nela es el principal importador y distribuidor de concentrados de fruta 100% natural del Perú en España. Descubre nuestra Chicha Morada, Maracuyá y Camu Camu.">
+    <meta name="keywords" content="productos peruanos, chicha morada, maracuyá, camu camu, importador peruano España, bebidas naturales, concentrados de fruta, comida peruana Madrid">
+    <meta name="author" content="Doña Nela">
+    <meta name="publisher" content="Doña Nela">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.donanela.com/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.donanela.com/">
+    <meta property="og:title" content="Doña Nela | Importador de Productos Peruanos en España">
+    <meta property="og:description" content="Concentrados de fruta 100% natural del Perú. Chicha Morada, Maracuyá y Camu Camu directo a tu mesa en España.">
+    <meta property="og:image" content="https://www.donanela.com/assets/logo_final.jpeg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.donanela.com/">
+    <meta property="twitter:title" content="Doña Nela | Importador de Productos Peruanos en España">
+    <meta property="twitter:description" content="Concentrados de fruta 100% natural del Perú. Chicha Morada, Maracuyá y Camu Camu directo a tu mesa en España.">
+    <meta property="twitter:image" content="https://www.donanela.com/assets/logo_final.jpeg">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Doña Nela",
+      "url": "https://www.donanela.com",
+      "logo": "https://www.donanela.com/assets/logo_final.jpeg",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+34-678-08-38-81",
+        "contactType": "customer service",
+        "email": "donanelaperu@gmail.com",
+        "areaServed": "ES",
+        "availableLanguage": "es"
+      },
+      "sameAs": [
+        "https://www.instagram.com/dona.nela.pe/"
+      ]
+    }
+    </script>
+    <link rel="stylesheet" href="styles.css?v=20">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=League+Gothic&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rosario:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
 </head>
-<body data-flavor="chicha">
+<body>
     <nav class="navbar">
         <div class="logo-container">
-            <img src="assets/logo.png" alt="Doña Nela Logo" class="logo-img">
+            <a href="index.html">
+                <img src="assets/logo_final.jpeg" alt="Doña Nela Logo" class="logo-img">
+            </a>
         </div>
-        <div class="nav-links">
-            <a href="#flavors">Sabores</a>
-            <a href="#benefits">Salud</a>
-            <a href="#contact" class="btn-cta">Pide Ahora</a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="quienes-somos.html">Quiénes Somos</a>
+            <a href="productos.html">Productos</a>
+            <a href="https://wa.me/34678083881" target="_blank" class="btn-cta">Pide Ahora</a>
         </div>
     </nav>
 
     <main>
-        <div class="story-wrapper">
-            <section id="hero" class="hero-section" style="position: sticky; top: 0; min-height: 100vh; z-index: 10;">
-                <div class="hero-content">
-                    <span class="badge">¡Muy pronto en España!</span>
-                    <h1 id="hero-title">Tradición Peruana <br> en cada gota.</h1>
-                    <p id="hero-desc">Concentrados de fruta 100% natural. El sabor de casa en formato familiar de 1 Litro.</p>
-                    
-                    <div id="benefit-box" class="benefit-box">
-                        <span class="benefit-icon">✨</span>
-                        <p id="benefit-text">Antioxidante natural del maíz morado.</p>
-                    </div>
-
-                    <a href="#contact" class="btn-primary">Pide Ahora</a>
+        <!-- Intro Animation Section -->
+        <section id="intro-hero" class="intro-section">
+            <div class="intro-content">
+                <div class="intro-logo-wrapper">
+                    <img src="assets/logo_final.jpeg" alt="Doña Nela Logo" class="intro-logo">
                 </div>
-                <div class="hero-image-container">
-                    <div class="product-frame">
-                        <video autoplay muted loop playsinline id="product-video">
-                            <source src="assets/hero_video.mp4" type="video/mp4">
-                        </video>
-                        <!-- No image here, video is the main focus as requested -->
-                    </div>
+                <div class="intro-text">
+                    <h2 class="custom-slogan">Sabor que te acerca a casa</h2>
+                    <p class="intro-subtitle">Importador y distribuidor en España</p>
+                    <p class="intro-details">Atendemos a Restaurantes - Tiendas - Hogares</p>
                 </div>
-            </section>
-
-            <div class="scroll-triggers" style="margin-top: -100vh; position: relative; z-index: 15; pointer-events: none;">
-                <section id="flavors" class="section-trigger" data-flavor="chicha" style="height: 100vh;"></section>
-                <section class="section-trigger" data-flavor="maracuya" style="height: 100vh;"></section>
-                <section class="section-trigger" data-flavor="camu_camu" style="height: 100vh;"></section>
-            </div>
-        </div>
-
-        <section id="benefits" class="benefits-section" style="position: relative; z-index: 20;">
-            <div class="benefit-item">
-                <div class="icon">🏠</div>
-                <h3>100% Natural</h3>
-                <p>Sin colorantes artificiales. Sabor real a fruta peruana.</p>
-            </div>
-            <div class="benefit-item">
-                <div class="icon">👨‍👩-👧‍👦</div>
-                <h3>Formato 1 Litro</h3>
-                <p>Ideal para compartir en familia o reuniones.</p>
-            </div>
-            <div class="benefit-item">
-                <div class="icon">🚀</div>
-                <h3>Fácil Preparación</h3>
-                <p>Solo diluye y disfruta del refresco más fresco.</p>
             </div>
         </section>
 
+        <!-- Product Title Banner -->
+        <div class="product-banner">
+            <h2 class="product-banner-title">Nuestros primeros lanzamientos de productos</h2>
+        </div>
+
+        <!-- Chicha Morada Section -->
+        <section id="hero-chicha" class="hero-section flavor-chicha">
+            <div class="hero-content">
+                <h1 style="margin-top: 0;">Chicha Morada<br>Tradición Pura.</h1>
+                <p>Concentrados de fruta 100% natural. El sabor de casa en formato familiar de 1 Litro.</p>
+                <div class="benefit-box">
+                    <span class="benefit-icon">🌽</span>
+                    <p>El auténtico sabor de casa. Una receta tradicional refrescante, deliciosa y llena de vitalidad para compartir en familia.</p>
+                </div>
+                <a href="https://wa.me/34678083881" target="_blank" class="btn-primary">Pide Ahora</a>
+            </div>
+            <div class="hero-image-container">
+                <div class="product-frame">
+                    <video autoplay loop muted playsinline>
+                        <source src="assets/chicha_video.mp4?v=3" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- Maracuyá Section -->
+        <section id="hero-maracuya" class="hero-section flavor-maracuya">
+            <div class="hero-content">
+                <div class="hero-text-block">
+                    <h1>Maracuyá <br> Explosión Tropical.</h1>
+                    <p>El toque cítrico y refrescante perfecto. Siente la pasión de la selva en un vaso lleno de vitalidad y frescura.</p>
+                </div>
+                <div class="benefit-box">
+                    <span class="benefit-icon">🍋</span>
+                    <p>Conocida como la 'fruta de la pasión'. Sabor tropical y refrescante.</p>
+                </div>
+                <a href="https://wa.me/34678083881" target="_blank" class="btn-primary">Pide Ahora</a>
+            </div>
+            <div class="hero-image-container">
+                <div class="product-frame">
+                    <video autoplay loop muted playsinline>
+                        <source src="assets/maracuya_video.mp4?v=2" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- Camu Camu Section -->
+        <section id="hero-camu" class="hero-section flavor-camu">
+            <div class="hero-content">
+                <h1 style="margin-top: 0;">Camu Camu<br>Superfruta<br>Amazónica.</h1>
+                <p>Un boost de energía inigualable. El poder antioxidante del Amazonas diseñado para revitalizar tus días.</p>
+                <div class="benefit-box">
+                    <span class="benefit-icon">🍒</span>
+                    <p>Sabor cítrico único. La mayor fuente natural de Vitamina C del mundo.</p>
+                </div>
+                <a href="https://wa.me/34678083881" target="_blank" class="btn-primary">Pide Ahora</a>
+            </div>
+            <div class="hero-image-container">
+                <div class="product-frame">
+                    <video autoplay loop muted playsinline>
+                        <source src="assets/camu_video.mp4?v=2" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
         <section id="contact" class="contact-section">
-            <div class="contact-card">
-                <h2>¿Listo para probar Doña Nela?</h2>
-                <p>Estamos llegando a España. Haz tu pedido previo por WhatsApp.</p>
-                <a href="https://wa.me/34678083881" class="btn-whatsapp">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="24">
-                    Contactar por WhatsApp
-                </a>
-                <p class="phone">O llámanos: 678 083 881</p>
-                <div class="social-links">
-                    <a href="https://instagram.com/dona.nela.pe">@dona.nela.pe</a>
+            <div class="footer-content">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <h3>Dirección</h3>
+                        <p>Av. Edison, 3, Villaverde,<br>28021 Madrid</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>Contáctanos</h3>
+                        <p><a href="mailto:donanelaperu@gmail.com" class="contact-email">donanelaperu@gmail.com</a></p>
+                        <p style="margin-top: 10px; font-weight: 700; color: var(--text-dark);">Tel: 678 08 38 81</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h2>Síguenos y descubre más</h2>
+                        <div class="social-links" style="margin-top: 1rem;">
+                            <a href="https://www.instagram.com/dona.nela.pe/" target="_blank" class="social-btn">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                                @dona.nela.pe
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Doña Nela - Sabores con Alma.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- WhatsApp Flotante -->
+    <a href="https://wa.me/34678083881" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" fill="white" width="35" height="35">
+            <path d="M16 2.001C8.268 2.001 2 8.271 2 16c0 2.476.643 4.87 1.864 6.985L2.016 30l7.202-1.888A13.921 13.921 0 0 0 16 30.001c7.732 0 14-6.27 14-14s-6.268-13.999-14-13.999l.001-.001zM24.49 21.03c-.36 1.01-1.745 1.83-2.903 1.947-.945.097-2.18-.184-4.708-1.233-3.04-1.261-5.013-4.385-5.166-4.59-.153-.204-1.232-1.642-1.232-3.13 0-1.488.777-2.222 1.055-2.527.278-.306.61-.383.811-.383.2 0 .4.004.577.012.188.009.436-.076.685.52.261.623.864 2.109.941 2.263.076.153.125.332.025.536-.102.204-.153.332-.306.51-.153.178-.316.388-.45.52-.15.148-.309.31-.137.607.171.297.761 1.258 1.636 2.036 1.131 1.006 2.052 1.314 2.348 1.467.297.153.471.127.649-.077.178-.204.764-.893.968-1.2.204-.306.408-.255.679-.153.271.102 1.716.809 2.01.957.293.148.489.268.56.417.071.148.071.86-.289 1.871z" />
+        </svg>
+    </a>
+
+    <script src="script.js?v=3"></script>
 </body>
 </html>

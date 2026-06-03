@@ -27,7 +27,16 @@ Este documento sirve como memoria del proyecto para evitar la pérdida de contex
 - **Persistencia en Scroll**: Asegurar que al volver al inicio de la página, el estado de "Chicha" se mantenga siempre como el activo inicial.
 - **Diseño del Hero**: Continuar refinando el Hero para que el video sea el protagonista sin elementos que lo tapen innecesariamente.
 
-### [Transición a v3]
-- **Contrastes de texto**: Arreglado el problema de botones ilegibles (texto blanco sobre fondo blanco se cambió a oscuro). Enlaces del header en blanco.
-- **Glassmorphism**: Añadido efecto de difuminado (`backdrop-filter: blur`) en el navbar superior.
-- **Logo Area**: Eliminados bordes blancos residuales del logo para que flote limpiamente sobre el navbar difuminado sin generar líneas o barras falsas.
+### [2026-04-14] - v3: Lanzamiento y Publicación
+- **UI/UX**: Implementación de Sticky Storytelling (escenario fijo durante scroll).
+- **Legibilidad**: Corrección de colores en botones y enlaces (Glassmorphism en navbar).
+- **Layout**: Añadido efecto espejo (maracuya a la izquierda) y copy dinámico vendedor.
+- **Hito**: Publicación exitosa en GitHub Pages (`https://vlemmor.github.io/scalea-landing/fruit_concentrates/`).
+- **Limpieza**: Removidos botones manuales y archivos pesados (>100MB) para optimización de carga.
+
+### [2026-06-03] - v3.1: Optimización Móvil, Tablet y Unificación Estética
+- **Breakpoint**: Se cambió el breakpoint principal de `768px` a `1024px` para soportar tablets (iPad, etc.) y evitar colisiones de navbar y problemas de flexbox horizontal.
+- **Intro Section**: Limpieza de estilos inline de la animación de inicio que rompían el diseño en móvil. Se modularizó en clases CSS autoadaptables con `clamp`.
+- **Estética Unificada**: Se movió la personalización de `.contact-card h2` al CSS para que se aplique en todas las páginas y se unificó la forma de los botones sociales (`.social-btn`) con el estándar de bordes de la marca (5px) en lugar de los antiguos bordes circulares (50px).
+- **SEO & Caché**: Se incrementó la versión de carga del stylesheet a `styles.css?v=20` en `index.html`, `quienes-somos.html` y `productos.html`.
+
