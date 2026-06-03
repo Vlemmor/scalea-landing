@@ -704,6 +704,10 @@ footer p {
     }
     .nav-links a {
         font-size: 1.2rem;
+        color: var(--white);
+    }
+    .nav-links a:hover {
+        color: var(--brand-green);
     }
     
     /* Intro section móvil y tablet */

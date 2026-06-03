@@ -38,5 +38,7 @@ Este documento sirve como memoria del proyecto para evitar la pérdida de contex
 - **Breakpoint**: Se cambió el breakpoint principal de `768px` a `1024px` para soportar tablets (iPad, etc.) y evitar colisiones de navbar y problemas de flexbox horizontal.
 - **Intro Section**: Limpieza de estilos inline de la animación de inicio que rompían el diseño en móvil. Se modularizó en clases CSS autoadaptables con `clamp`.
 - **Estética Unificada**: Se movió la personalización de `.contact-card h2` al CSS para que se aplique en todas las páginas y se unificó la forma de los botones sociales (`.social-btn`) con el estándar de bordes de la marca (5px) en lugar de los antiguos bordes circulares (50px).
-- **SEO & Caché**: Se incrementó la versión de carga del stylesheet a `styles.css?v=20` en `index.html`, `quienes-somos.html` y `productos.html`.
+- **Corrección Menú Móvil**: Se solucionó un problema de contraste crítico en el menú hamburguesa móvil donde los enlaces ("Inicio", "Quiénes Somos", "Productos") tenían color de texto oscuro sobre fondo oscuro. Ahora se muestran en blanco con hover verde de la marca, asegurando una visibilidad perfecta.
+- **SEO & Caché**: Se incrementó la versión de carga del stylesheet a `styles.css?v=21` en `index.html`, `quienes-somos.html` y `productos.html`.
+
 
