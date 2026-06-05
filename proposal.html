@@ -129,8 +129,61 @@
     </div>
 
     <script>
+        function renderProposalData(data) {
+            document.getElementById('display-business').innerText = data.businessName || "Cliente";
+            document.title = `Propuesta Scalea Digital - ${data.businessName || 'Cliente'}`;
+            document.getElementById('display-cif').innerText = data.clientCif ? `CIF/NIF: ${data.clientCif}` : "";
+            document.getElementById('display-address').innerText = data.clientAddress || "";
+
+            const dateObj = new Date(data.timestamp || data.createdAt);
+            document.getElementById('display-date').innerText = dateObj.toLocaleDateString('es-ES', {
+                day: '2-digit', month: 'long', year: 'numeric'
+            });
+            document.getElementById('display-time').innerText = dateObj.toLocaleTimeString('es-ES', {
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            document.getElementById('display-roiHours').innerText = `+${data.roi.hours}h`;
+            document.getElementById('display-roiReservations').innerText = `+${data.roi.reservations}%`;
+
+            const tbody = document.getElementById('services-tbody');
+            tbody.innerHTML = "";
+            let total = 0;
+            
+            if (data.services) {
+                data.services.forEach(service => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>
+                            <span class="item-name">${service.name}</span>
+                            <span class="item-desc">${service.description}</span>
+                        </td>
+                        <td class="price-col">${service.price.toLocaleString()}€</td>
+                    `;
+                    tbody.appendChild(tr);
+                    total += service.price;
+                });
+            }
+            
+            document.getElementById('display-total').innerText = `${total.toLocaleString()}€`;
+        }
+
         async function loadProposal() {
             const urlParams = new URLSearchParams(window.location.search);
+            
+            // Check for direct base64 data first (portable fallback)
+            const dataParam = urlParams.get('data');
+            if (dataParam) {
+                try {
+                    const decodedJSON = decodeURIComponent(escape(atob(dataParam)));
+                    const data = JSON.parse(decodedJSON);
+                    renderProposalData(data);
+                    return;
+                } catch (e) {
+                    console.error("Error decoding portable proposal data:", e);
+                }
+            }
+
             const budgetId = urlParams.get('id');
             let apiUrl = urlParams.get('api') || '';
             
@@ -146,45 +199,9 @@
                 const budgets = await response.json();
                 const data = budgets.find(b => b.id === budgetId);
 
-                if (!data) return;
-
-                document.getElementById('display-business').innerText = data.businessName || "Cliente";
-                document.title = `Propuesta Scalea Digital - ${data.businessName || 'Cliente'}`;
-                document.getElementById('display-cif').innerText = data.clientCif ? `CIF/NIF: ${data.clientCif}` : "";
-                document.getElementById('display-address').innerText = data.clientAddress || "";
-
-                const dateObj = new Date(data.timestamp || data.createdAt);
-                document.getElementById('display-date').innerText = dateObj.toLocaleDateString('es-ES', {
-                    day: '2-digit', month: 'long', year: 'numeric'
-                });
-                document.getElementById('display-time').innerText = dateObj.toLocaleTimeString('es-ES', {
-                    hour: '2-digit', minute: '2-digit'
-                });
-
-                document.getElementById('display-roiHours').innerText = `+${data.roi.hours}h`;
-                document.getElementById('display-roiReservations').innerText = `+${data.roi.reservations}%`;
-
-                const tbody = document.getElementById('services-tbody');
-                tbody.innerHTML = "";
-                let total = 0;
-                
-                if (data.services) {
-                    data.services.forEach(service => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>
-                                <span class="item-name">${service.name}</span>
-                                <span class="item-desc">${service.description}</span>
-                            </td>
-                            <td class="price-col">${service.price.toLocaleString()}€</td>
-                        `;
-                        tbody.appendChild(tr);
-                        total += service.price;
-                    });
+                if (data) {
+                    renderProposalData(data);
                 }
-                
-                document.getElementById('display-total').innerText = `${total.toLocaleString()}€`;
-
             } catch (err) { console.error(err); }
         }
         loadProposal();
