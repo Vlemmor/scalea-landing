@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | Scalea Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: #0b0b0f;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(20, 20, 30, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(10, 10, 15, 0.5) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(20, 20, 25, 0.4) 0px, transparent 50%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            padding: 1.5rem;
+        }
+
+        .portal-container {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        /* Glassmorphism Panel */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .header-logo {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo-txt {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #8e8e93;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        /* Login Mode */
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8e8e93;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem 1.25rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.02);
+        }
+
+        .btn-portal {
+            background: #ffffff;
+            color: #0b0b0f;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-portal:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            text-align: center;
+            display: none;
+        }
+
+        /* Dashboard Mode */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1.5rem;
+        }
+
+        .dashboard-title h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.2s;
+        }
+
+        .tool-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+            display: inline-block;
+        }
+
+        .tool-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .tool-card p {
+            color: #8e8e93;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-tool-action {
+            background: #ffffff;
+            color: #0b0b0f;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .btn-tool-action:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
+        }
+
+        /* Settings Card */
+        .settings-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-card p {
+            font-size: 0.85rem;
+            color: #8e8e93;
+            margin-bottom: 1.25rem;
+        }
+
+        .settings-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .settings-form input {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+        }
+
+        .btn-save-settings {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.7rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-save-settings:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .glass-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="portal-container">
+        <!-- Login Panel -->
+        <div id="login-panel" class="glass-card" style="display: none;">
+            <div class="header-logo">
+                <div class="logo-txt">Scalea Admin</div>
+                <div class="subtitle">Ingresa tus credenciales para acceder al portal</div>
+            </div>
+
+            <form id="form-login" class="login-form" onsubmit="handleLogin(event)">
+                <div id="login-error" class="error-message"></div>
+                
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" placeholder="admin" required autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-portal">Iniciar Sesión</button>
+            </form>
+        </div>
+
+        <!-- Dashboard Panel -->
+        <div id="dashboard-panel" class="glass-card" style="display: none;">
+            <div class="dashboard-header">
+                <div class="dashboard-title">
+                    <h2>Portal de Herramientas</h2>
+                    <p class="subtitle">Bienvenido al centro de automatización de Scalea</p>
+                </div>
+                <button class="logout-btn" onclick="handleLogout()">Cerrar Sesión</button>
+            </div>
+
+            <div class="tools-grid">
+                <!-- Tool 1: Presupuestador -->
+                <div class="tool-card">
+                    <span class="tool-icon">📄</span>
+                    <h3>Generador de Presupuestos</h3>
+                    <p>Crea propuestas comerciales personalizadas para tus clientes B2B con catalogación automatizada, cálculo de ROI e impresión a PDF premium lista para enviar.</p>
+                    <a href="admin.html" class="btn-tool-action">
+                        <span>Abrir Presupuestador</span>
+                        <span>→</span>
+                    </a>
+                </div>
+
+                <!-- Settings: Backend API URL config -->
+                <div class="tool-card settings-card">
+                    <span class="tool-icon">⚙️</span>
+                    <h3>Configuración de API</h3>
+                    <p>URL del servidor Express de Railway para el almacenamiento persistente en la nube y envíos de emails (Resend).</p>
+                    
+                    <form class="settings-form" onsubmit="handleSaveSettings(event)">
+                        <div class="form-group">
+                            <input type="url" id="api-url-input" placeholder="https://mi-servidor.up.railway.app" required>
+                        </div>
+                        <button type="submit" class="btn-save-settings">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication status
+        function checkAuth() {
+            const loginPanel = document.getElementById('login-panel');
+            const dashboardPanel = document.getElementById('dashboard-panel');
+            
+            if (sessionStorage.getItem('scalea_auth') === 'true') {
+                loginPanel.style.display = 'none';
+                dashboardPanel.style.display = 'block';
+                
+                // Load saved API URL in settings form
+                const savedApiUrl = localStorage.getItem('scalea_api_url') || window.location.origin;
+                document.getElementById('api-url-input').value = savedApiUrl;
+            } else {
+                loginPanel.style.display = 'block';
+                dashboardPanel.style.display = 'none';
+            }
+        }
+
+        // Login Handler
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim().toLowerCase();
+            const pass = document.getElementById('password').value;
+            const errorBox = document.getElementById('login-error');
+
+            errorBox.style.display = 'none';
+
+            if (user === 'admin' && pass === 'ScaleaDigital#AdminSecure2026!') {
+                sessionStorage.setItem('scalea_auth', 'true');
+                // Ensure default API URL is initialized
+                if (!localStorage.getItem('scalea_api_url')) {
+                    localStorage.setItem('scalea_api_url', window.location.origin);
+                }
+                checkAuth();
+            } else {
+                errorBox.innerText = 'Usuario o contraseña incorrectos.';
+                errorBox.style.display = 'block';
+            }
+        }
+
+        // Save Settings Handler
+        function handleSaveSettings(e) {
+            e.preventDefault();
+            let url = document.getElementById('api-url-input').value.trim();
+            if (url.endsWith('/')) {
+                url = url.slice(0, -1);
+            }
+            localStorage.setItem('scalea_api_url', url);
+            alert('¡Configuración de API guardada correctamente!');
+        }
+
+        // Logout Handler
+        function handleLogout() {
+            sessionStorage.removeItem('scalea_auth');
+            checkAuth();
+        }
+
+        // Initialize view
+        checkAuth();
+    </script>
+</body>
+</html>

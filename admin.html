@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Presupuestos | Scalea Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-section { margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1.5rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); }
+        input, textarea, select { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; }
+        .actions { margin-top: 2rem; display: flex; gap: 1rem; }
+        #link-display { margin-top: 1rem; padding: 1.5rem; border-radius: 12px; display: none; }
+        .nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .back-btn { background: transparent; border: 1px solid #000; color: #000; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+        .back-btn:hover { background: #000; color: #fff; }
+    </style>
+    <script>
+        // Security check before loading page contents
+        if (sessionStorage.getItem('scalea_auth') !== 'true') {
+            const loc = window.location;
+            const base = loc.pathname.substring(0, loc.pathname.lastIndexOf('/'));
+            window.location.href = loc.origin + base + '/paneladmin';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header class="nav-header">
+            <div>
+                <h1>Generador de <span class="gradient-text">Presupuestos</span></h1>
+                <p>Scalea Digital - Panel de Control</p>
+            </div>
+            <a href="paneladmin" class="back-btn">← Volver al Panel</a>
+        </header>
+
+        <div class="card">
+            <div id="link-display">
+                <h3 style="color: #2e7d32;">¡Propuesta Lista!</h3>
+                <div style="display: flex; gap: 10px; margin-top: 1rem; margin-bottom: 2rem;">
+                    <a href="#" id="budget-link" target="_blank" class="btn btn-primary">Ver Propuesta</a>
+                    <button class="btn btn-primary" onclick="sendEmail()">Enviar por Email</button>
+                    <input type="hidden" id="copy-link">
+                    <button class="btn btn-outline" onclick="copyProposalLink()">Copiar Enlace</button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>1. Datos del Cliente</h3>
+                <div class="form-grid" style="margin-top: 1rem;">
+                    <div class="form-group">
+                        <label>Nombre del Negocio / Cliente</label>
+                        <input type="text" id="businessName" placeholder="Ej. Restaurante La Cresta">
+                    </div>
+                    <div class="form-group">
+                        <label>CIF / NIF</label>
+                        <input type="text" id="clientCif" placeholder="Ej. B12345678">
+                    </div>
+                    <div class="form-group">
+                        <label>Email del Cliente</label>
+                        <input type="email" id="clientEmail" placeholder="cliente@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección (Opcional)</label>
+                        <input type="text" id="clientAddress" placeholder="Ej. Carrer de Balmes, 123">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>2. Selección de Servicios</h3>
+                <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">Selecciona un servicio del catálogo o escribe uno personalizado.</p>
+                <div id="services-container">
+                    <!-- Rows will be added here via JS -->
+                </div>
+                <button class="add-service-btn" onclick="addServiceRow()">+ Añadir Servicio</button>
+            </div>
+
+            <div class="form-section">
+                <h3>3. Potencial de Mejora (Metas)</h3>
+                <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">Valores orientativos para motivar la digitalización.</p>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Horas potenciales de ahorro/mes</label>
+                        <input type="number" id="roiHours" value="40">
+                    </div>
+                    <div class="form-group">
+                        <label>% Mejora estimada en ventas/reservas</label>
+                        <input type="number" id="roiReservations" value="25">
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="generateBudget()">Generar Propuesta</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CATALOG = [
+            { name: "Auditoría de Procesos", desc: "Análisis de flujos y detección de ineficiencias.", price: 300 },
+            { name: "Bot IA Aitana (WhatsApp)", desc: "Asistente inteligente 24/7 para reservas.", price: 1200 },
+            { name: "Optimización Google Business", desc: "SEO Local y gestión de reseñas.", price: 450 },
+            { name: "Gestión TPV & Analítica", desc: "Control total de ventas en tiempo real.", price: 800 },
+            { name: "Campañas Ads (Meta/Google)", desc: "Captación directa de clientes cualificados.", price: 600 },
+            { name: "Desarrollo Web / Landing", desc: "Sitio web optimizado para conversión.", price: 950 },
+            { name: "Otro (Personalizado)", desc: "Descripción del servicio...", price: 0 }
+        ];
+
+        // Retrieve API Base URL dynamically
+        const getApiUrl = () => {
+            return localStorage.getItem('scalea_api_url') || '';
+        };
+
+        function addServiceRow() {
+            const container = document.getElementById('services-container');
+            const row = document.createElement('div');
+            row.className = 'service-row';
+            
+            let options = CATALOG.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+            
+            row.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <select onchange="updateRow(this)" class="row-select">
+                        <option value="" disabled selected>Elige un servicio...</option>
+                        ${options}
+                    </select>
+                    <input type="text" placeholder="Nombre personalizado" class="row-name" style="display:none; font-weight:bold;">
+                </div>
+                <input type="text" placeholder="Descripción corta" class="row-desc">
+                <input type="number" placeholder="Precio" class="row-price">
+                <button class="remove-btn" onclick="this.parentElement.remove()">×</button>
+            `;
+            container.appendChild(row);
+        }
+
+        function updateRow(select) {
+            const row = select.parentElement.parentElement;
+            const nameInput = row.querySelector('.row-name');
+            const service = CATALOG.find(s => s.name === select.value);
+            
+            if (select.value === "Otro (Personalizado)") {
+                nameInput.style.display = "block";
+                nameInput.value = "";
+            } else {
+                nameInput.style.display = "none";
+                nameInput.value = select.value;
+            }
+
+            if (service) {
+                row.querySelector('.row-desc').value = service.desc;
+                row.querySelector('.row-price').value = service.price;
+            }
+        }
+
+        let currentBudgetId = '';
+
+        async function generateBudget() {
+            const businessName = document.getElementById('businessName').value;
+            const clientCif = document.getElementById('clientCif').value;
+            const clientEmail = document.getElementById('clientEmail').value;
+            const clientAddress = document.getElementById('clientAddress').value;
+            
+            const services = [];
+            document.querySelectorAll('.service-row').forEach(row => {
+                const selectValue = row.querySelector('.row-select').value;
+                const nameInput = row.querySelector('.row-name').value;
+                const name = selectValue === "Otro (Personalizado)" ? nameInput : selectValue;
+                const desc = row.querySelector('.row-desc').value;
+                const price = parseFloat(row.querySelector('.row-price').value);
+                if (name) services.push({ name, description: desc, price });
+            });
+
+            const roi = {
+                hours: document.getElementById('roiHours').value,
+                reservations: document.getElementById('roiReservations').value
+            };
+
+            const budgetData = {
+                businessName,
+                clientCif,
+                clientEmail,
+                clientAddress,
+                services,
+                roi,
+                timestamp: new Date().toISOString()
+            };
+
+            const apiUrl = getApiUrl();
+
+            try {
+                const response = await fetch(`${apiUrl}/api/budgets`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(budgetData)
+                });
+
+                if (!response.ok) throw new Error('Error saving budget');
+                const result = await response.json();
+                currentBudgetId = result.id;
+                
+                // Build dynamic link using the API base URL parameter
+                const loc = window.location;
+                const base = loc.origin + loc.pathname.substring(0, loc.pathname.lastIndexOf('/'));
+                const fullLink = base + `/proposal.html?id=${currentBudgetId}&api=${encodeURIComponent(apiUrl)}`;
+                
+                document.getElementById('copy-link').value = fullLink;
+                document.getElementById('budget-link').href = fullLink;
+                document.getElementById('link-display').style.display = 'block';
+                
+                // Scroll to success
+                document.getElementById('link-display').scrollIntoView({ behavior: 'smooth' });
+            } catch (err) {
+                console.error(err);
+                alert('Error al conectar con el servidor backend. Por favor, verifica la URL del servidor API en el panel de administración.');
+            }
+        }
+
+        async function sendEmail() {
+            const clientEmail = document.getElementById('clientEmail').value;
+            const proposalLink = document.getElementById('copy-link').value;
+            const businessName = document.getElementById('businessName').value;
+            
+            const message = `Es un placer saludarte. Adjunto encontrarás la propuesta personalizada de Scalea Digital para ${businessName}. Hemos diseñado un plan enfocado en optimizar tus procesos y aumentar tu rentabilidad.`;
+
+            const apiUrl = getApiUrl();
+
+            try {
+                const response = await fetch(`${apiUrl}/api/send-proposal`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: clientEmail,
+                        clientName: businessName,
+                        proposalLink,
+                        message
+                    })
+                });
+
+                if (response.ok) {
+                    alert('¡Propuesta enviada correctamente por email!');
+                } else {
+                    alert('Error al enviar. Revisa la configuración de Resend en el servidor Railway.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error de conexión al enviar el correo.');
+            }
+        }
+
+        function copyProposalLink() {
+            const copyText = document.getElementById('copy-link');
+            navigator.clipboard.writeText(copyText.value);
+            alert('¡Enlace copiado al portapapeles!');
+        }
+
+        // Initialize with one row
+        addServiceRow();
+    </script>
+</body>
+</html>
