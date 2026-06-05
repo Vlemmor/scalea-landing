@@ -93,6 +93,16 @@
                 </div>
             </div>
 
+            <div class="form-section">
+                <h3>4. Condiciones de la Propuesta</h3>
+                <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">Detalla las condiciones comerciales o notas adicionales (puedes editarlas libremente).</p>
+                <div class="form-group">
+                    <textarea id="conditions" rows="4" placeholder="Ej. ▪ Validez de la oferta: 15 días naturales.">▪ Validez de la oferta: 15 días naturales.
+▪ Precios netos sin IVA incluido.
+▪ Forma de pago: 50% inicio / 50% entrega.</textarea>
+                </div>
+            </div>
+
             <div class="actions">
                 <button class="btn btn-primary" onclick="generateBudget()">Generar Propuesta</button>
             </div>
@@ -179,6 +189,8 @@
                 reservations: document.getElementById('roiReservations').value
             };
 
+            const conditions = document.getElementById('conditions').value;
+
             const budgetData = {
                 businessName,
                 clientCif,
@@ -186,6 +198,7 @@
                 clientAddress,
                 services,
                 roi,
+                conditions,
                 timestamp: new Date().toISOString()
             };
 

@@ -111,11 +111,11 @@
             <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 2rem;">
                 <div>
                     <h4 style="margin-bottom: 0.5rem;">Condiciones de la Propuesta</h4>
-                    <ul style="font-size: 0.85rem; color: var(--text-muted); list-style: none; padding: 0;">
-                        <li>• Validez de la oferta: 15 días naturales.</li>
-                        <li>• Precios netos sin IVA incluido.</li>
-                        <li>• Forma de pago: 50% inicio / 50% entrega.</li>
-                    </ul>
+                    <div id="display-conditions" style="font-size: 0.85rem; color: var(--text-muted); white-space: pre-line; line-height: 1.5;">
+                        ▪ Validez de la oferta: 15 días naturales.
+                        ▪ Precios netos sin IVA incluido.
+                        ▪ Forma de pago: 50% inicio / 50% entrega.
+                    </div>
                 </div>
                 <div style="text-align: right;">
                     <h4 style="margin-bottom: 0.5rem;">Scalea Digital</h4>
@@ -145,6 +145,9 @@
 
             document.getElementById('display-roiHours').innerText = `+${data.roi.hours}h`;
             document.getElementById('display-roiReservations').innerText = `+${data.roi.reservations}%`;
+
+            const conditions = data.conditions || `▪ Validez de la oferta: 15 días naturales.\n▪ Precios netos sin IVA incluido.\n▪ Forma de pago: 50% inicio / 50% entrega.`;
+            document.getElementById('display-conditions').innerText = conditions;
 
             const tbody = document.getElementById('services-tbody');
             tbody.innerHTML = "";
