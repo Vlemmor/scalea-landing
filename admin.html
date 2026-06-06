@@ -134,22 +134,26 @@
             let options = CATALOG.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
             
             row.innerHTML = `
-                <div style="display: flex; flex-direction: column; gap: 5px;">
-                    <select onchange="updateRow(this)" class="row-select">
-                        <option value="" disabled selected>Elige un servicio...</option>
-                        ${options}
-                    </select>
-                    <input type="text" placeholder="Nombre personalizado" class="row-name" style="display:none; font-weight:bold;">
+                <div class="service-row-header">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <select onchange="updateRow(this)" class="row-select">
+                            <option value="" disabled selected>Elige un servicio...</option>
+                            ${options}
+                        </select>
+                        <input type="text" placeholder="Nombre personalizado" class="row-name" style="display:none; font-weight:bold;">
+                    </div>
+                    <input type="number" placeholder="Precio" class="row-price">
+                    <button class="remove-btn" onclick="this.closest('.service-row').remove()">×</button>
                 </div>
-                <input type="text" placeholder="Descripción corta" class="row-desc">
-                <input type="number" placeholder="Precio" class="row-price">
-                <button class="remove-btn" onclick="this.parentElement.remove()">×</button>
+                <div class="service-row-body">
+                    <textarea placeholder="Descripción del servicio (puedes usar listas, viñetas, saltos de línea...)" class="row-desc" rows="3"></textarea>
+                </div>
             `;
             container.appendChild(row);
         }
 
         function updateRow(select) {
-            const row = select.parentElement.parentElement;
+            const row = select.closest('.service-row');
             const nameInput = row.querySelector('.row-name');
             const service = CATALOG.find(s => s.name === select.value);
             

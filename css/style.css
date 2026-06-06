@@ -111,6 +111,9 @@ h1, h2, h3, h4 {
 .item-desc {
     font-size: 0.85rem;
     color: var(--text-muted);
+    display: block;
+    white-space: pre-line;
+    margin-top: 0.4rem;
 }
 
 .price-col {
@@ -149,12 +152,26 @@ h1, h2, h3, h4 {
 
 /* Dynamic Service Rows */
 .service-row {
-    display: grid;
-    grid-template-columns: 2fr 1fr 100px 40px;
-    gap: 1rem;
-    margin-bottom: 0.8rem;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1.2rem;
+    background: rgba(0, 0, 0, 0.015);
     animation: fadeIn 0.3s ease;
+}
+
+.service-row-header {
+    display: grid;
+    grid-template-columns: 2fr 120px 40px;
+    gap: 1rem;
+    align-items: center;
+}
+
+.service-row-body {
+    width: 100%;
 }
 
 @keyframes fadeIn {
@@ -162,10 +179,11 @@ h1, h2, h3, h4 {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.service-row input, .service-row select {
+.service-row input, .service-row select, .service-row textarea {
     padding: 0.6rem;
     border: 1px solid var(--border);
     border-radius: 6px;
+    font-family: inherit;
 }
 
 .remove-btn {
