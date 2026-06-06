@@ -118,7 +118,10 @@ app.get('/api/budgets', async (req, res) => {
 app.post('/api/suggest-roi', async (req, res) => {
     try {
         const { services } = req.body;
-        const geminiApiKey = process.env.GEMINI_API_KEY;
+        const rawApiKey = process.env.GEMINI_API_KEY;
+        const geminiApiKey = rawApiKey ? rawApiKey.trim() : null;
+
+        console.log("Endpoint /api/suggest-roi llamado. API Key detectada:", geminiApiKey ? `${geminiApiKey.substring(0, 6)}...${geminiApiKey.slice(-4)}` : "NO ENCONTRADA");
 
         // If no API key, use smart rule-based mock suggestions to ensure resilience
         if (!geminiApiKey) {
@@ -203,7 +206,7 @@ Debes devolver una respuesta en formato JSON estricto con las siguientes claves:
 
 IMPORTANTE: Devuelve SOLAMENTE el JSON, sin markdown, sin explicaciones.`;
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
