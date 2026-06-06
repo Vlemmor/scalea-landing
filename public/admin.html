@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="solo_logo.png?v=2" />
+    <title>Generador de Presupuestos | Scalea Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-section { margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1.5rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); }
+        input, textarea, select { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; }
+        .actions { margin-top: 2rem; display: flex; gap: 1rem; }
+        #link-display { margin-top: 1rem; padding: 1.5rem; border-radius: 12px; display: none; }
+        .nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .back-btn { background: transparent; border: 1px solid #000; color: #000; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+        .back-btn:hover { background: #000; color: #fff; }
+    </style>
+    <script>
+        // Security check before loading page contents
+        if (sessionStorage.getItem('scalea_auth') !== 'true') {
+            const loc = window.location;
+            const base = loc.pathname.substring(0, loc.pathname.lastIndexOf('/'));
+            window.location.href = loc.origin + base + '/paneladmin';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header class="nav-header">
+            <div>
+                <h1>Generador de <span class="gradient-text">Presupuestos</span></h1>
+                <p>Scalea Digital - Panel de Control</p>
+            </div>
+            <a href="paneladmin" class="back-btn">← Volver al Panel</a>
+        </header>
+
+        <div class="card">
+            <div id="link-display">
+                <h3 style="color: #2e7d32;">¡Propuesta Lista!</h3>
+                <div style="display: flex; gap: 10px; margin-top: 1rem; margin-bottom: 2rem;">
+                    <a href="#" id="budget-link" target="_blank" class="btn btn-primary">Ver Propuesta</a>
+                    <button class="btn btn-primary" onclick="sendEmail()">Enviar por Email</button>
+                    <input type="hidden" id="copy-link">
+                    <button class="btn btn-outline" onclick="copyProposalLink()">Copiar Enlace</button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>1. Datos del Cliente</h3>
+                <div class="form-grid" style="margin-top: 1rem;">
+                    <div class="form-group">
+                        <label>Nombre del Negocio / Cliente</label>
+                        <input type="text" id="businessName" placeholder="Ej. Restaurante La Cresta">
+                    </div>
+                    <div class="form-group">
+                        <label>CIF / NIF</label>
+                        <input type="text" id="clientCif" placeholder="Ej. B12345678">
+                    </div>
+                    <div class="form-group">
+                        <label>Email del Cliente</label>
+                        <input type="email" id="clientEmail" placeholder="cliente@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección (Opcional)</label>
+                        <input type="text" id="clientAddress" placeholder="Ej. Carrer de Balmes, 123">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>2. Selección de Servicios</h3>
+                <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">Selecciona un servicio del catálogo o escribe uno personalizado.</p>
+                <div id="services-container">
+                    <!-- Rows will be added here via JS -->
+                </div>
+                <button class="add-service-btn" onclick="addServiceRow()">+ Añadir Servicio</button>
+            </div>
+
+            <div class="form-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div>
+                        <h3>3. Potencial de Optimización (Metas)</h3>
+                        <p style="font-size: 0.8rem; color: #666;">Valores orientativos y etiquetas para motivar la propuesta.</p>
+                    </div>
+                    <button type="button" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="suggestRoiWithAI(event)">✨ Sugerir con IA</button>
+                </div>
+                <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <!-- Card 1 -->
+                    <div style="border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; background: rgba(0,0,0,0.01);">
+                        <h4 style="margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--accent);">Tarjeta 1</h4>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>Valor (ej: +40h)</label>
+                            <input type="text" id="roiHours" value="+40h">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Descripción / Etiqueta</label>
+                            <input type="text" id="roiHoursLabel" value="Tiempo libre para ti / mes">
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div style="border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; background: rgba(0,0,0,0.01);">
+                        <h4 style="margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--accent);">Tarjeta 2</h4>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>Valor (ej: +25%)</label>
+                            <input type="text" id="roiReservations" value="+25%">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Descripción / Etiqueta</label>
+                            <input type="text" id="roiReservationsLabel" value="Más ventas y reservas">
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div style="border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; background: rgba(0,0,0,0.01);">
+                        <h4 style="margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--accent);">Tarjeta 3</h4>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>Valor (ej: 24/7)</label>
+                            <input type="text" id="roiMetric3Value" value="24/7">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Descripción / Etiqueta</label>
+                            <input type="text" id="roiMetric3Label" value="Tu negocio activo 24/7">
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div style="border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; background: rgba(0,0,0,0.01);">
+                        <h4 style="margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--accent);">Tarjeta 4</h4>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>Valor (ej: 100%)</label>
+                            <input type="text" id="roiMetric4Value" value="100%">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Descripción / Etiqueta</label>
+                            <input type="text" id="roiMetric4Label" value="Soporte y tranquilidad total">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>4. Condiciones de la Propuesta</h3>
+                <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">Detalla las condiciones comerciales o notas adicionales (puedes editarlas libremente).</p>
+                <div class="form-group">
+                    <textarea id="conditions" rows="4" placeholder="Ej. ▪ Validez de la oferta: 15 días naturales.">▪ Validez de la oferta: 15 días naturales.
+▪ Precios netos sin IVA incluido.
+▪ Forma de pago: 50% inicio / 50% entrega.</textarea>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="generateBudget()">Generar Propuesta</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CATALOG = [
+            { name: "Auditoría de Procesos", desc: "Análisis de flujos y detección de ineficiencias.", price: 300 },
+            { name: "Bot IA Aitana (WhatsApp)", desc: "Asistente inteligente 24/7 para reservas.", price: 1200 },
+            { name: "Optimización Google Business", desc: "SEO Local y gestión de reseñas.", price: 450 },
+            { name: "Gestión TPV & Analítica", desc: "Control total de ventas en tiempo real.", price: 800 },
+            { name: "Campañas Ads (Meta/Google)", desc: "Captación directa de clientes cualificados.", price: 600 },
+            { name: "Desarrollo Web / Landing", desc: "Sitio web optimizado para conversión.", price: 950 },
+            { name: "Otro (Personalizado)", desc: "Descripción del servicio...", price: 0 }
+        ];
+
+        // Retrieve API Base URL dynamically
+        const getApiUrl = () => {
+            return localStorage.getItem('scalea_api_url') || '';
+        };
+
+        function addServiceRow() {
+            const container = document.getElementById('services-container');
+            const row = document.createElement('div');
+            row.className = 'service-row';
+            
+            let options = CATALOG.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+            
+            row.innerHTML = `
+                <div class="service-row-header">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <select onchange="updateRow(this)" class="row-select">
+                            <option value="" disabled selected>Elige un servicio...</option>
+                            ${options}
+                        </select>
+                        <input type="text" placeholder="Nombre personalizado" class="row-name" style="display:none; font-weight:bold;">
+                    </div>
+                    <input type="number" placeholder="Precio" class="row-price">
+                    <button class="remove-btn" onclick="this.closest('.service-row').remove()">×</button>
+                </div>
+                <div class="service-row-body">
+                    <textarea placeholder="Descripción del servicio (puedes usar listas, viñetas, saltos de línea...)" class="row-desc" rows="3"></textarea>
+                </div>
+            `;
+            container.appendChild(row);
+        }
+
+        function updateRow(select) {
+            const row = select.closest('.service-row');
+            const nameInput = row.querySelector('.row-name');
+            const service = CATALOG.find(s => s.name === select.value);
+            
+            if (select.value === "Otro (Personalizado)") {
+                nameInput.style.display = "block";
+                nameInput.value = "";
+            } else {
+                nameInput.style.display = "none";
+                nameInput.value = select.value;
+            }
+
+            if (service) {
+                row.querySelector('.row-desc').value = service.desc;
+                row.querySelector('.row-price').value = service.price;
+            }
+        }
+
+        async function suggestRoiWithAI(event) {
+            const services = [];
+            document.querySelectorAll('.service-row').forEach(row => {
+                const selectValue = row.querySelector('.row-select').value;
+                const nameInput = row.querySelector('.row-name').value;
+                const name = selectValue === "Otro (Personalizado)" ? nameInput : selectValue;
+                const desc = row.querySelector('.row-desc').value;
+                if (name) services.push({ name, description: desc });
+            });
+
+            if (services.length === 0) {
+                alert('Por favor, añade al menos un servicio con su descripción para poder sugerir metas con IA.');
+                return;
+            }
+
+            const btn = event ? event.target : null;
+            const originalText = btn ? btn.innerText : '✨ Sugerir con IA';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerText = 'Analizando propuesta...';
+            }
+
+            const apiUrl = getApiUrl();
+            const cleanApiUrl = (apiUrl === window.location.origin) ? '' : apiUrl;
+
+            try {
+                const response = await fetch(`${cleanApiUrl}/api/suggest-roi`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ services })
+                });
+
+                if (!response.ok) throw new Error('Error al conectar con la IA');
+                const result = await response.json();
+                
+                if (result.roi) {
+                    document.getElementById('roiHours').value = result.roi.hours || "+40h";
+                    document.getElementById('roiHoursLabel').value = result.roi.hoursLabel || "Tiempo libre para ti / mes";
+                    document.getElementById('roiReservations').value = result.roi.reservations || "+25%";
+                    document.getElementById('roiReservationsLabel').value = result.roi.reservationsLabel || "Más ventas y reservas";
+                    document.getElementById('roiMetric3Value').value = result.roi.metric3Value || "24/7";
+                    document.getElementById('roiMetric3Label').value = result.roi.metric3Label || "Tu negocio activo 24/7";
+                    document.getElementById('roiMetric4Value').value = result.roi.metric4Value || "100%";
+                    document.getElementById('roiMetric4Label').value = result.roi.metric4Label || "Soporte y tranquilidad total";
+                    alert('¡Las metas y métricas han sido generadas y adaptadas automáticamente por la IA!');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('No se pudo sugerir las metas automáticamente. Asegúrate de tener GEMINI_API_KEY en las variables de entorno de tu servidor Railway. No te preocupes, de todas formas puedes editarlas manualmente.');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerText = originalText;
+                }
+            }
+        }
+
+        let currentBudgetId = '';
+
+        async function generateBudget() {
+            const businessName = document.getElementById('businessName').value;
+            const clientCif = document.getElementById('clientCif').value;
+            const clientEmail = document.getElementById('clientEmail').value;
+            const clientAddress = document.getElementById('clientAddress').value;
+            
+            const services = [];
+            document.querySelectorAll('.service-row').forEach(row => {
+                const selectValue = row.querySelector('.row-select').value;
+                const nameInput = row.querySelector('.row-name').value;
+                const name = selectValue === "Otro (Personalizado)" ? nameInput : selectValue;
+                const desc = row.querySelector('.row-desc').value;
+                const price = parseFloat(row.querySelector('.row-price').value);
+                if (name) services.push({ name, description: desc, price });
+            });
+
+            const roi = {
+                hours: document.getElementById('roiHours').value,
+                hoursLabel: document.getElementById('roiHoursLabel').value,
+                reservations: document.getElementById('roiReservations').value,
+                reservationsLabel: document.getElementById('roiReservationsLabel').value,
+                metric3Value: document.getElementById('roiMetric3Value').value,
+                metric3Label: document.getElementById('roiMetric3Label').value,
+                metric4Value: document.getElementById('roiMetric4Value').value,
+                metric4Label: document.getElementById('roiMetric4Label').value
+            };
+
+            const conditions = document.getElementById('conditions').value;
+
+            const budgetData = {
+                businessName,
+                clientCif,
+                clientEmail,
+                clientAddress,
+                services,
+                roi,
+                conditions,
+                timestamp: new Date().toISOString()
+            };
+
+            // Generate portable base64 fallback link first
+            const dataStr = btoa(unescape(encodeURIComponent(JSON.stringify(budgetData))));
+            const loc = window.location;
+            const base = loc.origin + loc.pathname.substring(0, loc.pathname.lastIndexOf('/'));
+            const fallbackLink = base + `/proposal.html?data=${dataStr}`;
+
+            const apiUrl = getApiUrl();
+            const cleanApiUrl = (apiUrl === loc.origin) ? '' : apiUrl; // Ignore default fallback if it points to github pages
+
+            if (!cleanApiUrl) {
+                // No API configured, use portable link directly
+                document.getElementById('copy-link').value = fallbackLink;
+                document.getElementById('budget-link').href = fallbackLink;
+                document.getElementById('link-display').innerHTML = `
+                    <h3 style="color: #2e7d32;">¡Propuesta Lista (Modo Portátil)!</h3>
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; margin-bottom: 1rem;">
+                        Generada localmente de forma segura. El enlace funcionará en cualquier ordenador sin necesidad de base de datos.
+                    </p>
+                    <div style="display: flex; gap: 10px;">
+                        <a href="${fallbackLink}" id="budget-link" target="_blank" class="btn btn-primary">Ver Propuesta</a>
+                        <button class="btn btn-outline" onclick="copyProposalLink()">Copiar Enlace</button>
+                    </div>
+                `;
+                document.getElementById('link-display').style.display = 'block';
+                document.getElementById('link-display').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+
+            try {
+                const response = await fetch(`${cleanApiUrl}/api/budgets`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(budgetData)
+                });
+
+                if (!response.ok) throw new Error('Error saving budget');
+                const result = await response.json();
+                currentBudgetId = result.id;
+                
+                const fullLink = base + `/proposal.html?id=${currentBudgetId}&api=${encodeURIComponent(cleanApiUrl)}`;
+                
+                document.getElementById('copy-link').value = fullLink;
+                document.getElementById('budget-link').href = fullLink;
+                document.getElementById('link-display').innerHTML = `
+                    <h3 style="color: #2e7d32;">¡Propuesta Lista (Nube)!</h3>
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; margin-bottom: 1rem;">
+                        Guardado en la base de datos de Railway.
+                    </p>
+                    <div style="display: flex; gap: 10px;">
+                        <a href="${fullLink}" id="budget-link" target="_blank" class="btn btn-primary">Ver Propuesta</a>
+                        <button class="btn btn-primary" onclick="sendEmail()">Enviar por Email</button>
+                        <button class="btn btn-outline" onclick="copyProposalLink()">Copiar Enlace</button>
+                    </div>
+                `;
+                document.getElementById('link-display').style.display = 'block';
+                document.getElementById('link-display').scrollIntoView({ behavior: 'smooth' });
+            } catch (err) {
+                console.error(err);
+                // Fallback to portable link if server is down
+                document.getElementById('copy-link').value = fallbackLink;
+                document.getElementById('budget-link').href = fallbackLink;
+                document.getElementById('link-display').innerHTML = `
+                    <h3 style="color: #d32f2f;">¡Propuesta Lista (Modo Portátil)!</h3>
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; margin-bottom: 1rem;">
+                        El servidor backend configurado (${cleanApiUrl}) no está en línea, pero hemos generado un enlace portátil alternativo que funcionará perfectamente para tu cliente.
+                    </p>
+                    <div style="display: flex; gap: 10px;">
+                        <a href="${fallbackLink}" id="budget-link" target="_blank" class="btn btn-primary">Ver Propuesta</a>
+                        <button class="btn btn-outline" onclick="copyProposalLink()">Copiar Enlace</button>
+                    </div>
+                `;
+                document.getElementById('link-display').style.display = 'block';
+                document.getElementById('link-display').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        async function sendEmail() {
+            const clientEmail = document.getElementById('clientEmail').value;
+            const proposalLink = document.getElementById('copy-link').value;
+            const businessName = document.getElementById('businessName').value;
+            
+            const message = `Es un placer saludarte. Adjunto encontrarás la propuesta personalizada de Scalea Digital para ${businessName}. Hemos diseñado un plan enfocado en optimizar tus procesos y aumentar tu rentabilidad.`;
+
+            const apiUrl = getApiUrl();
+
+            try {
+                const response = await fetch(`${apiUrl}/api/send-proposal`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: clientEmail,
+                        clientName: businessName,
+                        proposalLink,
+                        message
+                    })
+                });
+
+                if (response.ok) {
+                    alert('¡Propuesta enviada correctamente por email!');
+                } else {
+                    alert('Error al enviar. Revisa la configuración de Resend en el servidor Railway.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error de conexión al enviar el correo.');
+            }
+        }
+
+        function copyProposalLink() {
+            const copyText = document.getElementById('copy-link');
+            navigator.clipboard.writeText(copyText.value);
+            alert('¡Enlace copiado al portapapeles!');
+        }
+
+        // Initialize with one row
+        addServiceRow();
+    </script>
+</body>
+</html>

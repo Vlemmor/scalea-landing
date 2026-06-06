@@ -1,0 +1,379 @@
+:root {
+    --primary: #0f172a;       /* Slate 900 - Deep Slate Black */
+    --accent: #4f46e5;        /* Indigo 600 - Technology Violet */
+    --accent-light: #e0e7ff;  /* Indigo 100 */
+    --bg: #f8fafc;            /* Slate 50 - Soft light blue-gray */
+    --card-bg: #ffffff;
+    --border: #e2e8f0;        /* Slate 200 - Fine border */
+    --text-main: #0f172a;     /* Slate 900 */
+    --text-muted: #475569;    /* Slate 600 */
+    --gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); /* Slate to Indigo */
+    --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+    --shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+    --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
+    --radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* Premium Card Design */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gradient);
+    display: none; /* Can be enabled on specific elements */
+}
+
+.gradient-text {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Modern Inputs & Form Controls */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    background-color: #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    background-color: #ffffff;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background: #1e293b; /* Slate 800 */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background: rgba(15, 23, 42, 0.03);
+    transform: translateY(-1px);
+}
+
+/* Budget Table */
+.budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.budget-table th {
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 2px solid var(--primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.budget-table td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.item-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--primary);
+    display: block;
+}
+
+.item-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: block;
+    white-space: pre-line;
+    margin-top: 0.4rem;
+    line-height: 1.5;
+}
+
+.price-col {
+    text-align: right;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--primary);
+    white-space: nowrap;
+}
+
+/* Metrics Section (Premium Cards) */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.metric-card {
+    background: var(--gradient);
+    color: #ffffff;
+    padding: 1.75rem 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+    transition: transform 0.2s ease;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+}
+
+.metric-value {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+}
+
+.metric-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    opacity: 0.9;
+    letter-spacing: 0.02em;
+}
+
+/* Dynamic Service Rows for Admin Form */
+.service-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1.2rem;
+    background: #fafafa;
+    box-shadow: var(--shadow-sm);
+    animation: fadeIn 0.25s ease-out;
+}
+
+.service-row-header {
+    display: grid;
+    grid-template-columns: 2fr 120px 40px;
+    gap: 1rem;
+    align-items: center;
+}
+
+.service-row-body {
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.remove-btn {
+    background: #fee2e2;
+    color: #ef4444;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.remove-btn:hover {
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #ef4444;
+}
+
+.add-service-btn {
+    background: #ffffff;
+    border: 1.5px dashed var(--accent);
+    color: var(--accent);
+    padding: 0.8rem;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    transition: all 0.2s;
+}
+
+.add-service-btn:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+}
+
+/* ROI Section Rebranding */
+.roi-section-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+    border-left: 4px solid var(--accent);
+    padding-left: 0.8rem;
+    font-weight: 700;
+}
+
+/* Success Alert (Admin Link Panel) */
+#link-display {
+    border: 1px solid #bbf7d0;
+    background: #f0fdf4;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    margin-bottom: 2rem;
+}
+
+/* Print Overrides for Professional PDF Output */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 10pt;
+        line-height: 1.5;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        padding: 0 !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+    }
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #eaeaea !important;
+        background: #ffffff !important;
+        border-radius: 8px !important;
+        padding: 1.75rem !important;
+        margin-bottom: 1.5rem !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    .metric-card {
+        background: #0f172a !important; /* Preserve dark theme for cards */
+        color: #ffffff !important;
+        border: none !important;
+        box-shadow: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .budget-table th {
+        border-bottom: 1.5pt solid #000000 !important;
+        color: #000000 !important;
+    }
+    .budget-table td {
+        border-bottom: 0.5pt solid #eaeaea !important;
+    }
+    .price-col {
+        color: #000000 !important;
+    }
+    tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+    @page {
+        size: A4;
+        margin: 15mm 20mm 15mm 20mm; /* standard corporate margins */
+    }
+}
