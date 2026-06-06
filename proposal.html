@@ -65,22 +65,22 @@
         <!-- Potencial de Optimización -->
         <section class="card">
             <h3 class="roi-section-title">Potencial de Optimización Digital</h3>
-            <div class="metrics-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="metrics-grid">
                 <div class="metric-card">
                     <span class="metric-value" id="display-roiHours">+0h</span>
-                    <span class="metric-label">Tiempo libre para ti / mes</span>
+                    <span class="metric-label" id="display-roiHoursLabel">Tiempo libre para ti / mes</span>
                 </div>
                 <div class="metric-card">
                     <span class="metric-value" id="display-roiReservations">+0%</span>
-                    <span class="metric-label">Más ventas y reservas</span>
+                    <span class="metric-label" id="display-roiReservationsLabel">Más ventas y reservas</span>
                 </div>
                 <div class="metric-card">
-                    <span class="metric-value">24/7</span>
-                    <span class="metric-label">Tu negocio activo 24/7</span>
+                    <span class="metric-value" id="display-roiMetric3Value">24/7</span>
+                    <span class="metric-label" id="display-roiMetric3Label">Tu negocio activo 24/7</span>
                 </div>
                 <div class="metric-card">
-                    <span class="metric-value">100%</span>
-                    <span class="metric-label">Soporte y tranquilidad total</span>
+                    <span class="metric-value" id="display-roiMetric4Value">100%</span>
+                    <span class="metric-label" id="display-roiMetric4Label">Soporte y tranquilidad total</span>
                 </div>
             </div>
         </section>
@@ -100,30 +100,41 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td style="padding-top: 2rem;"><strong>TOTAL INVERSIÓN (Base Imponible)</strong></td>
-                        <td style="padding-top: 2rem; text-align: right;"><span id="display-total" style="font-size: 1.8rem; font-weight: 800; border-bottom: 4px solid var(--primary);">0€</span></td>
+                        <td style="padding-top: 2rem;"><strong>TOTAL INVERSIÓN (más IVA)</strong></td>
+                        <td style="padding-top: 2rem; text-align: right;"><span id="display-total" style="font-size: 1.8rem; font-weight: 800; border-bottom: 4px solid var(--accent);">0€</span></td>
                     </tr>
                 </tfoot>
             </table>
         </section>
 
         <!-- Footer -->
-        <footer style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); break-inside: avoid;">
-            <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 2rem;">
-                <div>
-                    <h4 style="margin-bottom: 0.5rem;">Condiciones de la Propuesta</h4>
-                    <div id="display-conditions" style="font-size: 0.85rem; color: var(--text-muted); white-space: pre-line; line-height: 1.5;">
+        <footer style="margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--border); break-inside: avoid; page-break-inside: avoid;">
+            <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 3rem; align-items: start;">
+                <div style="background: #fafafa; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.01); break-inside: avoid; page-break-inside: avoid;">
+                    <h4 style="margin-bottom: 0.75rem; color: #0f172a; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Condiciones de la Propuesta
+                    </h4>
+                    <div id="display-conditions" style="font-size: 0.85rem; color: var(--text-muted); white-space: pre-line; line-height: 1.6;">
                         ▪ Validez de la oferta: 15 días naturales.
                         ▪ Precios netos sin IVA incluido.
                         ▪ Forma de pago: 50% inicio / 50% entrega.
                     </div>
                 </div>
-                <div style="text-align: right;">
-                    <h4 style="margin-bottom: 0.5rem;">Scalea Digital</h4>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">
-                        scaleadigital@gmail.com<br>
-                        +34 631 65 12 32
-                    </p>
+                <div style="text-align: right; padding: 0.5rem 0;">
+                    <div style="display: inline-block; text-align: left;">
+                        <h4 style="margin-bottom: 0.75rem; color: #0f172a; font-size: 0.95rem;">Scalea Digital</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <a href="mailto:scaleadigital@gmail.com" style="color: inherit; text-decoration: none;">scaleadigital@gmail.com</a>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                <span>+34 631 65 12 32</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -144,8 +155,14 @@
                 hour: '2-digit', minute: '2-digit'
             });
 
-            document.getElementById('display-roiHours').innerText = `+${data.roi.hours}h`;
-            document.getElementById('display-roiReservations').innerText = `+${data.roi.reservations}%`;
+            document.getElementById('display-roiHours').innerText = data.roi.hours || "+40h";
+            document.getElementById('display-roiHoursLabel').innerText = data.roi.hoursLabel || "Tiempo libre para ti / mes";
+            document.getElementById('display-roiReservations').innerText = data.roi.reservations || "+25%";
+            document.getElementById('display-roiReservationsLabel').innerText = data.roi.reservationsLabel || "Más ventas y reservas";
+            document.getElementById('display-roiMetric3Value').innerText = data.roi.metric3Value || "24/7";
+            document.getElementById('display-roiMetric3Label').innerText = data.roi.metric3Label || "Tu negocio activo 24/7";
+            document.getElementById('display-roiMetric4Value').innerText = data.roi.metric4Value || "100%";
+            document.getElementById('display-roiMetric4Label').innerText = data.roi.metric4Label || "Soporte y tranquilidad total";
 
             const conditions = data.conditions || `▪ Validez de la oferta: 15 días naturales.\n▪ Precios netos sin IVA incluido.\n▪ Forma de pago: 50% inicio / 50% entrega.`;
             document.getElementById('display-conditions').innerText = conditions;
