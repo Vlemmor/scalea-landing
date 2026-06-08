@@ -114,6 +114,174 @@ app.get('/api/budgets', async (req, res) => {
     }
 });
 
+// Serve paneladmin.html
+app.get('/paneladmin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'paneladmin.html'));
+});
+
+// API: Log Analytics Event
+app.post('/api/analytics/event', async (req, res) => {
+    try {
+        const { eventType, page, referrer } = req.body;
+        if (!eventType) {
+            return res.status(400).json({ error: 'Missing eventType' });
+        }
+
+        const eventId = Date.now().toString() + '_' + Math.random().toString(36).substr(2, 9);
+        const eventData = {
+            id: eventId,
+            eventType,
+            page: page || '/',
+            referrer: referrer || '',
+            userAgent: req.headers['user-agent'] || '',
+            createdAt: new Date().toISOString()
+        };
+
+        if (db) {
+            await db.collection('analytics').doc(eventId).set(eventData);
+            console.log(`Analytics event saved to Firestore: ${eventType}`);
+        } else {
+            const fs = require('fs');
+            const analyticsPath = path.join(__dirname, 'analytics.json');
+            let events = [];
+            if (fs.existsSync(analyticsPath)) {
+                try {
+                    events = JSON.parse(fs.readFileSync(analyticsPath, 'utf8'));
+                } catch (e) {
+                    console.error("Error reading local analytics file:", e);
+                }
+            }
+            events.push(eventData);
+            // Limit local file size to 10,000 events
+            if (events.length > 10000) {
+                events = events.slice(events.length - 10000);
+            }
+            fs.writeFileSync(analyticsPath, JSON.stringify(events, null, 2), 'utf8');
+            console.log(`Analytics event saved to local JSON: ${eventType}`);
+        }
+
+        res.json({ success: true, id: eventId });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error logging analytics event' });
+    }
+});
+
+// API: Get Analytics Metrics
+app.get('/api/analytics/metrics', async (req, res) => {
+    try {
+        let events = [];
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+        if (db) {
+            const snapshot = await db.collection('analytics')
+                .where('createdAt', '>=', thirtyDaysAgo.toISOString())
+                .get();
+            events = snapshot.docs.map(doc => doc.data());
+        } else {
+            const fs = require('fs');
+            const analyticsPath = path.join(__dirname, 'analytics.json');
+            if (fs.existsSync(analyticsPath)) {
+                try {
+                    const allEvents = JSON.parse(fs.readFileSync(analyticsPath, 'utf8'));
+                    events = allEvents.filter(evt => evt.createdAt && evt.createdAt >= thirtyDaysAgo.toISOString());
+                } catch (e) {
+                    console.error("Error reading local analytics file:", e);
+                }
+            }
+        }
+
+        // Process metrics
+        const metrics = processMetrics(events);
+        res.json(metrics);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error fetching analytics metrics' });
+    }
+});
+
+// Helper function to process events into metrics
+function processMetrics(events) {
+    let totalVisits = 0;
+    let whatsappClicks = 0;
+    const pages = {};
+    const referrers = {};
+    const dailyHistory = {};
+
+    // Initialize last 7 days in daily history to ensure 0s are plotted
+    for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const dateStr = d.toISOString().split('T')[0];
+        dailyHistory[dateStr] = { visits: 0, clicks: 0 };
+    }
+
+    events.forEach(evt => {
+        const isVis = evt.eventType === 'pageview';
+        const isClick = evt.eventType === 'click_whatsapp';
+
+        if (isVis) totalVisits++;
+        if (isClick) whatsappClicks++;
+
+        // Pages breakdown
+        const p = evt.page || '/';
+        pages[p] = (pages[p] || 0) + 1;
+
+        // Referrer breakdown
+        let ref = evt.referrer || '';
+        let source = 'Directo / Orgánico';
+        if (ref) {
+            try {
+                const url = new URL(ref);
+                const hostname = url.hostname.toLowerCase();
+                if (hostname.includes('google')) source = 'Google';
+                else if (hostname.includes('facebook') || hostname.includes('fb.')) source = 'Facebook';
+                else if (hostname.includes('instagram') || hostname.includes('ig.')) source = 'Instagram';
+                else if (hostname.includes('linkedin')) source = 'LinkedIn';
+                else if (hostname.includes('t.co') || hostname.includes('twitter') || hostname.includes('x.com')) source = 'Twitter / X';
+                else source = hostname;
+            } catch (e) {
+                source = ref;
+            }
+        }
+        referrers[source] = (referrers[source] || 0) + 1;
+
+        // Daily history (only for dates within the last 7 days window initialized)
+        if (evt.createdAt) {
+            const dateStr = evt.createdAt.split('T')[0];
+            if (dailyHistory[dateStr]) {
+                if (isVis) dailyHistory[dateStr].visits++;
+                if (isClick) dailyHistory[dateStr].clicks++;
+            }
+        }
+    });
+
+    const conversionRate = totalVisits > 0 ? ((whatsappClicks / totalVisits) * 100).toFixed(2) : '0.00';
+
+    return {
+        kpis: {
+            totalVisits,
+            whatsappClicks,
+            conversionRate: parseFloat(conversionRate)
+        },
+        pages: Object.entries(pages)
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 10),
+        referrers: Object.entries(referrers)
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 10),
+        history: Object.entries(dailyHistory).map(([date, data]) => ({
+            date,
+            visits: data.visits,
+            clicks: data.clicks
+        }))
+    };
+}
+
+
 // API: Suggest ROI Goals based on Services
 app.post('/api/suggest-roi', async (req, res) => {
     try {
