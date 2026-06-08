@@ -26,6 +26,7 @@
                 eventType,
                 page,
                 referrer: document.referrer,
+                language: navigator.language || navigator.userLanguage || '',
                 ...eventData
             })
         }).catch(err => console.error('Error logging analytics event:', err));

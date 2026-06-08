@@ -122,18 +122,28 @@ app.get('/paneladmin', (req, res) => {
 // API: Log Analytics Event
 app.post('/api/analytics/event', async (req, res) => {
     try {
-        const { eventType, page, referrer } = req.body;
+        const { eventType, page, referrer, language } = req.body;
         if (!eventType) {
             return res.status(400).json({ error: 'Missing eventType' });
         }
 
         const eventId = Date.now().toString() + '_' + Math.random().toString(36).substr(2, 9);
+        const userAgent = req.headers['user-agent'] || '';
+        
+        // Detect device category: Mobile vs Desktop
+        let deviceType = 'Ordenador';
+        if (/Mobi|Android|iPhone|iPad|iPod/i.test(userAgent)) {
+            deviceType = 'Móvil';
+        }
+
         const eventData = {
             id: eventId,
             eventType,
             page: page || '/',
             referrer: referrer || '',
-            userAgent: req.headers['user-agent'] || '',
+            userAgent,
+            deviceType,
+            language: language || 'Desconocido',
             createdAt: new Date().toISOString()
         };
 
@@ -170,13 +180,78 @@ app.post('/api/analytics/event', async (req, res) => {
 // API: Get Analytics Metrics
 app.get('/api/analytics/metrics', async (req, res) => {
     try {
-        let events = [];
-        const thirtyDaysAgo = new Date();
-        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const range = req.query.range || '30';
+        let days = 30;
+        if (range === '7') days = 7;
+        else if (range === '90') days = 90;
+        else if (range === 'all') days = 365 * 10; // 10 years fallback
 
+        const now = new Date();
+        const currentStart = new Date();
+        currentStart.setDate(currentStart.getDate() - days);
+        currentStart.setUTCHours(0,0,0,0);
+
+        const prevStart = new Date(currentStart);
+        prevStart.setDate(prevStart.getDate() - days);
+
+        let allEventsForCalc = [];
         if (db) {
             const snapshot = await db.collection('analytics')
-                .where('createdAt', '>=', thirtyDaysAgo.toISOString())
+                .where('createdAt', '>=', prevStart.toISOString())
+                .get();
+            allEventsForCalc = snapshot.docs.map(doc => doc.data());
+        } else {
+            const fs = require('fs');
+            const analyticsPath = path.join(__dirname, 'analytics.json');
+            if (fs.existsSync(analyticsPath)) {
+                try {
+                    const raw = JSON.parse(fs.readFileSync(analyticsPath, 'utf8'));
+                    allEventsForCalc = raw.filter(evt => evt.createdAt && evt.createdAt >= prevStart.toISOString());
+                } catch (e) {
+                    console.error("Error reading local analytics file:", e);
+                }
+            }
+        }
+
+        // Split events into current and previous periods
+        const currentEvents = allEventsForCalc.filter(evt => evt.createdAt >= currentStart.toISOString());
+        const prevEvents = allEventsForCalc.filter(evt => evt.createdAt >= prevStart.toISOString() && evt.createdAt < currentStart.toISOString());
+
+        // Calculate real-time active users (unique User-Agents in last 5 minutes)
+        const fiveMinAgo = new Date(now.getTime() - 5 * 60 * 1000);
+        const activeSessions = new Set(
+            allEventsForCalc
+                .filter(evt => evt.eventType === 'pageview' && evt.createdAt >= fiveMinAgo.toISOString())
+                .map(evt => evt.userAgent)
+        );
+        const activeUsers = activeSessions.size;
+
+        // Process metrics
+        const metrics = processMetricsWithTrends(currentEvents, prevEvents, days, activeUsers);
+        res.json(metrics);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error fetching analytics metrics' });
+    }
+});
+
+// API: Export Analytics to CSV
+app.get('/api/analytics/export', async (req, res) => {
+    try {
+        const range = req.query.range || '30';
+        let days = 30;
+        if (range === '7') days = 7;
+        else if (range === '90') days = 90;
+        else if (range === 'all') days = 365 * 10;
+
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - days);
+        startDate.setUTCHours(0,0,0,0);
+
+        let events = [];
+        if (db) {
+            const snapshot = await db.collection('analytics')
+                .where('createdAt', '>=', startDate.toISOString())
                 .get();
             events = snapshot.docs.map(doc => doc.data());
         } else {
@@ -185,44 +260,67 @@ app.get('/api/analytics/metrics', async (req, res) => {
             if (fs.existsSync(analyticsPath)) {
                 try {
                     const allEvents = JSON.parse(fs.readFileSync(analyticsPath, 'utf8'));
-                    events = allEvents.filter(evt => evt.createdAt && evt.createdAt >= thirtyDaysAgo.toISOString());
+                    events = allEvents.filter(evt => evt.createdAt && evt.createdAt >= startDate.toISOString());
                 } catch (e) {
                     console.error("Error reading local analytics file:", e);
                 }
             }
         }
 
-        // Process metrics
-        const metrics = processMetrics(events);
-        res.json(metrics);
+        // Sort events newest first
+        events.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        // Generate CSV Content (Excel compatible with BOM and semicolons)
+        let csvContent = '\uFEFF'; 
+        csvContent += 'ID;Fecha (UTC);Tipo de Evento;Pagina;Referente;Dispositivo;Idioma;Navegador\n';
+
+        events.forEach(evt => {
+            const id = evt.id || '';
+            const date = evt.createdAt ? evt.createdAt.replace('T', ' ').substring(0, 19) : '';
+            const type = evt.eventType || '';
+            const page = evt.page || '';
+            const referrer = (evt.referrer || '').replace(/;/g, ',');
+            const device = evt.deviceType || 'Ordenador';
+            const language = evt.language || '';
+            const userAgent = (evt.userAgent || '').replace(/;/g, ',').replace(/"/g, '""');
+
+            csvContent += `"${id}";"${date}";"${type}";"${page}";"${referrer}";"${device}";"${language}";"${userAgent}"\n`;
+        });
+
+        res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+        res.setHeader('Content-Disposition', `attachment; filename=reporte_analytics_${range}dias.csv`);
+        res.status(200).send(csvContent);
+
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Error fetching analytics metrics' });
+        res.status(500).send('Error al exportar datos de analítica');
     }
 });
 
-// Helper function to process events into metrics
-function processMetrics(events) {
-    let totalVisits = 0;
-    let whatsappClicks = 0;
+// Helper function to process events and calculate trends
+function processMetricsWithTrends(currentEvents, prevEvents, days, activeUsers) {
+    let currentVisits = 0;
+    let currentClicks = 0;
     const pages = {};
     const referrers = {};
+    const devices = { 'Móvil': 0, 'Ordenador': 0 };
+    const languages = {};
     const dailyHistory = {};
 
-    // Initialize last 7 days in daily history to ensure 0s are plotted
-    for (let i = 6; i >= 0; i--) {
+    // Initialize daily history
+    for (let i = days - 1; i >= 0; i--) {
         const d = new Date();
         d.setDate(d.getDate() - i);
         const dateStr = d.toISOString().split('T')[0];
         dailyHistory[dateStr] = { visits: 0, clicks: 0 };
     }
 
-    events.forEach(evt => {
+    currentEvents.forEach(evt => {
         const isVis = evt.eventType === 'pageview';
         const isClick = evt.eventType === 'click_whatsapp';
 
-        if (isVis) totalVisits++;
-        if (isClick) whatsappClicks++;
+        if (isVis) currentVisits++;
+        if (isClick) currentClicks++;
 
         // Pages breakdown
         const p = evt.page || '/';
@@ -247,7 +345,15 @@ function processMetrics(events) {
         }
         referrers[source] = (referrers[source] || 0) + 1;
 
-        // Daily history (only for dates within the last 7 days window initialized)
+        // Device breakdown
+        const dev = evt.deviceType || 'Ordenador';
+        devices[dev] = (devices[dev] || 0) + 1;
+
+        // Language breakdown (e.g. ES, EN, CA)
+        const lang = (evt.language || 'Desconocido').split('-')[0].toUpperCase();
+        languages[lang] = (languages[lang] || 0) + 1;
+
+        // Daily history
         if (evt.createdAt) {
             const dateStr = evt.createdAt.split('T')[0];
             if (dailyHistory[dateStr]) {
@@ -257,13 +363,36 @@ function processMetrics(events) {
         }
     });
 
-    const conversionRate = totalVisits > 0 ? ((whatsappClicks / totalVisits) * 100).toFixed(2) : '0.00';
+    // Previous metrics
+    let prevVisits = 0;
+    let prevClicks = 0;
+    prevEvents.forEach(evt => {
+        if (evt.eventType === 'pageview') prevVisits++;
+        if (evt.eventType === 'click_whatsapp') prevClicks++;
+    });
+
+    // Growth calculation helper
+    const calcGrowth = (curr, prev) => {
+        if (prev === 0) return curr > 0 ? 100 : 0;
+        return parseFloat((((curr - prev) / prev) * 100).toFixed(1));
+    };
+
+    const visitsGrowth = calcGrowth(currentVisits, prevVisits);
+    const clicksGrowth = calcGrowth(currentClicks, prevClicks);
+
+    const currentConv = currentVisits > 0 ? (currentClicks / currentVisits) * 100 : 0;
+    const prevConv = prevVisits > 0 ? (prevClicks / prevVisits) * 100 : 0;
+    const convGrowth = parseFloat((currentConv - prevConv).toFixed(2));
 
     return {
         kpis: {
-            totalVisits,
-            whatsappClicks,
-            conversionRate: parseFloat(conversionRate)
+            totalVisits: currentVisits,
+            visitsGrowth,
+            whatsappClicks: currentClicks,
+            clicksGrowth,
+            conversionRate: parseFloat(currentConv.toFixed(2)),
+            convGrowth,
+            activeUsers
         },
         pages: Object.entries(pages)
             .map(([name, count]) => ({ name, count }))
@@ -273,11 +402,20 @@ function processMetrics(events) {
             .map(([name, count]) => ({ name, count }))
             .sort((a, b) => b.count - a.count)
             .slice(0, 10),
+        devices: {
+            mobile: devices['Móvil'] || 0,
+            desktop: devices['Ordenador'] || 0,
+            total: (devices['Móvil'] || 0) + (devices['Ordenador'] || 0)
+        },
+        languages: Object.entries(languages)
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 5),
         history: Object.entries(dailyHistory).map(([date, data]) => ({
             date,
             visits: data.visits,
             clicks: data.clicks
-        }))
+        })).sort((a, b) => a.date.localeCompare(b.date))
     };
 }
 

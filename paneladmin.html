@@ -385,13 +385,65 @@
             color: #ffffff;
         }
 
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .growth-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.2s ease;
+        }
+        .growth-positive {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.15);
+        }
+        .growth-negative {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.15);
+        }
+        .growth-neutral {
+            background: rgba(255, 255, 255, 0.05);
+            color: #8e8e93;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
         @media (max-width: 768px) {
             .tools-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
             .glass-card {
-                padding: 2rem 1.5rem;
+                padding: 2rem 1.25rem;
             }
             .kpi-grid {
                 grid-template-columns: 1fr;
@@ -399,6 +451,10 @@
             }
             .metrics-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .metrics-two-col {
+                grid-template-columns: 1fr !important;
                 gap: 1.5rem;
             }
         }
@@ -490,48 +546,103 @@
             <div class="dashboard-header">
                 <div class="dashboard-title">
                     <h2>Métricas y Rendimiento</h2>
-                    <p class="subtitle">Estadísticas de tráfico y conversión en tiempo real (Últimos 30 días)</p>
+                    <p class="subtitle">Estadísticas de tráfico y conversión</p>
                 </div>
                 <button class="logout-btn" onclick="hideMetricsPanel()">← Volver al Panel</button>
             </div>
 
-            <!-- KPIs Grid -->
-            <div class="kpi-grid">
-                <div class="kpi-card">
-                    <span class="kpi-label">Visitas Totales</span>
-                    <h3 id="kpi-visits">0</h3>
+            <!-- Control Bar (Active Users, Selector, Export Button) -->
+            <div class="metrics-controls" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;">
+                <!-- Real-time Active Users -->
+                <div class="active-users-badge" style="display: flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.15); padding: 0.5rem 1rem; border-radius: 9999px;">
+                    <span class="pulse-dot"></span>
+                    <span style="font-size: 0.85rem; font-weight: 500; color: #10b981;"><strong id="live-active-users">0</strong> activos ahora</span>
                 </div>
-                <div class="kpi-card">
-                    <span class="kpi-label">Clics en WhatsApp</span>
-                    <h3 id="kpi-clicks">0</h3>
-                </div>
-                <div class="kpi-card">
-                    <span class="kpi-label">Tasa de Conversión</span>
-                    <h3 id="kpi-conversion">0.00%</h3>
+                
+                <!-- Range select + Export -->
+                <div style="display: flex; gap: 0.75rem; align-items: center;">
+                    <select id="date-range-select" onchange="loadMetrics()" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #ffffff; padding: 0.6rem 1rem; font-size: 0.85rem; cursor: pointer; outline: none; transition: border-color 0.2s;">
+                        <option value="7">Últimos 7 días</option>
+                        <option value="30" selected>Últimos 30 días</option>
+                        <option value="90">Últimos 90 días</option>
+                        <option value="all">Histórico Completo</option>
+                    </select>
+                    <button onclick="exportAnalyticsCsv()" class="btn-save-settings" style="margin: 0; padding: 0.6rem 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>📥</span> Exportar CSV
+                    </button>
                 </div>
             </div>
 
-            <!-- Charts & Tables Layout -->
+            <!-- KPIs Grid -->
+            <div class="kpi-grid">
+                <div class="kpi-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span class="kpi-label">Visitas Totales</span>
+                    <h3 id="kpi-visits">0</h3>
+                    <span id="kpi-visits-growth" class="growth-tag">0% vs anterior</span>
+                </div>
+                <div class="kpi-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span class="kpi-label">Clics en WhatsApp</span>
+                    <h3 id="kpi-clicks">0</h3>
+                    <span id="kpi-clicks-growth" class="growth-tag">0% vs anterior</span>
+                </div>
+                <div class="kpi-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span class="kpi-label">Tasa de Conversión</span>
+                    <h3 id="kpi-conversion">0.00%</h3>
+                    <span id="kpi-conversion-growth" class="growth-tag">0% vs anterior</span>
+                </div>
+            </div>
+
+            <!-- Charts, Tables & Tech Layout -->
             <div class="metrics-grid">
-                <!-- Chart Card -->
-                <div class="metrics-card">
-                    <h3>Tendencia (Últimos 7 días)</h3>
-                    <div id="chart-container" style="height: 200px; margin-top: 1.5rem; position: relative;">
-                        <!-- SVG chart renders here -->
+                <!-- Left Column (Chart & Tables) -->
+                <div style="display: flex; flex-direction: column; gap: 2rem;">
+                    <!-- Chart Card -->
+                    <div class="metrics-card">
+                        <h3 id="chart-title">Tendencia</h3>
+                        <div id="chart-container" style="height: 200px; margin-top: 1.5rem; position: relative;">
+                            <!-- SVG chart renders here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Tables Card -->
+                    <div class="metrics-card metrics-two-col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="table-section">
+                            <h3>Páginas más visitadas</h3>
+                            <ul id="pages-list" class="metrics-list">
+                                <!-- Dynamically loaded -->
+                            </ul>
+                        </div>
+                        <div class="table-section">
+                            <h3>Orígenes de tráfico</h3>
+                            <ul id="referrers-list" class="metrics-list">
+                                <!-- Dynamically loaded -->
+                            </ul>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Tables Card -->
-                <div class="metrics-card tables-card">
-                    <div class="table-section">
-                        <h3>Páginas más visitadas</h3>
-                        <ul id="pages-list" class="metrics-list">
-                            <!-- Dynamically loaded -->
-                        </ul>
+                
+                <!-- Right Column (Tech & Devices) -->
+                <div class="metrics-card" style="display: flex; flex-direction: column; gap: 2rem;">
+                    <!-- Device Breakdown Section -->
+                    <div>
+                        <h3>Dispositivos</h3>
+                        <div style="margin-top: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #d1d1d6; margin-bottom: 0.5rem;">
+                                <span style="display: flex; align-items: center; gap: 0.35rem;">📱 Móvil <span id="lbl-device-mobile" style="color: #8e8e93; font-weight: 500;">(0%)</span></span>
+                                <span style="display: flex; align-items: center; gap: 0.35rem;">💻 Ordenador <span id="lbl-device-desktop" style="color: #8e8e93; font-weight: 500;">(0%)</span></span>
+                            </div>
+                            <!-- Bar container -->
+                            <div style="height: 8px; width: 100%; background: rgba(255, 255, 255, 0.05); border-radius: 4px; overflow: hidden; display: flex;">
+                                <div id="bar-device-mobile" style="height: 100%; width: 0%; background: #3b82f6; transition: width 0.3s ease;"></div>
+                                <div id="bar-device-desktop" style="height: 100%; width: 0%; background: #10b981; transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="table-section">
-                        <h3>Orígenes de tráfico</h3>
-                        <ul id="referrers-list" class="metrics-list">
+                    
+                    <!-- Language Breakdown Section -->
+                    <div class="table-section" style="border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 1.5rem; margin-bottom: 0;">
+                        <h3>Idiomas del Navegador</h3>
+                        <ul id="languages-list" class="metrics-list" style="margin-top: 1rem;">
                             <!-- Dynamically loaded -->
                         </ul>
                     </div>
@@ -622,9 +733,13 @@
             const defaultUrl = getDefaultApiUrl();
             const apiUrl = localStorage.getItem('scalea_api_url') || defaultUrl;
             const cleanApiUrl = (apiUrl === window.location.origin) ? '' : apiUrl;
+            
+            // Get selected range
+            const rangeSelect = document.getElementById('date-range-select');
+            const range = rangeSelect ? rangeSelect.value : '30';
 
             try {
-                const response = await fetch(`${cleanApiUrl}/api/analytics/metrics`);
+                const response = await fetch(`${cleanApiUrl}/api/analytics/metrics?range=${range}`);
                 if (!response.ok) throw new Error('Error al cargar métricas');
                 const data = await response.json();
 
@@ -633,7 +748,36 @@
                 document.getElementById('kpi-clicks').innerText = data.kpis.whatsappClicks;
                 document.getElementById('kpi-conversion').innerText = data.kpis.conversionRate.toFixed(2) + '%';
 
-                // 2. Update Pages List
+                // 2. Update Growth Indicators
+                const updateGrowthTag = (elementId, value, isDifference = false) => {
+                    const el = document.getElementById(elementId);
+                    if (!el) return;
+                    
+                    const sign = value > 0 ? '+' : '';
+                    const unit = '%';
+                    el.innerText = `${sign}${value}${unit} vs anterior`;
+                    
+                    el.className = 'growth-tag'; // reset
+                    if (value > 0) {
+                        el.classList.add('growth-positive');
+                    } else if (value < 0) {
+                        el.classList.add('growth-negative');
+                    } else {
+                        el.classList.add('growth-neutral');
+                    }
+                };
+                
+                updateGrowthTag('kpi-visits-growth', data.kpis.visitsGrowth);
+                updateGrowthTag('kpi-clicks-growth', data.kpis.clicksGrowth);
+                updateGrowthTag('kpi-conversion-growth', data.kpis.convGrowth, true);
+
+                // 3. Update Real-time Active Users
+                const activeUsersEl = document.getElementById('live-active-users');
+                if (activeUsersEl) {
+                    activeUsersEl.innerText = data.kpis.activeUsers || 0;
+                }
+
+                // 4. Update Pages List
                 const pagesList = document.getElementById('pages-list');
                 pagesList.innerHTML = data.pages.map(p => `
                     <li>
@@ -642,7 +786,7 @@
                     </li>
                 `).join('') || '<li><span class="item-name">Sin datos</span><span class="item-count">0</span></li>';
 
-                // 3. Update Referrers List
+                // 5. Update Referrers List
                 const referrersList = document.getElementById('referrers-list');
                 referrersList.innerHTML = data.referrers.map(r => `
                     <li>
@@ -651,13 +795,65 @@
                     </li>
                 `).join('') || '<li><span class="item-name">Directo / Orgánico</span><span class="item-count">0</span></li>';
 
-                // 4. Render Chart
+                // 6. Update Devices
+                const mobileCount = data.devices.mobile || 0;
+                const desktopCount = data.devices.desktop || 0;
+                const totalDevices = data.devices.total || 0;
+                let mobilePct = 0;
+                let desktopPct = 0;
+                if (totalDevices > 0) {
+                    mobilePct = Math.round((mobileCount / totalDevices) * 100);
+                    desktopPct = Math.round((desktopCount / totalDevices) * 100);
+                }
+                const mobileLbl = document.getElementById('lbl-device-mobile');
+                const desktopLbl = document.getElementById('lbl-device-desktop');
+                const mobileBar = document.getElementById('bar-device-mobile');
+                const desktopBar = document.getElementById('bar-device-desktop');
+                if (mobileLbl) mobileLbl.innerText = `(${mobilePct}%)`;
+                if (desktopLbl) desktopLbl.innerText = `(${desktopPct}%)`;
+                if (mobileBar) mobileBar.style.width = `${mobilePct}%`;
+                if (desktopBar) desktopBar.style.width = `${desktopPct}%`;
+
+                // 7. Update Languages
+                const languagesList = document.getElementById('languages-list');
+                if (languagesList) {
+                    languagesList.innerHTML = data.languages.map(l => `
+                        <li>
+                            <span class="item-name">${l.name}</span>
+                            <span class="item-count">${l.count}</span>
+                        </li>
+                    `).join('') || '<li><span class="item-name">Sin datos</span><span class="item-count">0</span></li>';
+                }
+
+                // 8. Update Chart Title
+                const chartTitle = document.getElementById('chart-title');
+                if (chartTitle) {
+                    const rangeLabel = {
+                        '7': 'Últimos 7 días',
+                        '30': 'Últimos 30 días',
+                        '90': 'Últimos 90 días',
+                        'all': 'Histórico Completo'
+                    }[range];
+                    chartTitle.innerText = `Tendencia (${rangeLabel})`;
+                }
+
+                // 9. Render Chart
                 renderChart(data.history);
 
             } catch (err) {
                 console.error(err);
                 alert('No se pudieron cargar las métricas. Comprueba que el servidor API de Railway esté activo y configurado correctamente.');
             }
+        }
+
+        function exportAnalyticsCsv() {
+            const defaultUrl = getDefaultApiUrl();
+            const apiUrl = localStorage.getItem('scalea_api_url') || defaultUrl;
+            const cleanApiUrl = (apiUrl === window.location.origin) ? '' : apiUrl;
+            const rangeSelect = document.getElementById('date-range-select');
+            const range = rangeSelect ? rangeSelect.value : '30';
+            
+            window.location.href = `${cleanApiUrl}/api/analytics/export?range=${range}`;
         }
 
         function renderChart(history) {
