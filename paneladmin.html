@@ -541,6 +541,13 @@
     </div>
 
     <script>
+        function getDefaultApiUrl() {
+            if (window.location.hostname.includes('github.io')) {
+                return 'https://scalea-landing-production.up.railway.app';
+            }
+            return window.location.origin;
+        }
+
         // Check authentication status
         function checkAuth() {
             const loginPanel = document.getElementById('login-panel');
@@ -551,7 +558,7 @@
                 dashboardPanel.style.display = 'block';
                 
                 // Load saved API URL in settings form
-                const savedApiUrl = localStorage.getItem('scalea_api_url') || window.location.origin;
+                const savedApiUrl = localStorage.getItem('scalea_api_url') || getDefaultApiUrl();
                 document.getElementById('api-url-input').value = savedApiUrl;
             } else {
                 loginPanel.style.display = 'block';
@@ -572,7 +579,7 @@
                 sessionStorage.setItem('scalea_auth', 'true');
                 // Ensure default API URL is initialized
                 if (!localStorage.getItem('scalea_api_url')) {
-                    localStorage.setItem('scalea_api_url', window.location.origin);
+                    localStorage.setItem('scalea_api_url', getDefaultApiUrl());
                 }
                 checkAuth();
             } else {
@@ -590,6 +597,7 @@
             }
             localStorage.setItem('scalea_api_url', url);
             alert('¡Configuración de API guardada correctamente!');
+            checkAuth();
         }
 
         // Logout Handler
@@ -611,7 +619,8 @@
         }
 
         async function loadMetrics() {
-            const apiUrl = localStorage.getItem('scalea_api_url') || window.location.origin;
+            const defaultUrl = getDefaultApiUrl();
+            const apiUrl = localStorage.getItem('scalea_api_url') || defaultUrl;
             const cleanApiUrl = (apiUrl === window.location.origin) ? '' : apiUrl;
 
             try {
