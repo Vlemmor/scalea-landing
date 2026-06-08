@@ -129,9 +129,16 @@
             { name: "Otro (Personalizado)", desc: "Descripción del servicio...", price: 0 }
         ];
 
+        const getDefaultApiUrl = () => {
+            if (window.location.hostname.includes('github.io')) {
+                return 'https://scalea-landing-production.up.railway.app';
+            }
+            return window.location.origin;
+        };
+
         // Retrieve API Base URL dynamically
         const getApiUrl = () => {
-            return localStorage.getItem('scalea_api_url') || '';
+            return localStorage.getItem('scalea_api_url') || getDefaultApiUrl();
         };
 
         function addServiceRow() {

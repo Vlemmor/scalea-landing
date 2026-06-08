@@ -263,9 +263,16 @@
             window.location.href = loc.origin + base + '/paneladmin';
         }
 
+        const getDefaultApiUrl = () => {
+            if (window.location.hostname.includes('github.io')) {
+                return 'https://scalea-landing-production.up.railway.app';
+            }
+            return window.location.origin;
+        };
+
         // Retrieve API Base URL dynamically
         const getApiUrl = () => {
-            return localStorage.getItem('scalea_api_url') || '';
+            return localStorage.getItem('scalea_api_url') || getDefaultApiUrl();
         };
     </script>
 </head>
