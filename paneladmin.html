@@ -242,6 +242,10 @@
         }
 
         /* Settings Card */
+        .settings-card {
+            grid-column: 1 / -1;
+        }
+
         .settings-card h3 {
             font-family: 'Outfit', sans-serif;
             font-size: 1.2rem;
@@ -512,6 +516,9 @@
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
+            .settings-card {
+                grid-column: span 1;
+            }
             .glass-card {
                 padding: 2rem 1.25rem;
             }
@@ -591,6 +598,19 @@
                         <span>Ver Analíticas</span>
                         <span>→</span>
                     </button>
+                </div>
+
+                <!-- Tool 3: CRM de Clientes -->
+                <div class="tool-card">
+                    <div>
+                        <span class="tool-icon">👥</span>
+                        <h3>CRM de Clientes</h3>
+                        <p>Gestiona tu base de datos de clientes, consulta sus propuestas anteriores en tiempo real y genera nuevos presupuestos pre-rellenados con un solo clic.</p>
+                    </div>
+                    <a href="crm.html" class="btn-tool-action">
+                        <span>Abrir CRM</span>
+                        <span>→</span>
+                    </a>
                 </div>
 
                 <!-- Settings: Backend API URL config -->

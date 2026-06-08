@@ -50,6 +50,14 @@
 
             <div class="form-section">
                 <h3>1. Datos del Cliente</h3>
+                
+                <div class="form-group" style="margin-top: 1rem; margin-bottom: 1.5rem; display: none;" id="quick-select-container">
+                    <label style="color: var(--primary);">⚡ Autocompletar con Cliente Existente</label>
+                    <select id="quick-client-select" onchange="autofillClient(this)">
+                        <option value="" selected>Selecciona un cliente registrado...</option>
+                    </select>
+                </div>
+
                 <div class="form-grid" style="margin-top: 1rem;">
                     <div class="form-group">
                         <label>Nombre del Negocio / Cliente</label>
@@ -80,64 +88,16 @@
             </div>
 
             <div class="form-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <div>
-                        <h3>3. Potencial de Optimización (Metas)</h3>
-                        <p style="font-size: 0.8rem; color: #666;">Valores orientativos y etiquetas para motivar la propuesta.</p>
+                <h3>3. Potencial de Mejora (Metas)</h3>
+                <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">Valores orientativos para motivar la digitalización.</p>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Horas potenciales de ahorro/mes</label>
+                        <input type="number" id="roiHours" value="40">
                     </div>
-                    <button type="button" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="suggestRoiWithAI(event)">✨ Sugerir con IA</button>
-                </div>
-                <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                    <!-- Card 1 -->
-                    <div style="border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; background: rgba(0,0,0,0.01);">
-                        <h4 style="margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--accent);">Tarjeta 1</h4>
-                        <div class="form-group" style="margin-bottom: 0.5rem;">
-                            <label>Valor (ej: +40h)</label>
-                            <input type="text" id="roiHours" value="+40h">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Descripción / Etiqueta</label>
-                            <input type="text" id="roiHoursLabel" value="Tiempo libre para ti / mes">
-                        </div>
-                    </div>
-                    
-                    <!-- Card 2 -->
-                    <div style="border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; background: rgba(0,0,0,0.01);">
-                        <h4 style="margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--accent);">Tarjeta 2</h4>
-                        <div class="form-group" style="margin-bottom: 0.5rem;">
-                            <label>Valor (ej: +25%)</label>
-                            <input type="text" id="roiReservations" value="+25%">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Descripción / Etiqueta</label>
-                            <input type="text" id="roiReservationsLabel" value="Más ventas y reservas">
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div style="border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; background: rgba(0,0,0,0.01);">
-                        <h4 style="margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--accent);">Tarjeta 3</h4>
-                        <div class="form-group" style="margin-bottom: 0.5rem;">
-                            <label>Valor (ej: 24/7)</label>
-                            <input type="text" id="roiMetric3Value" value="24/7">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Descripción / Etiqueta</label>
-                            <input type="text" id="roiMetric3Label" value="Tu negocio activo 24/7">
-                        </div>
-                    </div>
-
-                    <!-- Card 4 -->
-                    <div style="border: 1px solid var(--border); padding: 1.25rem; border-radius: 12px; background: rgba(0,0,0,0.01);">
-                        <h4 style="margin-bottom: 0.8rem; font-size: 0.9rem; color: var(--accent);">Tarjeta 4</h4>
-                        <div class="form-group" style="margin-bottom: 0.5rem;">
-                            <label>Valor (ej: 100%)</label>
-                            <input type="text" id="roiMetric4Value" value="100%">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label>Descripción / Etiqueta</label>
-                            <input type="text" id="roiMetric4Label" value="Soporte y tranquilidad total">
-                        </div>
+                    <div class="form-group">
+                        <label>% Mejora estimada en ventas/reservas</label>
+                        <input type="number" id="roiReservations" value="25">
                     </div>
                 </div>
             </div>
@@ -219,63 +179,6 @@
             }
         }
 
-        async function suggestRoiWithAI(event) {
-            const services = [];
-            document.querySelectorAll('.service-row').forEach(row => {
-                const selectValue = row.querySelector('.row-select').value;
-                const nameInput = row.querySelector('.row-name').value;
-                const name = selectValue === "Otro (Personalizado)" ? nameInput : selectValue;
-                const desc = row.querySelector('.row-desc').value;
-                if (name) services.push({ name, description: desc });
-            });
-
-            if (services.length === 0) {
-                alert('Por favor, añade al menos un servicio con su descripción para poder sugerir metas con IA.');
-                return;
-            }
-
-            const btn = event ? event.target : null;
-            const originalText = btn ? btn.innerText : '✨ Sugerir con IA';
-            if (btn) {
-                btn.disabled = true;
-                btn.innerText = 'Analizando propuesta...';
-            }
-
-            const apiUrl = getApiUrl();
-            const cleanApiUrl = (apiUrl === window.location.origin) ? '' : apiUrl;
-
-            try {
-                const response = await fetch(`${cleanApiUrl}/api/suggest-roi`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ services })
-                });
-
-                if (!response.ok) throw new Error('Error al conectar con la IA');
-                const result = await response.json();
-                
-                if (result.roi) {
-                    document.getElementById('roiHours').value = result.roi.hours || "+40h";
-                    document.getElementById('roiHoursLabel').value = result.roi.hoursLabel || "Tiempo libre para ti / mes";
-                    document.getElementById('roiReservations').value = result.roi.reservations || "+25%";
-                    document.getElementById('roiReservationsLabel').value = result.roi.reservationsLabel || "Más ventas y reservas";
-                    document.getElementById('roiMetric3Value').value = result.roi.metric3Value || "24/7";
-                    document.getElementById('roiMetric3Label').value = result.roi.metric3Label || "Tu negocio activo 24/7";
-                    document.getElementById('roiMetric4Value').value = result.roi.metric4Value || "100%";
-                    document.getElementById('roiMetric4Label').value = result.roi.metric4Label || "Soporte y tranquilidad total";
-                    alert('¡Las metas y métricas han sido generadas y adaptadas automáticamente por la IA!');
-                }
-            } catch (err) {
-                console.error(err);
-                alert('No se pudo sugerir las metas automáticamente. Asegúrate de tener GEMINI_API_KEY en las variables de entorno de tu servidor Railway. No te preocupes, de todas formas puedes editarlas manualmente.');
-            } finally {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerText = originalText;
-                }
-            }
-        }
-
         let currentBudgetId = '';
 
         async function generateBudget() {
@@ -296,13 +199,7 @@
 
             const roi = {
                 hours: document.getElementById('roiHours').value,
-                hoursLabel: document.getElementById('roiHoursLabel').value,
-                reservations: document.getElementById('roiReservations').value,
-                reservationsLabel: document.getElementById('roiReservationsLabel').value,
-                metric3Value: document.getElementById('roiMetric3Value').value,
-                metric3Label: document.getElementById('roiMetric3Label').value,
-                metric4Value: document.getElementById('roiMetric4Value').value,
-                metric4Label: document.getElementById('roiMetric4Label').value
+                reservations: document.getElementById('roiReservations').value
             };
 
             const conditions = document.getElementById('conditions').value;
@@ -328,6 +225,15 @@
             const cleanApiUrl = (apiUrl === loc.origin) ? '' : apiUrl; // Ignore default fallback if it points to github pages
 
             if (!cleanApiUrl) {
+                // Save locally first for CRM history
+                try {
+                    let localBudgets = JSON.parse(localStorage.getItem('scalea_local_budgets') || '[]');
+                    localBudgets.push(budgetData);
+                    localStorage.setItem('scalea_local_budgets', JSON.stringify(localBudgets));
+                } catch (e) {
+                    console.error("Error saving local CRM backup:", e);
+                }
+
                 // No API configured, use portable link directly
                 document.getElementById('copy-link').value = fallbackLink;
                 document.getElementById('budget-link').href = fallbackLink;
@@ -376,6 +282,15 @@
                 document.getElementById('link-display').scrollIntoView({ behavior: 'smooth' });
             } catch (err) {
                 console.error(err);
+                // Save locally first for CRM history
+                try {
+                    let localBudgets = JSON.parse(localStorage.getItem('scalea_local_budgets') || '[]');
+                    localBudgets.push(budgetData);
+                    localStorage.setItem('scalea_local_budgets', JSON.stringify(localBudgets));
+                } catch (e) {
+                    console.error("Error saving local CRM backup:", e);
+                }
+
                 // Fallback to portable link if server is down
                 document.getElementById('copy-link').value = fallbackLink;
                 document.getElementById('budget-link').href = fallbackLink;
@@ -432,8 +347,87 @@
             alert('¡Enlace copiado al portapapeles!');
         }
 
-        // Initialize with one row
+        // CRM: Load query params and load past client data for autocomplete
+        function checkUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const businessName = params.get('businessName');
+            const clientCif = params.get('clientCif');
+            const clientEmail = params.get('clientEmail');
+            const clientAddress = params.get('clientAddress');
+
+            if (businessName) document.getElementById('businessName').value = businessName;
+            if (clientCif) document.getElementById('clientCif').value = clientCif;
+            if (clientEmail) document.getElementById('clientEmail').value = clientEmail;
+            if (clientAddress) document.getElementById('clientAddress').value = clientAddress;
+        }
+
+        async function loadClientsForAutofill() {
+            let budgets = [];
+            const apiUrl = getApiUrl();
+            const loc = window.location;
+            const cleanApiUrl = (apiUrl === loc.origin) ? '' : apiUrl;
+
+            try {
+                if (cleanApiUrl) {
+                    const response = await fetch(`${cleanApiUrl}/api/budgets`);
+                    if (response.ok) {
+                        budgets = await response.json();
+                    }
+                }
+            } catch (err) {
+                console.warn("Could not load cloud budgets for autofill. Checking local backup.", err);
+            }
+
+            let localBudgets = [];
+            try {
+                localBudgets = JSON.parse(localStorage.getItem('scalea_local_budgets') || '[]');
+            } catch (e) {
+                console.error(e);
+            }
+            budgets = [...budgets, ...localBudgets];
+
+            const uniqueClients = {};
+            budgets.forEach(b => {
+                const key = (b.clientCif || b.businessName || '').trim().toLowerCase();
+                if (key && !uniqueClients[key]) {
+                    uniqueClients[key] = {
+                        name: b.businessName,
+                        cif: b.clientCif,
+                        email: b.clientEmail,
+                        address: b.clientAddress
+                    };
+                }
+            });
+
+            const clientList = Object.values(uniqueClients);
+            if (clientList.length > 0) {
+                const selectEl = document.getElementById('quick-client-select');
+                const containerEl = document.getElementById('quick-select-container');
+                
+                clientList.forEach(c => {
+                    const option = document.createElement('option');
+                    option.value = JSON.stringify(c);
+                    option.textContent = `${c.name} (${c.cif || 'Sin CIF/NIF'})`;
+                    selectEl.appendChild(option);
+                });
+                
+                containerEl.style.display = 'block';
+            }
+        }
+
+        function autofillClient(select) {
+            if (!select.value) return;
+            const client = JSON.parse(select.value);
+            document.getElementById('businessName').value = client.name || '';
+            document.getElementById('clientCif').value = client.cif || '';
+            document.getElementById('clientEmail').value = client.email || '';
+            document.getElementById('clientAddress').value = client.address || '';
+        }
+
+        // Initialize with one row and load CRM tools
         addServiceRow();
+        checkUrlParams();
+        loadClientsForAutofill();
     </script>
 </body>
 </html>
