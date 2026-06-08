@@ -175,7 +175,7 @@
         /* Tools Grid */
         .tools-grid {
             display: grid;
-            grid-template-columns: 1.3fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.5rem;
         }
 
@@ -185,6 +185,9 @@
             border-radius: 16px;
             padding: 2rem;
             transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .tool-card:hover {
@@ -211,20 +214,26 @@
             font-size: 0.9rem;
             line-height: 1.5;
             margin-bottom: 1.5rem;
+            flex-grow: 1;
         }
 
         .btn-tool-action {
             background: #ffffff;
             color: #0b0b0f;
+            font-family: inherit;
             font-weight: 600;
             font-size: 0.9rem;
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
+            border: none;
+            cursor: pointer;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             transition: all 0.2s;
+            width: fit-content;
         }
 
         .btn-tool-action:hover {
@@ -250,6 +259,7 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            width: 100%;
         }
 
         .settings-form input {
@@ -274,6 +284,107 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
+        /* KPIs Metrics dashboard styling */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            margin-top: 1.5rem;
+        }
+        .kpi-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .kpi-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        .kpi-label {
+            font-size: 0.8rem;
+            color: #8e8e93;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .kpi-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        /* Metrics grid and details */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1.0fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .metrics-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        .metrics-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        .tables-card {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .table-section h3 {
+            font-size: 0.95rem;
+            color: #8e8e93;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .metrics-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .metrics-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.01);
+        }
+        .metrics-list li .item-name {
+            color: #d1d1d6;
+            max-width: 75%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .metrics-list li .item-count {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
         @media (max-width: 768px) {
             .tools-grid {
                 grid-template-columns: 1fr;
@@ -281,6 +392,14 @@
             }
             .glass-card {
                 padding: 2rem 1.5rem;
+            }
+            .kpi-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
         }
     </style>
@@ -324,27 +443,98 @@
             <div class="tools-grid">
                 <!-- Tool 1: Presupuestador -->
                 <div class="tool-card">
-                    <span class="tool-icon">📄</span>
-                    <h3>Generador de Presupuestos</h3>
-                    <p>Crea propuestas comerciales personalizadas para tus clientes B2B con catalogación automatizada, cálculo de ROI e impresión a PDF premium lista para enviar.</p>
+                    <div>
+                        <span class="tool-icon">📄</span>
+                        <h3>Generador de Presupuestos</h3>
+                        <p>Crea propuestas comerciales personalizadas para tus clientes B2B con catalogación automatizada, cálculo de ROI e impresión a PDF premium lista para enviar.</p>
+                    </div>
                     <a href="admin.html" class="btn-tool-action">
                         <span>Abrir Presupuestador</span>
                         <span>→</span>
                     </a>
                 </div>
 
+                <!-- Tool 2: Métricas Web -->
+                <div class="tool-card">
+                    <div>
+                        <span class="tool-icon">📈</span>
+                        <h3>Métricas y Analítica</h3>
+                        <p>Visualiza el tráfico en tiempo real, clics en el botón de WhatsApp y la efectividad de conversión de tu landing page.</p>
+                    </div>
+                    <button class="btn-tool-action" onclick="showMetricsPanel()">
+                        <span>Ver Analíticas</span>
+                        <span>→</span>
+                    </button>
+                </div>
+
                 <!-- Settings: Backend API URL config -->
                 <div class="tool-card settings-card">
-                    <span class="tool-icon">⚙️</span>
-                    <h3>Configuración de API</h3>
-                    <p>URL del servidor Express de Railway para el almacenamiento persistente en la nube y envíos de emails (Resend).</p>
+                    <div>
+                        <span class="tool-icon">⚙️</span>
+                        <h3>Configuración de API</h3>
+                        <p>URL del servidor Express de Railway para el almacenamiento persistente en la nube y envíos de emails (Resend).</p>
+                    </div>
                     
                     <form class="settings-form" onsubmit="handleSaveSettings(event)">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 1rem; width: 100%;">
                             <input type="url" id="api-url-input" placeholder="https://mi-servidor.up.railway.app" required>
                         </div>
-                        <button type="submit" class="btn-save-settings">Guardar Cambios</button>
+                        <button type="submit" class="btn-save-settings" style="width: 100%;">Guardar Cambios</button>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics Panel -->
+        <div id="metrics-panel" class="glass-card" style="display: none;">
+            <div class="dashboard-header">
+                <div class="dashboard-title">
+                    <h2>Métricas y Rendimiento</h2>
+                    <p class="subtitle">Estadísticas de tráfico y conversión en tiempo real (Últimos 30 días)</p>
+                </div>
+                <button class="logout-btn" onclick="hideMetricsPanel()">← Volver al Panel</button>
+            </div>
+
+            <!-- KPIs Grid -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <span class="kpi-label">Visitas Totales</span>
+                    <h3 id="kpi-visits">0</h3>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-label">Clics en WhatsApp</span>
+                    <h3 id="kpi-clicks">0</h3>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-label">Tasa de Conversión</span>
+                    <h3 id="kpi-conversion">0.00%</h3>
+                </div>
+            </div>
+
+            <!-- Charts & Tables Layout -->
+            <div class="metrics-grid">
+                <!-- Chart Card -->
+                <div class="metrics-card">
+                    <h3>Tendencia (Últimos 7 días)</h3>
+                    <div id="chart-container" style="height: 200px; margin-top: 1.5rem; position: relative;">
+                        <!-- SVG chart renders here -->
+                    </div>
+                </div>
+
+                <!-- Tables Card -->
+                <div class="metrics-card tables-card">
+                    <div class="table-section">
+                        <h3>Páginas más visitadas</h3>
+                        <ul id="pages-list" class="metrics-list">
+                            <!-- Dynamically loaded -->
+                        </ul>
+                    </div>
+                    <div class="table-section">
+                        <h3>Orígenes de tráfico</h3>
+                        <ul id="referrers-list" class="metrics-list">
+                            <!-- Dynamically loaded -->
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -406,6 +596,123 @@
         function handleLogout() {
             sessionStorage.removeItem('scalea_auth');
             checkAuth();
+        }
+
+        // --- Metrics Handling Functions ---
+        function showMetricsPanel() {
+            document.getElementById('dashboard-panel').style.display = 'none';
+            document.getElementById('metrics-panel').style.display = 'block';
+            loadMetrics();
+        }
+
+        function hideMetricsPanel() {
+            document.getElementById('metrics-panel').style.display = 'none';
+            document.getElementById('dashboard-panel').style.display = 'block';
+        }
+
+        async function loadMetrics() {
+            const apiUrl = localStorage.getItem('scalea_api_url') || window.location.origin;
+            const cleanApiUrl = (apiUrl === window.location.origin) ? '' : apiUrl;
+
+            try {
+                const response = await fetch(`${cleanApiUrl}/api/analytics/metrics`);
+                if (!response.ok) throw new Error('Error al cargar métricas');
+                const data = await response.json();
+
+                // 1. Update KPIs
+                document.getElementById('kpi-visits').innerText = data.kpis.totalVisits;
+                document.getElementById('kpi-clicks').innerText = data.kpis.whatsappClicks;
+                document.getElementById('kpi-conversion').innerText = data.kpis.conversionRate.toFixed(2) + '%';
+
+                // 2. Update Pages List
+                const pagesList = document.getElementById('pages-list');
+                pagesList.innerHTML = data.pages.map(p => `
+                    <li>
+                        <span class="item-name" title="${p.name}">${p.name}</span>
+                        <span class="item-count">${p.count}</span>
+                    </li>
+                `).join('') || '<li><span class="item-name">Sin datos</span><span class="item-count">0</span></li>';
+
+                // 3. Update Referrers List
+                const referrersList = document.getElementById('referrers-list');
+                referrersList.innerHTML = data.referrers.map(r => `
+                    <li>
+                        <span class="item-name">${r.name}</span>
+                        <span class="item-count">${r.count}</span>
+                    </li>
+                `).join('') || '<li><span class="item-name">Directo / Orgánico</span><span class="item-count">0</span></li>';
+
+                // 4. Render Chart
+                renderChart(data.history);
+
+            } catch (err) {
+                console.error(err);
+                alert('No se pudieron cargar las métricas. Comprueba que el servidor API de Railway esté activo y configurado correctamente.');
+            }
+        }
+
+        function renderChart(history) {
+            const container = document.getElementById('chart-container');
+            if (!history || history.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #8e8e93; padding-top: 4rem;">Sin datos de historial</div>';
+                return;
+            }
+
+            const width = container.clientWidth || 400;
+            const height = 200;
+            const padding = 35;
+
+            const maxVal = Math.max(...history.map(d => Math.max(d.visits, d.clicks)), 5);
+            
+            const pointsVisits = [];
+            const pointsClicks = [];
+            
+            history.forEach((day, index) => {
+                const x = padding + (index * (width - 2 * padding) / (history.length - 1));
+                const yVis = height - padding - (day.visits * (height - 2 * padding) / maxVal);
+                const yClick = height - padding - (day.clicks * (height - 2 * padding) / maxVal);
+                
+                pointsVisits.push(`${x},${yVis}`);
+                pointsClicks.push(`${x},${yClick}`);
+            });
+
+            const pointsVisitsStr = pointsVisits.join(' ');
+            const pointsClicksStr = pointsClicks.join(' ');
+
+            let svg = `
+                <svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" style="overflow: visible;">
+                    <!-- Grid Lines -->
+                    <line x1="${padding}" y1="${padding}" x2="${width - padding}" y2="${padding}" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+                    <line x1="${padding}" y1="${(height) / 2}" x2="${width - padding}" y2="${(height) / 2}" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+                    <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                    
+                    <!-- Date Labels -->
+                    ${history.map((day, idx) => {
+                        const x = padding + (idx * (width - 2 * padding) / (history.length - 1));
+                        const labelDate = day.date.substring(5); // MM-DD
+                        return `<text x="${x}" y="${height - 10}" fill="#8e8e93" font-size="9" text-anchor="middle">${labelDate}</text>`;
+                    }).join('')}
+
+                    <!-- Y-Axis Labels -->
+                    <text x="${padding - 8}" y="${padding + 3}" fill="#8e8e93" font-size="9" text-anchor="end">${maxVal}</text>
+                    <text x="${padding - 8}" y="${(height) / 2 + 3}" fill="#8e8e93" font-size="9" text-anchor="end">${Math.round(maxVal / 2)}</text>
+                    <text x="${padding - 8}" y="${height - padding + 3}" fill="#8e8e93" font-size="9" text-anchor="end">0</text>
+
+                    <!-- Visits Path -->
+                    <polyline fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${pointsVisitsStr}" />
+                    <!-- Clicks Path -->
+                    <polyline fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${pointsClicksStr}" />
+
+                    <!-- Legend -->
+                    <g transform="translate(${width - 160}, 10)">
+                        <circle cx="5" cy="5" r="4" fill="#3b82f6" />
+                        <text x="13" y="8" fill="#d1d1d6" font-size="9">Visitas</text>
+                        <circle cx="75" cy="5" r="4" fill="#10b981" />
+                        <text x="83" y="8" fill="#d1d1d6" font-size="9">Clics WA</text>
+                    </g>
+                </svg>
+            `;
+            container.innerHTML = svg;
         }
 
         // Initialize view
