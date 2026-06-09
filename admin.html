@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="solo_logo.png?v=2" />
-    <title>Generador de Presupuestos | Scalea Digital</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <title>Generador de Presupuestos | BarLi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Bauhaus:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
         .form-section { margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1.5rem; }
@@ -69,7 +69,7 @@
     </style>
     <script>
         // Security check before loading page contents
-        if (sessionStorage.getItem('scalea_auth') !== 'true') {
+        if (sessionStorage.getItem('barli_auth') !== 'true') {
             const loc = window.location;
             const base = loc.pathname.substring(0, loc.pathname.lastIndexOf('/'));
             window.location.href = loc.origin + base + '/paneladmin';
@@ -81,7 +81,7 @@
         <header class="nav-header">
             <div>
                 <h1>Generador de <span class="gradient-text">Presupuestos</span></h1>
-                <p>Scalea Digital - Panel de Control</p>
+                <p>BarLi - Panel de Control</p>
             </div>
             <a href="paneladmin" class="back-btn">← Volver al Panel</a>
         </header>
@@ -235,7 +235,7 @@
 
         // Retrieve API Base URL dynamically
         const getApiUrl = () => {
-            return localStorage.getItem('scalea_api_url') || getDefaultApiUrl();
+            return localStorage.getItem('barli_api_url') || getDefaultApiUrl();
         };
 
         function addServiceRow() {
@@ -394,9 +394,9 @@
             if (!cleanApiUrl) {
                 // Save locally first for CRM history
                 try {
-                    let localBudgets = JSON.parse(localStorage.getItem('scalea_local_budgets') || '[]');
+                    let localBudgets = JSON.parse(localStorage.getItem('barli_local_budgets') || '[]');
                     localBudgets.push(budgetData);
-                    localStorage.setItem('scalea_local_budgets', JSON.stringify(localBudgets));
+                    localStorage.setItem('barli_local_budgets', JSON.stringify(localBudgets));
                 } catch (e) {
                     console.error("Error saving local CRM backup:", e);
                 }
@@ -451,9 +451,9 @@
                 console.error(err);
                 // Save locally first for CRM history
                 try {
-                    let localBudgets = JSON.parse(localStorage.getItem('scalea_local_budgets') || '[]');
+                    let localBudgets = JSON.parse(localStorage.getItem('barli_local_budgets') || '[]');
                     localBudgets.push(budgetData);
-                    localStorage.setItem('scalea_local_budgets', JSON.stringify(localBudgets));
+                    localStorage.setItem('barli_local_budgets', JSON.stringify(localBudgets));
                 } catch (e) {
                     console.error("Error saving local CRM backup:", e);
                 }
@@ -481,7 +481,7 @@
             const proposalLink = document.getElementById('copy-link').value;
             const businessName = document.getElementById('businessName').value;
             
-            const message = `Es un placer saludarte. Adjunto encontrarás la propuesta personalizada de Scalea Digital para ${businessName}. Hemos diseñado un plan enfocado en optimizar tus procesos y aumentar tu rentabilidad.`;
+            const message = `Es un placer saludarte. Adjunto encontrarás la propuesta personalizada de BarLi para ${businessName}. Hemos diseñado un plan enfocado en optimizar tus procesos y aumentar tu rentabilidad.`;
 
             const apiUrl = getApiUrl();
 
@@ -547,7 +547,7 @@
 
             let localBudgets = [];
             try {
-                localBudgets = JSON.parse(localStorage.getItem('scalea_local_budgets') || '[]');
+                localBudgets = JSON.parse(localStorage.getItem('barli_local_budgets') || '[]');
             } catch (e) {
                 console.error(e);
             }

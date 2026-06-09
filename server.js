@@ -556,9 +556,9 @@ app.post('/api/send-proposal', async (req, res) => {
 
     try {
         const data = await resend.emails.send({
-            from: 'Scalea Digital <proyectos@scaleadigital.com>', // Ensure domain is verified in Resend
+            from: 'BarLi <proyectos@scaleadigital.com>', // Ensure domain is verified in Resend
             to: [email],
-            subject: `Propuesta de Transformación Digital - ${clientName}`,
+            subject: `Propuesta de Transformación Digital BarLi - ${clientName}`,
             html: `
                 <div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
                     <h2 style="color: #000;">Hola, ${clientName}</h2>
@@ -567,7 +567,7 @@ app.post('/api/send-proposal', async (req, res) => {
                         <a href="${proposalLink}" style="background: #000; color: #fff; padding: 15px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Ver Propuesta Completa</a>
                     </div>
                     <hr style="border: 0; border-top: 1px solid #eee;">
-                    <p style="font-size: 12px; color: #999;">Esta es una propuesta exclusiva creada por Scalea Digital.</p>
+                    <p style="font-size: 12px; color: #999;">Esta es una propuesta exclusiva creada por BarLi.</p>
                 </div>
             `
         });

@@ -1,13 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Manrope:wght@600&display=swap');
+
+@font-face {
+    font-family: 'Bauhaus';
+    src: url('/scalea-landing/BAUHAUSM.TTF') format('truetype'),
+         url('/BAUHAUSM.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
-    --primary: #000000;
-    --accent: #5a5a5a;
-    --bg: #ffffff;
-    --glass: rgba(255, 255, 255, 0.8);
-    --border: rgba(0, 0, 0, 0.1);
-    --text-main: #1a1a1a;
-    --text-muted: #666666;
-    --gradient: linear-gradient(135deg, #000000 0%, #434343 100%);
-    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+    --primary: #101A2B;      /* Azul BarLi */
+    --accent: #1340FC;       /* Azul conexión */
+    --bg: #FFFFFF;           /* Blanco */
+    --bg-soft: #F7F9FC;      /* Gris nube */
+    --border: #E7ECF3;       /* Gris sistema */
+    --text-main: #101A2B;    /* Azul BarLi */
+    --text-muted: #6B7280;   /* Gris texto */
+    --bg-dark: #0B1220;      /* Azul noche */
+    --gradient: linear-gradient(135deg, #101A2B 0%, #0B1220 100%);
+    --shadow: 0 8px 32px 0 rgba(16, 26, 43, 0.05);
 }
 
 * {
@@ -18,14 +29,14 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #f8f9fa;
+    background-color: var(--bg-soft);
     color: var(--text-main);
     line-height: 1.6;
 }
 
 h1, h2, h3, h4 {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
+    font-family: 'Bauhaus', sans-serif;
+    font-weight: normal;
 }
 
 .container {
@@ -62,7 +73,7 @@ h1, h2, h3, h4 {
     transition: all 0.3s ease;
     cursor: pointer;
     border: none;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 .btn-primary {

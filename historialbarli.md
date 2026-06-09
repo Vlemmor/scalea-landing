@@ -1,6 +1,6 @@
-# Historial de Versiones y Cambios — Scalea Digital
+# Historial de Versiones y Cambios — BarLi
 
-Este documento registra cronológicamente los hitos, cambios de diseño, correcciones y nuevas funcionalidades implementadas en la plataforma de **Scalea Digital** (tanto en la Landing Page como en el Portal de Administración y Cotizaciones).
+Este documento registra cronológicamente los hitos, cambios de diseño, correcciones y nuevas funcionalidades implementadas en la plataforma de **BarLi** (tanto en la Landing Page como en el Portal de Administración y Cotizaciones).
 
 ---
 
@@ -80,7 +80,7 @@ A continuación se detallan las versiones confirmadas en el repositorio para fac
 Si en algún momento necesitas revertir el código del servidor o la landing page a un punto estable anterior, sigue estas instrucciones:
 
 1. **Verificar el Historial de Git:**
-   Abre una consola en la raíz de `ScaleaDigital` y ejecuta:
+   Abre una consola en la raíz de `BarLi` y ejecuta:
    ```bash
    git log --oneline -n 10
    ```
@@ -103,9 +103,9 @@ Si en algún momento necesitas revertir el código del servidor o la landing pag
    ```
 
 4. **Reconstruir y Desplegar (si aplica):**
-   Si revertiste archivos en la carpeta `Web Scalea Digital/src`, debes reconstruir el bundle de React:
+   Si revertiste archivos en la carpeta `Web BarLi/src`, debes reconstruir el bundle de React:
    ```bash
-   cd "Web Scalea Digital"
+   cd "Web BarLi"
    npm run build
-   # Luego copia la carpeta dist/assets y dist/index.html a la raíz de ScaleaDigital
+   # Luego copia la carpeta dist/assets y dist/index.html a la raíz de BarLi
    ```

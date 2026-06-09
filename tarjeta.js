@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         text: currentURL,
         width: 150,
         height: 150,
-        colorDark : "#000000",
+        colorDark : "#101A2B",
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.H
     });
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             phone: "631651232",
             email: "scaleadigital@gmail.com",
             title: "Gerente",
-            company: "Scalea Digital",
+            company: "BarLi",
             web: "https://vlemmor.github.io/scalea-landing/"
         };
 
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 VERSION:3.0
 FN:Rommel Villafana
 N:Villafana;Rommel;;;
-ORG:Scalea Digital
+ORG:BarLi
 TITLE:Gerente
 TEL;TYPE=CELL:631651232
 EMAIL:scaleadigital@gmail.com

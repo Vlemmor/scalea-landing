@@ -1,6 +1,6 @@
-# Arquitectura del Software — Scalea Digital
+# Arquitectura del Software — BarLi
 
-Este documento detalla la estructura, tecnologías, flujos de datos y el flujo de trabajo para el desarrollo, compilación y despliegue del ecosistema digital de **Scalea Digital**.
+Este documento detalla la estructura, tecnologías, flujos de datos y el flujo de trabajo para el desarrollo, compilación y despliegue del ecosistema digital de **BarLi**.
 
 ---
 
@@ -8,23 +8,23 @@ Este documento detalla la estructura, tecnologías, flujos de datos y el flujo d
 
 El proyecto está dividido en dos directorios principales dentro de la carpeta comercial:
 
-### 1. Directorio de Producción y Backend (`ScaleaDigital/`)
+### 1. Directorio de Producción y Backend (`BarLi/`)
 Es la raíz del repositorio Git y contiene el código de ejecución en el servidor (Railway) y los archivos estáticos de producción (GitHub Pages).
-- [server.js](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/ScaleaDigital/server.js): Servidor Node.js + Express. Gestiona APIs, Firebase y envío de correos.
-- [index.html](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/ScaleaDigital/index.html): Archivo principal de la Landing Page (autogenerado por la compilación de React).
-- [assets/](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/ScaleaDigital/assets/): Código JS/CSS compilado y comprimido por Vite.
+- [server.js](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/BarLi/server.js): Servidor Node.js + Express. Gestiona APIs, Firebase y envío de correos.
+- [index.html](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/BarLi/index.html): Archivo principal de la Landing Page (autogenerado por la compilación de React).
+- [assets/](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/BarLi/assets/): Código JS/CSS compilado y comprimido por Vite.
 - **Portal de Cotización y CRM (Archivos Duplicados para GitHub Pages y Railway):**
-  - En la Raíz (para GitHub Pages): [admin.html](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/ScaleaDigital/admin.html), [crm.html](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/ScaleaDigital/crm.html), [proposal.html](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/ScaleaDigital/proposal.html), [paneladmin.html](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/ScaleaDigital/paneladmin.html) y [css/style.css](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/ScaleaDigital/css/style.css).
+  - En la Raíz (para GitHub Pages): [admin.html](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/BarLi/admin.html), [crm.html](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/BarLi/crm.html), [proposal.html](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/BarLi/proposal.html), [paneladmin.html](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/BarLi/paneladmin.html) y [css/style.css](file:///c:/Users/USER/OneDrive%20-%20LICENCIATEC%20SAC%20%281%29/Escritorio/CLIENTES/IA/LangGraph/Comercial%20y%20Ventas/BarLi/css/style.css).
   - En `public/` (para Railway): `public/admin.html`, `public/crm.html`, `public/proposal.html` y `public/css/style.css`.
 - **Datos Locales (Fallback sin Base de Datos):**
   - `budgets.json`: Historial de propuestas locales.
   - `analytics.json`: Historial de eventos de analíticas local.
 
-### 2. Directorio de Desarrollo Frontend (`Web Scalea Digital/`)
+### 2. Directorio de Desarrollo Frontend (`Web BarLi/`)
 Es una aplicación independiente basada en **Vite + React** que contiene el diseño interactivo y componentes principales de la Landing Page.
 - `src/`:
   - `App.jsx` y `index.css`: Inicializadores globales de React.
-  - `components/`: Componentes modulares de la Landing Page (Preloader, Hero, Problem, Services, AboutScalea, Experience, sectors, etc.).
+  - `components/`: Componentes modulares de la Landing Page (Preloader, Hero, Problem, Services, AboutBarLi, Experience, sectors, etc.).
 - `dist/`: Directorio temporal generado al ejecutar `npm run build` que contiene la compilación estática lista para mover.
 
 ---
@@ -43,7 +43,7 @@ Es una aplicación independiente basada en **Vite + React** que contiene el dise
 - **Persistencia en la Nube:** Firebase Firestore (Almacenamiento de propuestas y analíticas)
 - **Persistencia Local (Resiliencia):** JSON files en disco (`budgets.json`, `analytics.json`) si Firebase no está disponible.
 - **Inteligencia Artificial:** API de Gemini (`gemini-2.5-flash`) para analizar propuestas y sugerir metas comerciales automáticamente.
-- **Correos Electrónicos:** SDK de Resend para notificar propuestas a clientes desde la dirección `proyectos@scaleadigital.com`.
+- **Correos Electrónicos:** barliK de Resend para notificar propuestas a clientes debarlie la dirección `proyectos@BarLi.com`.
 - **Hosting del Servidor:** Railway.
 - **Hosting de Respaldo:** GitHub Pages.
 
@@ -70,24 +70,24 @@ El servidor Express expone los siguientes servicios JSON B2B:
 Para realizar cualquier modificación en la web y asegurar su despliegue sin fallas, sigue estos pasos:
 
 ### Paso 1: Edición Frontend (React)
-Realiza las modificaciones visuales y funcionales en los componentes ubicados en `Web Scalea Digital/src/components/`.
+Realiza las modificaciones visuales y funcionales en los componentes ubicados en `Web BarLi/src/components/`.
 
 ### Paso 2: Construcción del Proyecto
-En la carpeta `Web Scalea Digital/`, ejecuta:
+En la carpeta `Web BarLi/`, ejecuta:
 ```bash
 npm run build
 ```
-Vite generará archivos únicos con sufijos hash en `Web Scalea Digital/dist/`.
+Vite generará archivos únicos con sufijos hash en `Web BarLi/dist/`.
 
-### Paso 3: Sincronizar en la Raíz de Producción (`ScaleaDigital/`)
+### Paso 3: Sincronizar en la Raíz de Producción (`BarLi/`)
 1. Limpia los assets antiguos de la carpeta de producción para evitar duplicidades:
    ```bash
-   Remove-Item -Path "ScaleaDigital/assets/*" -Force
+   Remove-Item -Path "BarLi/assets/*" -Force
    ```
 2. Copia los nuevos assets y el archivo de entrada:
    ```bash
-   Copy-Item -Path "Web Scalea Digital/dist/assets/*" -Destination "ScaleaDigital/assets/" -Force
-   Copy-Item -Path "Web Scalea Digital/dist/index.html" -Destination "ScaleaDigital/index.html" -Force
+   Copy-Item -Path "Web BarLi/dist/assets/*" -Destination "BarLi/assets/" -Force
+   Copy-Item -Path "Web BarLi/dist/index.html" -Destination "BarLi/index.html" -Force
    ```
 
 ### Paso 4: Sincronizar Herramientas del Portal
@@ -98,7 +98,7 @@ Copy-Item -Path "css/style.css" -Destination "public/css/" -Force
 ```
 
 ### Paso 5: Probar Servidor en Local
-Sitúate en `ScaleaDigital/` y ejecuta:
+Sitúate en `BarLi/` y ejecuta:
 ```bash
 npm run dev
 ```

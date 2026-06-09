@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="solo_logo.png?v=2" />
-    <title>CRM de Clientes | Scalea Digital</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <title>CRM de Clientes | BarLi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bauhaus:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
         body {
@@ -117,7 +117,7 @@
         }
 
         .client-info h3 {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Bauhaus', sans-serif;
             font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 0.4rem;
@@ -296,7 +296,7 @@
     </style>
     <script>
         // Security check before loading page contents
-        if (sessionStorage.getItem('scalea_auth') !== 'true') {
+        if (sessionStorage.getItem('barli_auth') !== 'true') {
             const loc = window.location;
             const base = loc.pathname.substring(0, loc.pathname.lastIndexOf('/'));
             window.location.href = loc.origin + base + '/paneladmin';
@@ -311,7 +311,7 @@
 
         // Retrieve API Base URL dynamically
         const getApiUrl = () => {
-            return localStorage.getItem('scalea_api_url') || getDefaultApiUrl();
+            return localStorage.getItem('barli_api_url') || getDefaultApiUrl();
         };
     </script>
 </head>
@@ -320,7 +320,7 @@
         <!-- Header -->
         <header class="nav-header">
             <div>
-                <h1 style="font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px;">
+                <h1 style="font-family: 'Bauhaus', sans-serif; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px;">
                     CRM de <span class="gradient-text" style="background: linear-gradient(135deg, #ffffff 0%, #a1a1a1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Clientes</span>
                 </h1>
                 <p class="subtitle" style="margin-top: 0.2rem;">Consulta de propuestas y reactivación comercial de clientes</p>
@@ -371,7 +371,7 @@
             // 2. Fetch Local Storage Budgets
             let localBudgets = [];
             try {
-                localBudgets = JSON.parse(localStorage.getItem('scalea_local_budgets') || '[]');
+                localBudgets = JSON.parse(localStorage.getItem('barli_local_budgets') || '[]');
             } catch (e) {
                 console.error(e);
             }

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="solo_logo.png?v=2" />
-    <title>Propuesta Scalea Digital</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <title>Propuesta BarLi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Bauhaus:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
         @media print {
@@ -24,7 +24,7 @@
             }
         }
         .header-logo {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Bauhaus', sans-serif;
             font-size: 3rem;
             font-weight: 800;
             letter-spacing: -1px;
@@ -45,7 +45,7 @@
         <!-- Header -->
         <header class="proposal-header">
             <div>
-                <div class="header-logo">Scalea Digital</div>
+                <div class="header-logo">BarLi</div>
                 <h1 style="font-size: 2rem; line-height: 1; margin-top: 1.5rem;">Propuesta de Transformación</h1>
                 <div style="margin-top: 1.5rem;">
                     <p style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Preparada para:</p>
@@ -124,11 +124,11 @@
                 </div>
                 <div class="proposal-contact-info">
                     <div style="display: inline-block; text-align: left;">
-                        <h4 style="margin-bottom: 0.75rem; color: #0f172a; font-size: 0.95rem;">Scalea Digital</h4>
+                        <h4 style="margin-bottom: 0.75rem; color: #0f172a; font-size: 0.95rem;">BarLi</h4>
                         <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                <a href="mailto:scaleadigital@gmail.com" style="color: inherit; text-decoration: none;">scaleadigital@gmail.com</a>
+                                <a href="mailto:BarLi@gmail.com" style="color: inherit; text-decoration: none;">BarLi@gmail.com</a>
                             </div>
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
@@ -144,7 +144,7 @@
     <script>
         function renderProposalData(data) {
             document.getElementById('display-business').innerText = data.businessName || "Cliente";
-            document.title = `Propuesta Scalea Digital - ${data.businessName || 'Cliente'}`;
+            document.title = `Propuesta BarLi - ${data.businessName || 'Cliente'}`;
             document.getElementById('display-cif').innerText = data.clientCif ? `CIF/NIF: ${data.clientCif}` : "";
             document.getElementById('display-address').innerText = data.clientAddress || "";
 
