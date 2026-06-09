@@ -43,6 +43,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
+// Servir archivos estáticos bajo el prefijo /scalea-landing (para compatibilidad con GitHub Pages)
+app.use('/scalea-landing', express.static(__dirname));
+app.use('/scalea-landing/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
 // Serve landing page from root directory
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));

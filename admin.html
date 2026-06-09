@@ -15,8 +15,57 @@
         .actions { margin-top: 2rem; display: flex; gap: 1rem; }
         #link-display { margin-top: 1rem; padding: 1.5rem; border-radius: 12px; display: none; }
         .nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .back-btn { background: transparent; border: 1px solid #000; color: #000; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+        .back-btn { background: transparent; border: 1px solid #000; color: #000; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; }
         .back-btn:hover { background: #000; color: #fff; }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .nav-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.25rem;
+                margin-bottom: 1.5rem;
+            }
+            .back-btn {
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            .service-row-header {
+                grid-template-columns: 1fr !important;
+                gap: 0.5rem;
+            }
+            .service-row-header select,
+            .service-row-header input.row-name {
+                width: 100%;
+            }
+            .service-row-header .row-price {
+                width: 100%;
+            }
+            .service-row-header .remove-btn {
+                width: 100%;
+                height: 38px;
+                margin-top: 0.25rem;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            .actions .btn {
+                width: 100%;
+                text-align: center;
+            }
+            #link-display div {
+                flex-direction: column;
+                width: 100%;
+            }
+            #link-display div .btn {
+                width: 100%;
+            }
+        }
     </style>
     <script>
         // Security check before loading page contents

@@ -236,3 +236,99 @@ h1, h2, h3, h4 {
     font-size: 0.85rem;
     color: var(--text-muted);
 }
+
+/* Proposal Layout Classes */
+.proposal-header {
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.proposal-header-right {
+    text-align: right;
+}
+
+.proposal-footer {
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+.proposal-footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.proposal-conditions-card {
+    background: #fafafa;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+.proposal-contact-info {
+    text-align: right;
+    padding: 0.5rem 0;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .card {
+        padding: 1.5rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .proposal-header {
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .proposal-header-right {
+        text-align: left !important;
+        width: 100%;
+    }
+    
+    .proposal-header-right .btn {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+    
+    .proposal-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .proposal-contact-info {
+        text-align: left !important;
+    }
+    
+    .budget-table td {
+        padding: 1rem 0.5rem;
+    }
+    
+    .budget-table th {
+        padding: 0.5rem;
+    }
+    
+    .item-name {
+        font-size: 1rem;
+    }
+    
+    .price-col {
+        font-size: 1.05rem;
+    }
+}
+

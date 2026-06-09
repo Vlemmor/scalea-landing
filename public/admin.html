@@ -15,8 +15,57 @@
         .actions { margin-top: 2rem; display: flex; gap: 1rem; }
         #link-display { margin-top: 1rem; padding: 1.5rem; border-radius: 12px; display: none; }
         .nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .back-btn { background: transparent; border: 1px solid #000; color: #000; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+        .back-btn { background: transparent; border: 1px solid #000; color: #000; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; }
         .back-btn:hover { background: #000; color: #fff; }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .nav-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.25rem;
+                margin-bottom: 1.5rem;
+            }
+            .back-btn {
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            .service-row-header {
+                grid-template-columns: 1fr !important;
+                gap: 0.5rem;
+            }
+            .service-row-header select,
+            .service-row-header input.row-name {
+                width: 100%;
+            }
+            .service-row-header .row-price {
+                width: 100%;
+            }
+            .service-row-header .remove-btn {
+                width: 100%;
+                height: 38px;
+                margin-top: 0.25rem;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            .actions .btn {
+                width: 100%;
+                text-align: center;
+            }
+            #link-display div {
+                flex-direction: column;
+                width: 100%;
+            }
+            #link-display div .btn {
+                width: 100%;
+            }
+        }
     </style>
     <script>
         // Security check before loading page contents
@@ -50,6 +99,14 @@
 
             <div class="form-section">
                 <h3>1. Datos del Cliente</h3>
+                
+                <div class="form-group" style="margin-top: 1rem; margin-bottom: 1.5rem; display: none;" id="quick-select-container">
+                    <label style="color: var(--primary);">⚡ Autocompletar con Cliente Existente</label>
+                    <select id="quick-client-select" onchange="autofillClient(this)">
+                        <option value="" selected>Selecciona un cliente registrado...</option>
+                    </select>
+                </div>
+
                 <div class="form-grid" style="margin-top: 1rem;">
                     <div class="form-group">
                         <label>Nombre del Negocio / Cliente</label>
@@ -169,9 +226,16 @@
             { name: "Otro (Personalizado)", desc: "Descripción del servicio...", price: 0 }
         ];
 
+        const getDefaultApiUrl = () => {
+            if (window.location.hostname.includes('github.io')) {
+                return 'https://scalea-landing-production.up.railway.app';
+            }
+            return window.location.origin;
+        };
+
         // Retrieve API Base URL dynamically
         const getApiUrl = () => {
-            return localStorage.getItem('scalea_api_url') || '';
+            return localStorage.getItem('scalea_api_url') || getDefaultApiUrl();
         };
 
         function addServiceRow() {
@@ -328,6 +392,15 @@
             const cleanApiUrl = (apiUrl === loc.origin) ? '' : apiUrl; // Ignore default fallback if it points to github pages
 
             if (!cleanApiUrl) {
+                // Save locally first for CRM history
+                try {
+                    let localBudgets = JSON.parse(localStorage.getItem('scalea_local_budgets') || '[]');
+                    localBudgets.push(budgetData);
+                    localStorage.setItem('scalea_local_budgets', JSON.stringify(localBudgets));
+                } catch (e) {
+                    console.error("Error saving local CRM backup:", e);
+                }
+
                 // No API configured, use portable link directly
                 document.getElementById('copy-link').value = fallbackLink;
                 document.getElementById('budget-link').href = fallbackLink;
@@ -376,6 +449,15 @@
                 document.getElementById('link-display').scrollIntoView({ behavior: 'smooth' });
             } catch (err) {
                 console.error(err);
+                // Save locally first for CRM history
+                try {
+                    let localBudgets = JSON.parse(localStorage.getItem('scalea_local_budgets') || '[]');
+                    localBudgets.push(budgetData);
+                    localStorage.setItem('scalea_local_budgets', JSON.stringify(localBudgets));
+                } catch (e) {
+                    console.error("Error saving local CRM backup:", e);
+                }
+
                 // Fallback to portable link if server is down
                 document.getElementById('copy-link').value = fallbackLink;
                 document.getElementById('budget-link').href = fallbackLink;
@@ -432,8 +514,87 @@
             alert('¡Enlace copiado al portapapeles!');
         }
 
-        // Initialize with one row
+        // CRM: Load query params and load past client data for autocomplete
+        function checkUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const businessName = params.get('businessName');
+            const clientCif = params.get('clientCif');
+            const clientEmail = params.get('clientEmail');
+            const clientAddress = params.get('clientAddress');
+
+            if (businessName) document.getElementById('businessName').value = businessName;
+            if (clientCif) document.getElementById('clientCif').value = clientCif;
+            if (clientEmail) document.getElementById('clientEmail').value = clientEmail;
+            if (clientAddress) document.getElementById('clientAddress').value = clientAddress;
+        }
+
+        async function loadClientsForAutofill() {
+            let budgets = [];
+            const apiUrl = getApiUrl();
+            const loc = window.location;
+            const cleanApiUrl = (apiUrl === loc.origin) ? '' : apiUrl;
+
+            try {
+                if (cleanApiUrl) {
+                    const response = await fetch(`${cleanApiUrl}/api/budgets`);
+                    if (response.ok) {
+                        budgets = await response.json();
+                    }
+                }
+            } catch (err) {
+                console.warn("Could not load cloud budgets for autofill. Checking local backup.", err);
+            }
+
+            let localBudgets = [];
+            try {
+                localBudgets = JSON.parse(localStorage.getItem('scalea_local_budgets') || '[]');
+            } catch (e) {
+                console.error(e);
+            }
+            budgets = [...budgets, ...localBudgets];
+
+            const uniqueClients = {};
+            budgets.forEach(b => {
+                const key = (b.clientCif || b.businessName || '').trim().toLowerCase();
+                if (key && !uniqueClients[key]) {
+                    uniqueClients[key] = {
+                        name: b.businessName,
+                        cif: b.clientCif,
+                        email: b.clientEmail,
+                        address: b.clientAddress
+                    };
+                }
+            });
+
+            const clientList = Object.values(uniqueClients);
+            if (clientList.length > 0) {
+                const selectEl = document.getElementById('quick-client-select');
+                const containerEl = document.getElementById('quick-select-container');
+                
+                clientList.forEach(c => {
+                    const option = document.createElement('option');
+                    option.value = JSON.stringify(c);
+                    option.textContent = `${c.name} (${c.cif || 'Sin CIF/NIF'})`;
+                    selectEl.appendChild(option);
+                });
+                
+                containerEl.style.display = 'block';
+            }
+        }
+
+        function autofillClient(select) {
+            if (!select.value) return;
+            const client = JSON.parse(select.value);
+            document.getElementById('businessName').value = client.name || '';
+            document.getElementById('clientCif').value = client.cif || '';
+            document.getElementById('clientEmail').value = client.email || '';
+            document.getElementById('clientAddress').value = client.address || '';
+        }
+
+        // Initialize with one row and load CRM tools
         addServiceRow();
+        checkUrlParams();
+        loadClientsForAutofill();
     </script>
 </body>
 </html>
