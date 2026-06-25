@@ -81,11 +81,11 @@
 
         .tab-btn.active {
             color: #ffffff;
-            background: #101a2b; /* Azul BarLi */
+            background: #101a2b;
             border-color: #101a2b;
         }
 
-        /* Cards */
+        /* Card panels */
         .glass-card {
             background: #ffffff;
             border: 1px solid #e7ecf3;
@@ -217,7 +217,7 @@
             border-color: #101a2b;
         }
 
-        /* Proposals dropdown panel */
+        /* Proposals list */
         .proposals-history-panel {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
@@ -274,12 +274,6 @@
             text-align: center;
             padding: 3rem;
             color: #6b7280;
-        }
-
-        .no-clients span {
-            font-size: 3rem;
-            display: block;
-            margin-bottom: 1rem;
         }
 
         /* Portada Dashboard Style */
@@ -366,12 +360,14 @@
             scrollbar-width: thin;
         }
 
-        /* Custom thin scrollbar style */
+        /* Scrollbars */
         .task-list::-webkit-scrollbar, 
         .meeting-list::-webkit-scrollbar, 
         .kanban-cards-container::-webkit-scrollbar,
         .kanban-board::-webkit-scrollbar,
-        .tabs-nav::-webkit-scrollbar {
+        .tabs-nav::-webkit-scrollbar,
+        .modal-content::-webkit-scrollbar,
+        .timeline-container::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
@@ -380,7 +376,9 @@
         .meeting-list::-webkit-scrollbar-track,
         .kanban-cards-container::-webkit-scrollbar-track,
         .kanban-board::-webkit-scrollbar-track,
-        .tabs-nav::-webkit-scrollbar-track {
+        .tabs-nav::-webkit-scrollbar-track,
+        .modal-content::-webkit-scrollbar-track,
+        .timeline-container::-webkit-scrollbar-track {
             background: transparent;
         }
         
@@ -388,8 +386,10 @@
         .meeting-list::-webkit-scrollbar-thumb,
         .kanban-cards-container::-webkit-scrollbar-thumb,
         .kanban-board::-webkit-scrollbar-thumb,
-        .tabs-nav::-webkit-scrollbar-thumb {
-            background: rgba(16, 26, 43, 0.1);
+        .tabs-nav::-webkit-scrollbar-thumb,
+        .modal-content::-webkit-scrollbar-thumb,
+        .timeline-container::-webkit-scrollbar-thumb {
+            background: rgba(16, 26, 43, 0.15);
             border-radius: 999px;
         }
 
@@ -397,8 +397,10 @@
         .meeting-list::-webkit-scrollbar-thumb:hover,
         .kanban-cards-container::-webkit-scrollbar-thumb:hover,
         .kanban-board::-webkit-scrollbar-thumb:hover,
-        .tabs-nav::-webkit-scrollbar-thumb:hover {
-            background: rgba(16, 26, 43, 0.25);
+        .tabs-nav::-webkit-scrollbar-thumb:hover,
+        .modal-content::-webkit-scrollbar-thumb:hover,
+        .timeline-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(16, 26, 43, 0.3);
         }
 
         .task-item {
@@ -425,7 +427,7 @@
             color: #101a2b;
             cursor: pointer;
             user-select: none;
-            width: 80%;
+            width: 85%;
         }
 
         .task-item.done .task-text {
@@ -446,6 +448,7 @@
             justify-content: center;
             transition: all 0.15s;
             background: #ffffff;
+            flex-shrink: 0;
         }
 
         .task-checkbox:checked {
@@ -458,22 +461,6 @@
             color: #ffffff;
             font-size: 11px;
             font-weight: 900;
-        }
-
-        .btn-delete-item {
-            background: transparent;
-            border: none;
-            color: rgba(239, 68, 68, 0.6);
-            cursor: pointer;
-            padding: 0.2rem;
-            font-size: 0.85rem;
-            border-radius: 4px;
-            transition: all 0.2s;
-        }
-
-        .btn-delete-item:hover {
-            color: rgba(239, 68, 68, 1);
-            background: rgba(239, 68, 68, 0.1);
         }
 
         .meeting-item {
@@ -498,15 +485,18 @@
             color: #ffffff;
         }
 
-        /* List Inputs */
+        /* Form Inputs (Fixed Overflow Out of Box) */
         .list-input-group {
             display: flex;
             gap: 0.5rem;
             margin-top: 1rem;
+            flex-wrap: wrap; /* Fix overflow */
+            width: 100%;
         }
 
         .list-input {
             flex: 1;
+            min-width: 100px; /* Prevent shrinking too much */
             padding: 0.5rem 0.75rem;
             background: #ffffff;
             border: 1px solid #d1d5db;
@@ -514,6 +504,7 @@
             color: #101a2b;
             font-size: 0.85rem;
             font-family: inherit;
+            box-sizing: border-box;
         }
 
         .list-input:focus {
@@ -530,6 +521,7 @@
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .btn-list-add:hover {
@@ -544,7 +536,7 @@
             padding-bottom: 1.5rem;
             min-height: 600px;
             align-items: flex-start;
-            -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
+            -webkit-overflow-scrolling: touch;
         }
 
         .kanban-column {
@@ -557,7 +549,7 @@
             display: flex;
             flex-direction: column;
             max-height: 580px;
-            box-shadow: 0 4px 12px rgba(16, 26, 43, 0.015);
+            box-shadow: 0 4px 12px rgba(16, 26, 43, 0.01);
         }
 
         .kanban-column-header {
@@ -616,7 +608,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
-            box-shadow: 0 2px 6px rgba(16, 26, 43, 0.01);
+            box-shadow: 0 2px 6px rgba(16, 26, 43, 0.015);
         }
 
         .kanban-card:hover {
@@ -702,7 +694,7 @@
             border-color: #101a2b;
         }
 
-        /* Modal Structure (Light Theme) */
+        /* Modal overlay & Scroll fixes (Fix Buttons Cut Off) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -716,6 +708,7 @@
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
+            overflow-y: auto; /* Fix overflow scroll on overlay */
         }
 
         .modal-content {
@@ -723,18 +716,22 @@
             border: 1px solid #e5e7eb;
             border-radius: 20px;
             width: 100%;
-            max-width: 480px;
+            max-width: 780px; /* Wide layout for detailed customer card */
             padding: 2rem;
             position: relative;
             box-shadow: 0 20px 50px rgba(16, 26, 43, 0.15);
             color: #101a2b;
+            max-height: 90vh; /* Max height limit */
+            overflow-y: auto;  /* Scroll inside modal if content exceeds screen */
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e7ecf3;
+            padding-bottom: 0.75rem;
         }
 
         .modal-header h3 {
@@ -749,18 +746,72 @@
             border: none;
             color: #6b7280;
             cursor: pointer;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
+            line-height: 1;
         }
 
         .close-modal-btn:hover {
             color: #101a2b;
         }
 
+        /* Ficha Sub-tabs */
+        .modal-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid #e7ecf3;
+            padding-bottom: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .modal-tab-btn {
+            background: transparent;
+            border: none;
+            color: #6b7280;
+            padding: 0.5rem 1.0rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .modal-tab-btn:hover {
+            color: #101a2b;
+            background: rgba(16,26,43,0.03);
+        }
+
+        .modal-tab-btn.active {
+            color: #ffffff;
+            background: #101a2b;
+        }
+
+        .modal-tab-view {
+            display: none;
+        }
+
+        .modal-tab-view.active {
+            display: block;
+        }
+
+        /* Double column layout inside Ficha */
+        .ficha-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .ficha-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
 
         .form-group label {
@@ -772,7 +823,7 @@
         }
 
         .form-group input, .form-group select, .form-group textarea {
-            padding: 0.75rem 1rem;
+            padding: 0.7rem 0.9rem;
             background: #ffffff;
             border: 1px solid #d1d5db;
             border-radius: 8px;
@@ -780,6 +831,8 @@
             font-family: inherit;
             font-size: 0.9rem;
             transition: all 0.2s;
+            box-sizing: border-box;
+            width: 100%;
         }
 
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
@@ -793,6 +846,8 @@
             justify-content: flex-end;
             gap: 0.75rem;
             margin-top: 1.75rem;
+            border-top: 1px solid #e7ecf3;
+            padding-top: 1rem;
         }
 
         .btn-modal-action {
@@ -851,43 +906,125 @@
             transition: width 0.3s ease;
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 1.5rem 1rem;
-            }
-            .nav-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1.25rem;
-                margin-bottom: 1.5rem;
-            }
-            .back-btn {
-                width: 100%;
-                text-align: center;
-                justify-content: center;
-            }
-            .client-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .client-actions {
-                flex-direction: column;
-                gap: 0.5rem;
-                margin-top: 1rem;
-            }
-            .client-actions .btn-crm-action {
-                width: 100%;
-                justify-content: center;
-            }
-            .proposal-item {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 0.75rem;
-            }
-            .proposal-item > div {
-                justify-content: space-between;
-                width: 100%;
-            }
+        /* Timeline / Historial medical Style */
+        .timeline-container {
+            position: relative;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-left: 1.5rem;
+            margin-top: 1.25rem;
+            border-left: 2px solid #e7ecf3;
+        }
+
+        .timeline-event {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-event::before {
+            content: "";
+            position: absolute;
+            left: -1.95rem;
+            top: 0.25rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #101a2b;
+            border: 3px solid #ffffff;
+            box-shadow: 0 0 0 2px #e7ecf3;
+        }
+
+        .timeline-event.event-llamada::before { background: #3b82f6; }
+        .timeline-event.event-whatsapp::before { background: #10b981; }
+        .timeline-event.event-demo::before { background: #8b5cf6; }
+        .timeline-event.event-propuesta::before { background: #f59e0b; }
+        .timeline-event.event-reunion::before { background: #ec4899; }
+
+        .timeline-date {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #6b7280;
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+        }
+
+        .timeline-content {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+        }
+
+        /* Project checklist Operations style */
+        .op-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .op-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 1rem;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .op-item-status {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .status-pending { background: #f3f4f6; color: #4b5563; }
+        .status-active { background: rgba(59,130,246,0.1); color: #3b82f6; }
+        .status-completed { background: rgba(16,185,129,0.1); color: #10b981; }
+
+        /* Operations Board view */
+        .op-board-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .op-card {
+            background: #ffffff;
+            border: 1px solid #e7ecf3;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(16,26,43,0.01);
+        }
+
+        .op-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e7ecf3;
+            padding-bottom: 0.75rem;
+        }
+
+        .op-client-name {
+            font-family: 'Bauhaus', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #101a2b;
+        }
+
+        .op-progress-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 0.4rem;
         }
     </style>
     <script>
@@ -905,7 +1042,6 @@
             return window.location.origin;
         };
 
-        // Retrieve API Base URL dynamically
         const getApiUrl = () => {
             return localStorage.getItem('barli_api_url') || getDefaultApiUrl();
         };
@@ -919,20 +1055,23 @@
                 <h1 style="font-family: 'Bauhaus', sans-serif; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px;">
                     BarLi <span class="gradient-text" style="background: linear-gradient(135deg, #101a2b 0%, #0b1220 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CRM</span>
                 </h1>
-                <p class="subtitle" style="margin-top: 0.2rem;">Centro de control de ventas y gestión de clientes</p>
+                <p class="subtitle" style="margin-top: 0.2rem;">Centro de control de ventas y operaciones de BarLi</p>
             </div>
             <a href="paneladmin" class="back-btn">← Volver al Panel</a>
         </header>
 
         <!-- Navigation Tabs -->
         <nav class="tabs-nav">
-            <button id="tab-btn-dashboard" class="tab-btn active" onclick="switchTab('dashboard')">
+            <button id="tab-btn-dashboard" class="tab-btn active" onclick="navigateTab('dashboard')">
                 <span>📊</span> Resumen de Hoy
             </button>
-            <button id="tab-btn-pipeline" class="tab-btn" onclick="switchTab('pipeline')">
+            <button id="tab-btn-pipeline" class="tab-btn" onclick="navigateTab('pipeline')">
                 <span>📋</span> Pipeline Comercial
             </button>
-            <button id="tab-btn-database" class="tab-btn" onclick="switchTab('database')">
+            <button id="tab-btn-operations" class="tab-btn" onclick="navigateTab('operations')">
+                <span>⚙️</span> Operaciones
+            </button>
+            <button id="tab-btn-database" class="tab-btn" onclick="navigateTab('database')">
                 <span>👥</span> Clientes e Historial
             </button>
         </nav>
@@ -946,7 +1085,7 @@
 
             <div class="kpi-dashboard-grid">
                 <!-- KPI 1: Prospectos Nuevos -->
-                <div class="kpi-card" onclick="switchTab('pipeline')" style="cursor: pointer;">
+                <div class="kpi-card" onclick="navigateTab('pipeline')" style="cursor: pointer;">
                     <div class="kpi-header">
                         <span>Prospectos</span>
                         <span class="kpi-icon">👥</span>
@@ -958,19 +1097,19 @@
                 </div>
 
                 <!-- KPI 2: Reuniones Hoy -->
-                <div class="kpi-card">
+                <div class="kpi-card" onclick="openLargeAgenda()" style="cursor: pointer;">
                     <div class="kpi-header">
                         <span>Reuniones Hoy</span>
                         <span class="kpi-icon">📅</span>
                     </div>
                     <div>
                         <h3 class="kpi-value" id="kpi-meetings-count">0</h3>
-                        <p class="kpi-sub">Agendadas para hoy</p>
+                        <p class="kpi-sub">Agendadas para hoy (Ampliar 🔍)</p>
                     </div>
                 </div>
 
                 <!-- KPI 3: Propuestas Pendientes -->
-                <div class="kpi-card" onclick="switchTab('pipeline')" style="cursor: pointer;">
+                <div class="kpi-card" onclick="navigateTab('pipeline')" style="cursor: pointer;">
                     <div class="kpi-header">
                         <span>Propuestas Pendientes</span>
                         <span class="kpi-icon">📄</span>
@@ -982,14 +1121,14 @@
                 </div>
 
                 <!-- KPI 4: Clientes Cerrados -->
-                <div class="kpi-card">
+                <div class="kpi-card" onclick="navigateTab('operations')" style="cursor: pointer;">
                     <div class="kpi-header">
                         <span>Cerrados este mes</span>
                         <span class="kpi-icon">🤝</span>
                     </div>
                     <div>
                         <h3 class="kpi-value" id="kpi-closed-clients">0</h3>
-                        <p class="kpi-sub">Proyectos ganados</p>
+                        <p class="kpi-sub">Proyectos ganados en operaciones</p>
                     </div>
                 </div>
 
@@ -1027,7 +1166,7 @@
                 <div class="kpi-card dashboard-list-card">
                     <div class="kpi-header" style="border-bottom: 1px solid #e7ecf3; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
                         <span>Agenda del Día</span>
-                        <span>📅</span>
+                        <button onclick="openLargeAgenda()" style="background:transparent; border:none; color:#1340fc; font-weight:600; cursor:pointer; font-size:0.75rem;">Ver Ampliado 🔍</button>
                     </div>
                     <div id="meetings-list-container" class="meeting-list">
                         <!-- Dynamic items -->
@@ -1042,7 +1181,7 @@
                 <!-- List 2: Tareas -->
                 <div class="kpi-card dashboard-list-card double-width">
                     <div class="kpi-header" style="border-bottom: 1px solid #e7ecf3; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
-                        <span>Tareas para hoy</span>
+                        <span>Tareas de Hoy</span>
                         <span>✓</span>
                     </div>
                     <div id="tasks-list-container" class="task-list">
@@ -1052,6 +1191,18 @@
                         <input type="text" id="task-text-input" class="list-input" placeholder="Escribe una nueva tarea..." required>
                         <button type="submit" class="btn-list-add">Añadir Tarea</button>
                     </form>
+
+                    <!-- Collapsible Archived Tasks -->
+                    <div style="margin-top: 1.25rem; border-top: 1px solid #e7ecf3; padding-top: 0.75rem;">
+                        <details>
+                            <summary style="font-size: 0.8rem; color: #6b7280; cursor: pointer; user-select: none; font-weight: 500;">
+                                📁 Ver tareas archivadas (<span id="archived-count">0</span>)
+                            </summary>
+                            <div id="archived-tasks-list-container" class="task-list" style="margin-top: 0.5rem; max-height: 120px;">
+                                <!-- Archived tasks load here -->
+                            </div>
+                        </details>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1060,25 +1211,34 @@
         <section id="tab-view-pipeline" class="tab-view" style="display: none;">
             <div class="dashboard-banner">
                 <h2 style="font-family: 'Bauhaus', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.2rem;">Pipeline de Ventas</h2>
-                <p style="color: #6b7280; font-size: 0.95rem;">Arrastra o mueve los prospectos entre columnas para actualizar su estado comercial.</p>
+                <p style="color: #6b7280; font-size: 0.95rem;">Mueve los prospectos entre fases. Haz clic para ver su "historial médico" completo.</p>
             </div>
 
-            <!-- Kanban Board -->
             <div class="kanban-board" id="kanban-board-container">
-                <!-- 6 Columns will load dynamically here -->
+                <!-- Columns load dynamically -->
             </div>
         </section>
 
-        <!-- TAB 3: CLIENTES E HISTORIAL (ORIGINAL) -->
+        <!-- TAB 3: OPERACIONES (NEW) -->
+        <section id="tab-view-operations" class="tab-view" style="display: none;">
+            <div class="dashboard-banner">
+                <h2 style="font-family: 'Bauhaus', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.2rem;">Operaciones y Proyectos</h2>
+                <p style="color: #6b7280; font-size: 0.95rem;">Gestión de la entrega, implementación y soporte de clientes ganados (compras cerradas).</p>
+            </div>
+
+            <div class="op-board-grid" id="operations-board-container">
+                <!-- Operations cards load dynamically -->
+            </div>
+        </section>
+
+        <!-- TAB 4: CLIENTES E HISTORIAL (ORIGINAL) -->
         <section id="tab-view-database" class="tab-view" style="display: none;">
-            <!-- Search Bar -->
             <div class="glass-card" style="padding: 1.5rem;">
                 <div class="filter-bar">
                     <input type="text" id="search-box" class="search-input" placeholder="🔍 Buscar por negocio, CIF o email de cliente..." oninput="filterClients()">
                 </div>
             </div>
 
-            <!-- Clients Container -->
             <div class="glass-card" style="min-height: 400px;">
                 <div id="clients-container" class="clients-list">
                     <!-- Dynamic clients load here -->
@@ -1091,65 +1251,235 @@
         </section>
     </div>
 
-    <!-- MODAL FOR PIPELINE CARDS (NEW/EDIT) -->
+    <!-- LARGE AGENDA MODAL (NEW) -->
+    <div class="modal-overlay" id="agenda-modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>Agenda Completa del Día</h3>
+                <button class="close-modal-btn" onclick="closeLargeAgenda()">×</button>
+            </div>
+            
+            <div id="large-agenda-list" style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.5rem; max-height: 350px; overflow-y:auto; padding-right:0.5rem;">
+                <!-- Full agenda items load here -->
+            </div>
+
+            <form class="list-input-group" onsubmit="handleAddMeetingLarge(event)">
+                <input type="text" id="meeting-time-input-large" class="list-input" placeholder="Ej. 10:30" style="max-width: 100px;" required>
+                <input type="text" id="meeting-title-input-large" class="list-input" placeholder="Asunto de la reunión..." required>
+                <button type="submit" class="btn-list-add">Añadir Reunión</button>
+            </form>
+            
+            <div class="modal-footer">
+                <button class="btn-modal-action btn-modal-primary" onclick="closeLargeAgenda()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PIPELINE DETAILED CARD MODAL ("FICHA DEL CLIENTE - HISTORIAL MÉDICO") -->
     <div class="modal-overlay" id="card-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modal-title">Agregar Prospecto</h3>
+                <h3 id="modal-title">Ficha de Cliente</h3>
                 <button class="close-modal-btn" onclick="closeCardModal()">×</button>
             </div>
             
+            <!-- Hidden inputs -->
             <input type="hidden" id="modal-card-id">
             <input type="hidden" id="modal-col-id">
 
-            <div class="form-group">
-                <label for="card-name">Negocio / Cliente</label>
-                <input type="text" id="card-name" placeholder="Ej. La Picantería" required>
+            <!-- Ficha Tab Navigation -->
+            <div class="modal-tabs">
+                <button class="modal-tab-btn active" onclick="switchModalTab('general')">📋 Datos Generales</button>
+                <button class="modal-tab-btn" onclick="switchModalTab('historial')">💬 Historial (WhatsApp/Llamadas)</button>
+                <button class="modal-tab-btn" onclick="switchModalTab('archivos')">📂 Documentos y Facturas</button>
+                <button class="modal-tab-btn" id="modal-tab-ops" onclick="switchModalTab('operaciones')">⚙️ Operaciones (Proyectos)</button>
             </div>
 
-            <div class="form-group">
-                <label for="card-value">Valor Estimado (€)</label>
-                <input type="number" id="card-value" placeholder="0" min="0">
-            </div>
-
-            <div class="form-group">
-                <label for="card-column">Fase del Pipeline</label>
-                <select id="card-column">
-                    <option value="col-prospectos">Prospectos</option>
-                    <option value="col-contacto">Primer contacto</option>
-                    <option value="col-diagnostico">Diagnóstico</option>
-                    <option value="col-propuesta">Propuesta enviada</option>
-                    <option value="col-negociacion">Negociación</option>
-                    <option value="col-ganado">Ganado</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="card-notes">Comentarios / Notas</label>
-                <textarea id="card-notes" rows="3" placeholder="Detalles de la oportunidad..."></textarea>
-            </div>
-
-            <div style="border-top: 1px solid #e7ecf3; margin: 1rem 0; padding-top: 0.5rem;">
-                <p style="font-size: 0.7rem; color: #6b7280; text-transform: uppercase; font-weight: 600; margin-bottom: 0.75rem;">Datos del Cliente (Opcional, para presupuestar):</p>
+            <!-- FICHA VIEW 1: GENERAL INFO -->
+            <div class="modal-tab-view active" id="modal-view-general">
+                <div class="ficha-grid">
+                    <div>
+                        <div class="form-group">
+                            <label for="card-name">Nombre de Empresa / Negocio</label>
+                            <input type="text" id="card-name" placeholder="Ej. La Picantería" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-contact">Persona de Contacto</label>
+                            <input type="text" id="card-contact" placeholder="Ej. Miguel Ángel">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-role">Cargo / Puesto</label>
+                            <input type="text" id="card-role" placeholder="Ej. Gerente de Operaciones">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-phone">Teléfono de Contacto</label>
+                            <input type="text" id="card-phone" placeholder="+34 600 000 000">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-email">Correo Electrónico</label>
+                            <input type="email" id="card-email" placeholder="cliente@correo.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-web">Sitio Web</label>
+                            <input type="text" id="card-web" placeholder="www.negocio.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-instagram">Instagram de la Empresa</label>
+                            <input type="text" id="card-instagram" placeholder="@empresa">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-maps">Ubicación Google Maps (Enlace)</label>
+                            <input type="text" id="card-maps" placeholder="https://maps.google.com/?q=...">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-value">Valor Estimado del Trato (€)</label>
+                            <input type="number" id="card-value" placeholder="0" min="0">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-group">
+                            <label for="card-column">Fase Actual del Pipeline</label>
+                            <select id="card-column" onchange="checkModalOpsTabVisibility()">
+                                <option value="col-prospectos">Prospectos</option>
+                                <option value="col-contacto">Primer contacto</option>
+                                <option value="col-diagnostico">Diagnóstico</option>
+                                <option value="col-propuesta">Propuesta enviada</option>
+                                <option value="col-negociacion">Negociación</option>
+                                <option value="col-ganado">Ganado (Compra cerrada)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-address">Dirección Física</label>
+                            <input type="text" id="card-address" placeholder="Calle Ejemplo 123, Madrid">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-cif">CIF / NIF</label>
+                            <input type="text" id="card-cif" placeholder="B12345678">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-workers">Nº Trabajadores</label>
+                            <input type="number" id="card-workers" placeholder="Ej. 15" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-ticket">Ticket Promedio (€)</label>
+                            <input type="number" id="card-ticket" placeholder="Ej. 25" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-tpv">TPV Actual</label>
+                            <input type="text" id="card-tpv" placeholder="Ej. BBVA Fijo / SumUp">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-problem">Problema Principal del Negocio</label>
+                            <textarea id="card-problem" rows="2" placeholder="Falta de digitalización, cartas desactualizadas..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-first-contact">Fecha Primer Contacto</label>
+                            <input type="date" id="card-first-contact">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-last-contact">Fecha Último Contacto</label>
+                            <input type="date" id="card-last-contact">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-next-action">Próxima Acción Agendada</label>
+                            <input type="text" id="card-next-action" placeholder="Enviar correo de seguimiento, llamar lunes...">
+                        </div>
+                    </div>
+                </div>
                 
-                <div class="form-group">
-                    <label for="card-cif">CIF / NIF</label>
-                    <input type="text" id="card-cif" placeholder="B12345678">
-                </div>
-                <div class="form-group">
-                    <label for="card-email">Correo Electrónico</label>
-                    <input type="email" id="card-email" placeholder="cliente@correo.com">
-                </div>
-                <div class="form-group">
-                    <label for="card-address">Dirección</label>
-                    <input type="text" id="card-address" placeholder="Calle Ejemplo 123">
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label for="card-notes">Comentarios / Notas Generales</label>
+                    <textarea id="card-notes" rows="3" placeholder="Detalles de la oportunidad comercial..."></textarea>
                 </div>
             </div>
 
+            <!-- FICHA VIEW 2: HISTORIAL (TIMELINE CRONOLÓGICO) -->
+            <div class="modal-tab-view" id="modal-view-historial">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <p style="font-size:0.8rem; color:#6b7280; text-transform:uppercase; font-weight:700;">Línea de tiempo de Interacciones (Estilo WhatsApp):</p>
+                </div>
+                
+                <div class="timeline-container" id="modal-timeline-list">
+                    <!-- Events render here -->
+                </div>
+
+                <!-- Form to Add Timeline Event -->
+                <div style="background:#f9fafb; border:1px solid #e5e7eb; padding:1rem; border-radius:12px; margin-top:1.5rem;">
+                    <p style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:#101a2b; margin-bottom:0.75rem;">Añadir interacción al historial:</p>
+                    <div style="display:grid; grid-template-columns:130px 1fr; gap:0.75rem; margin-bottom:0.75rem;">
+                        <select id="new-event-type" class="list-input" style="height:38px;">
+                            <option value="whatsapp">💬 WhatsApp</option>
+                            <option value="llamada">📞 Llamada</option>
+                            <option value="demo">💻 Demo</option>
+                            <option value="propuesta">📄 Propuesta</option>
+                            <option value="reunion">🤝 Reunión</option>
+                            <option value="nota">📝 Nota</option>
+                        </select>
+                        <input type="text" id="new-event-desc" class="list-input" placeholder="Detalle de la interacción..." style="height:38px;">
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <input type="date" id="new-event-date" class="list-input" style="max-width:150px; height:38px;">
+                        <button type="button" class="btn-list-add" onclick="handleAddTimelineEvent()" style="height:38px;">Registrar Interacción</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FICHA VIEW 3: ARCHIVOS, PROPUESTAS Y FACTURAS -->
+            <div class="modal-tab-view" id="modal-view-archivos">
+                <div style="margin-bottom:1.5rem;">
+                    <h4 style="font-size:0.85rem; font-weight:700; text-transform:uppercase; color:#6b7280; border-bottom:1px solid #e7ecf3; padding-bottom:0.4rem; margin-bottom:0.75rem;">Propuestas Relacionadas</h4>
+                    <div id="modal-proposals-list" style="display:flex; flex-direction:column; gap:0.5rem;">
+                        <!-- Auto-linked budgets load here -->
+                    </div>
+                </div>
+
+                <div style="margin-bottom:1.5rem;">
+                    <h4 style="font-size:0.85rem; font-weight:700; text-transform:uppercase; color:#6b7280; border-bottom:1px solid #e7ecf3; padding-bottom:0.4rem; margin-bottom:0.75rem;">Facturas del Cliente</h4>
+                    <div id="modal-invoices-list" style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:0.75rem;">
+                        <!-- Invoices list -->
+                    </div>
+                    <div class="list-input-group" style="margin-top:0.5rem;">
+                        <input type="text" id="new-invoice-num" class="list-input" placeholder="INV-2026-01" style="max-width:130px;">
+                        <input type="number" id="new-invoice-amount" class="list-input" placeholder="Monto (€)">
+                        <button type="button" class="btn-list-add" onclick="handleAddInvoice()">+ Factura</button>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 style="font-size:0.85rem; font-weight:700; text-transform:uppercase; color:#6b7280; border-bottom:1px solid #e7ecf3; padding-bottom:0.4rem; margin-bottom:0.75rem;">Documentos Adjuntos</h4>
+                    <div id="modal-files-list" style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:0.75rem;">
+                        <!-- Files list -->
+                    </div>
+                    <div class="list-input-group">
+                        <input type="text" id="new-file-name" class="list-input" placeholder="Contrato_Firmado.pdf">
+                        <button type="button" class="btn-list-add" onclick="handleAddFile()">+ Adjuntar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FICHA VIEW 4: OPERACIONES / PROYECTOS -->
+            <div class="modal-tab-view" id="modal-view-operaciones">
+                <div style="margin-bottom:1rem;">
+                    <p style="font-size:0.85rem; color:#6b7280; margin-bottom:0.5rem;">Porcentaje de Implementación del Proyecto:</p>
+                    <div style="display:flex; align-items:center; gap:1rem;">
+                        <div class="progress-container" style="flex:1; height:10px; margin-top:0;">
+                            <div class="progress-bar" id="modal-op-progress-bar" style="width:0%;"></div>
+                        </div>
+                        <span id="modal-op-progress-pct" style="font-size:0.9rem; font-weight:700; color:#101a2b;">0%</span>
+                    </div>
+                </div>
+
+                <div class="op-checklist" id="modal-op-checklist-container">
+                    <!-- Checkboxes will render here dynamically -->
+                </div>
+            </div>
+
+            <!-- Action buttons footer -->
             <div class="modal-footer">
-                <button id="btn-delete-card" class="btn-modal-action btn-modal-danger" onclick="handleDeleteCard()" style="display: none;">Eliminar</button>
+                <button id="btn-delete-card" class="btn-modal-action btn-modal-danger" onclick="handleDeleteCard()">Eliminar Cliente</button>
                 <button class="btn-modal-action btn-modal-secondary" onclick="closeCardModal()">Cancelar</button>
-                <button class="btn-modal-action btn-modal-primary" onclick="handleSaveCard()">Guardar</button>
+                <button class="btn-modal-action btn-modal-primary" onclick="handleSaveCard()">Guardar Ficha</button>
             </div>
         </div>
     </div>
@@ -1161,69 +1491,353 @@
         let tasksData = [];
         let meetingsData = [];
 
-        // Initial default pipeline data
+        // Initial default pipeline data with timeline histories and complete fields
         const DEFAULT_PIPELINE = [
             {
                 id: "col-prospectos",
                 title: "Prospectos",
                 cards: [
-                    { id: "c-1", name: "Carlos", value: 0, notes: "Interesado en potenciar su marketing digital.", cif: "", email: "", address: "" },
-                    { id: "c-2", name: "La Picantería", value: 1200, notes: "Pendiente de agendar llamada inicial.", cif: "", email: "", address: "" },
-                    { id: "c-3", name: "El Patio", value: 850, notes: "Contacto inicial establecido por WhatsApp.", cif: "", email: "", address: "" }
+                    { 
+                        id: "c-1", 
+                        name: "Carlos", 
+                        value: 0, 
+                        contact: "Carlos",
+                        role: "Propietario",
+                        phone: "+34 611 222 333",
+                        email: "carlos@correo.com",
+                        web: "",
+                        instagram: "@carlos_restobar",
+                        maps: "",
+                        address: "Calle Mayor 14, Madrid",
+                        cif: "",
+                        workers: 4,
+                        ticket: 15,
+                        tpv: "Fijo Tradicional",
+                        problem: "Quiere evaluar marketing digital pero no tiene presupuesto inicial definido.",
+                        firstContact: "2026-06-10",
+                        lastContact: "2026-06-21",
+                        nextAction: "Llamar el lunes para agendar diagnóstico",
+                        notes: "Interesado en potenciar su marketing digital.",
+                        history: [
+                            { date: "2026-06-10", type: "whatsapp", desc: "WhatsApp enviado de presentación." },
+                            { date: "2026-06-18", type: "whatsapp", desc: "WhatsApp recibido indicando interés leve." }
+                        ],
+                        files: [],
+                        invoices: [],
+                        ops: { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false }
+                    },
+                    { 
+                        id: "c-2", 
+                        name: "La Picantería", 
+                        value: 1200, 
+                        contact: "Miguel Ángel",
+                        role: "Socio Principal",
+                        phone: "+34 622 333 444",
+                        email: "info@lapicanteria.es",
+                        web: "www.lapicanteria.es",
+                        instagram: "@lapicanteria",
+                        maps: "",
+                        address: "Av. de América 32, Madrid",
+                        cif: "B98765432",
+                        workers: 12,
+                        ticket: 28,
+                        tpv: "BBVA Tradicional",
+                        problem: "La carta física cambia de precios constantemente y pierden tiempo imprimiendo.",
+                        firstContact: "2026-06-15",
+                        lastContact: "2026-06-22",
+                        nextAction: "Llamada inicial de calificación de dolor",
+                        notes: "Pendiente de agendar llamada inicial.",
+                        history: [
+                            { date: "2026-06-15", type: "whatsapp", desc: "Primer contacto por chat de Instagram." },
+                            { date: "2026-06-22", type: "llamada", desc: "Llamada de presentación. Acuerdan agendar diagnóstico." }
+                        ],
+                        files: [],
+                        invoices: [],
+                        ops: { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false }
+                    },
+                    { 
+                        id: "c-3", 
+                        name: "El Patio", 
+                        value: 850, 
+                        contact: "Sofía",
+                        role: "Encargada",
+                        phone: "",
+                        email: "patio@restauracion.com",
+                        web: "",
+                        instagram: "",
+                        maps: "",
+                        address: "",
+                        cif: "",
+                        workers: 6,
+                        ticket: 18,
+                        tpv: "SumUp",
+                        problem: "Mesas exteriores sin llamada digital. El camarero tarda en atender.",
+                        firstContact: "2026-06-20",
+                        lastContact: "2026-06-23",
+                        nextAction: "Confirmar reunión de demostración",
+                        notes: "Contacto inicial establecido por WhatsApp.",
+                        history: [
+                            { date: "2026-06-20", type: "whatsapp", desc: "Contacto inicial por WhatsApp solicitando precios de comanderos." }
+                        ],
+                        files: [],
+                        invoices: [],
+                        ops: { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false }
+                    }
                 ]
             },
             {
                 id: "col-contacto",
                 title: "Primer contacto",
                 cards: [
-                    { id: "c-4", name: "La Cresta", value: 1500, notes: "Llamada de presentación realizada. Interesados.", cif: "", email: "", address: "" },
-                    { id: "c-5", name: "Marisquería X", value: 2000, notes: "Solicitó información detallada sobre carta digital.", cif: "", email: "", address: "" }
+                    { 
+                        id: "c-4", 
+                        name: "La Cresta", 
+                        value: 1500, 
+                        contact: "Alejandro",
+                        role: "Dueño",
+                        phone: "+34 633 444 555",
+                        email: "contacto@lacresta.es",
+                        web: "www.lacresta.es",
+                        instagram: "@lacrestarestaurante",
+                        maps: "",
+                        address: "Paseo de la Castellana 112, Madrid",
+                        cif: "",
+                        workers: 10,
+                        ticket: 22,
+                        tpv: "Fijo Tradicional",
+                        problem: "Pérdida de comandas en cocina durante horas punta.",
+                        firstContact: "2026-06-10",
+                        lastContact: "2026-06-24",
+                        nextAction: "Reunión de diagnóstico el viernes",
+                        notes: "Llamada de presentación realizada. Interesados.",
+                        history: [
+                            { date: "2026-06-10", type: "whatsapp", desc: "Contacto inicial." },
+                            { date: "2026-06-18", type: "llamada", desc: "Llamada comercial. Se agenda diagnóstico." }
+                        ],
+                        files: [],
+                        invoices: [],
+                        ops: { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false }
+                    },
+                    { 
+                        id: "c-5", 
+                        name: "Marisquería X", 
+                        value: 2000, 
+                        contact: "Javier",
+                        role: "Gerente",
+                        phone: "+34 644 555 666",
+                        email: "javier@marisqueriax.com",
+                        web: "www.marisqueriax.com",
+                        instagram: "@marisqueriax",
+                        maps: "",
+                        address: "Calle de Alcalá 400, Madrid",
+                        cif: "",
+                        workers: 20,
+                        ticket: 45,
+                        tpv: "Redsys",
+                        problem: "Quieren pasarela de pago y pedidos automáticos en mesa.",
+                        firstContact: "2026-06-14",
+                        lastContact: "2026-06-25",
+                        nextAction: "Enviar información comercial adicional",
+                        notes: "Solicitó información detallada sobre carta digital.",
+                        history: [
+                            { date: "2026-06-14", type: "whatsapp", desc: "WhatsApp inicial de consulta." },
+                            { date: "2026-06-21", type: "llamada", desc: "Explicación telefónica del sistema de pagos BarLi." }
+                        ],
+                        files: [],
+                        invoices: [],
+                        ops: { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false }
+                    }
                 ]
             },
             {
                 id: "col-diagnostico",
                 title: "Diagnóstico",
                 cards: [
-                    { id: "c-6", name: "Restaurante Sol", value: 1800, notes: "Reunión de diagnóstico completada con el dueño.", cif: "", email: "", address: "" }
+                    { 
+                        id: "c-6", 
+                        name: "Restaurante Sol", 
+                        value: 1800, 
+                        contact: "Alberto Sol",
+                        role: "Propietario",
+                        phone: "+34 655 666 777",
+                        email: "alberto@restaurantesol.com",
+                        web: "www.restaurantesol.com",
+                        instagram: "@restaurantesol",
+                        maps: "",
+                        address: "Calle de Toledo 80, Madrid",
+                        cif: "B12398745",
+                        workers: 8,
+                        ticket: 20,
+                        tpv: "Sabadell Tradicional",
+                        problem: "Baja afluencia de clientes por las noches. Cuentan con comensales recurrentes en almuerzos pero no cenas.",
+                        firstContact: "2026-06-08",
+                        lastContact: "2026-06-25",
+                        nextAction: "Preparar y enviar propuesta comercial",
+                        notes: "Reunión de diagnóstico completada con el dueño.",
+                        history: [
+                            { date: "2026-06-08", type: "whatsapp", desc: "Primer contacto por Google Maps." },
+                            { date: "2026-06-15", type: "reunion", desc: "Reunión de diagnóstico realizada. Tienen problemas de captación nocturna." }
+                        ],
+                        files: [],
+                        invoices: [],
+                        ops: { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false }
+                    }
                 ]
             },
             {
                 id: "col-propuesta",
                 title: "Propuesta enviada",
                 cards: [
-                    { id: "c-7", name: "La Selva", value: 2500, notes: "Propuesta enviada por email. Esperando feedback.", cif: "", email: "", address: "" }
+                    { 
+                        id: "c-7", 
+                        name: "La Selva", 
+                        value: 2500, 
+                        contact: "Marta",
+                        role: "Directora General",
+                        phone: "+34 666 777 888",
+                        email: "marta@laselvagrupo.com",
+                        web: "",
+                        instagram: "@laselvataberna",
+                        maps: "",
+                        address: "Gran Vía 45, Madrid",
+                        cif: "",
+                        workers: 18,
+                        ticket: 30,
+                        tpv: "BBVA Fijo",
+                        problem: "Carta obsoleta e imposibilidad de cambiar menús del día al instante.",
+                        firstContact: "2026-06-05",
+                        lastContact: "2026-06-26",
+                        nextAction: "Llamar para resolver dudas de la propuesta",
+                        notes: "Propuesta enviada por email. Esperando feedback.",
+                        history: [
+                            { date: "2026-06-05", type: "whatsapp", desc: "Contacto inicial." },
+                            { date: "2026-06-12", type: "reunion", desc: "Reunión diagnóstica comercial." },
+                            { date: "2026-06-20", type: "propuesta", desc: "Propuesta comercial digitalizada enviada al correo." }
+                        ],
+                        files: [{ name: "Propuesta_Digitalizacion_LaSelva.pdf" }],
+                        invoices: [],
+                        ops: { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false }
+                    }
                 ]
             },
             {
                 id: "col-negociacion",
                 title: "Negociación",
                 cards: [
-                    { id: "c-8", name: "Doña Nela", value: 3000, notes: "Ajustando detalles del acuerdo anual y ROI.", cif: "", email: "", address: "" }
+                    { 
+                        id: "c-8", 
+                        name: "Doña Nela", 
+                        value: 3000, 
+                        contact: "Nela",
+                        role: "Dueña",
+                        phone: "+34 677 888 999",
+                        email: "nela@donanela.com",
+                        web: "www.donanela.com",
+                        instagram: "@donanela_es",
+                        maps: "",
+                        address: "Plaza de Cascorro 5, Madrid",
+                        cif: "A87654321",
+                        workers: 14,
+                        ticket: 35,
+                        tpv: "BBVA Smart",
+                        problem: "Sabor tradicional que no conecta con el público joven. Buscan relanzar imagen corporativa y TPV táctil.",
+                        firstContact: "2026-06-01",
+                        lastContact: "2026-06-26",
+                        nextAction: "Reunión de cierre del contrato anual",
+                        notes: "Ajustando detalles del acuerdo anual y ROI.",
+                        history: [
+                            { date: "2026-06-01", type: "whatsapp", desc: "WhatsApp inicial de presentación." },
+                            { date: "2026-06-10", type: "reunion", desc: "Reunión física de diagnóstico en la Plaza de Cascorro." },
+                            { date: "2026-06-18", type: "propuesta", desc: "Propuesta de digitalización y comanderos enviada." },
+                            { date: "2026-06-25", type: "llamada", desc: "Llamada de negociación. Solicitó un 5% de descuento en TPVs." }
+                        ],
+                        files: [{ name: "Propuesta_Comercial_DoñaNela.pdf" }],
+                        invoices: [],
+                        ops: { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false }
+                    }
                 ]
             },
             {
                 id: "col-ganado",
                 title: "Ganado",
                 cards: [
-                    { id: "c-9", name: "La Cresta BCN", value: 2500, notes: "Contrato firmado y primer pago procesado.", cif: "B67890123", email: "bcn@lacresta.com", address: "Carrer de Balmes 45, Barcelona" },
-                    { id: "c-10", name: "La Cresta Petit", value: 1500, notes: "Segunda sede cerrada este mes de forma exitosa.", cif: "B67890123", email: "petit@lacresta.com", address: "Gran Via 12, Barcelona" }
+                    { 
+                        id: "c-9", 
+                        name: "La Cresta BCN", 
+                        value: 2500, 
+                        contact: "David",
+                        role: "Gerente BCN",
+                        phone: "+34 688 999 000",
+                        email: "bcn@lacresta.com",
+                        web: "www.lacresta.es",
+                        instagram: "@lacrestabcn",
+                        maps: "",
+                        address: "Carrer de Balmes 45, Barcelona",
+                        cif: "B67890123",
+                        workers: 15,
+                        ticket: 25,
+                        tpv: "BBVA Táctil",
+                        problem: "Control ineficiente del stock de ingredientes premium.",
+                        firstContact: "2026-05-15",
+                        lastContact: "2026-06-18",
+                        nextAction: "Completar la fase de pruebas de comanderos",
+                        notes: "Contrato firmado y primer pago procesado.",
+                        history: [
+                            { date: "2026-05-15", type: "whatsapp", desc: "Primer contacto." },
+                            { date: "2026-05-22", type: "reunion", desc: "Reunión virtual comercial." },
+                            { date: "2026-06-05", type: "demo", desc: "Demo técnica del sistema de comanderos." },
+                            { date: "2026-06-12", type: "propuesta", desc: "Propuesta aceptada." },
+                            { date: "2026-06-18", type: "nota", desc: "Primer pago verificado. Traspasado a operaciones." }
+                        ],
+                        files: [{ name: "Contrato_Firmado_CrestaBCN.pdf" }],
+                        invoices: [{ num: "INV-2026-001", amt: 2500 }],
+                        ops: { kickoff: true, config: true, pruebas: false, training: false, delivery: false, support: false }
+                    },
+                    { 
+                        id: "c-10", 
+                        name: "La Cresta Petit", 
+                        value: 1500, 
+                        contact: "David",
+                        role: "Gerente BCN",
+                        phone: "+34 688 999 000",
+                        email: "petit@lacresta.com",
+                        web: "www.lacresta.es",
+                        instagram: "@lacrestapetit",
+                        maps: "",
+                        address: "Gran Via 12, Barcelona",
+                        cif: "B67890123",
+                        workers: 5,
+                        ticket: 20,
+                        tpv: "SumUp",
+                        problem: "Mesas muy reducidas y carta de licores con rotación diaria.",
+                        firstContact: "2026-05-20",
+                        lastContact: "2026-06-19",
+                        nextAction: "Iniciar kick off",
+                        notes: "Segunda sede cerrada este mes de forma exitosa.",
+                        history: [
+                            { date: "2026-05-20", type: "whatsapp", desc: "WhatsApp inicial del cliente." },
+                            { date: "2026-06-19", type: "nota", desc: "Cierre comercial de la segunda franquicia." }
+                        ],
+                        files: [{ name: "Contrato_Cresta_Petit.pdf" }],
+                        invoices: [{ num: "INV-2026-002", amt: 1500 }],
+                        ops: { kickoff: true, config: false, pruebas: false, training: false, delivery: false, support: false }
+                    }
                 ]
             }
         ];
 
         // Initial default tasks data
         const DEFAULT_TASKS = [
-            { id: "t-1", text: "Llamar a La Picantería", done: false },
-            { id: "t-2", text: "Enviar propuesta a Restaurante Sol", done: true },
-            { id: "t-3", text: "Revisión mensual de métricas comerciales", done: false },
-            { id: "t-4", text: "Preparar presentación para Doña Nela", done: false },
-            { id: "t-5", text: "Subir contrato firmado de La Cresta BCN", done: true },
-            { id: "t-6", text: "Reunión de equipo BarLi", done: false },
-            { id: "t-7", text: "Contactar nuevos prospectos de Instagram", done: false },
-            { id: "t-8", text: "Enviar reporte semanal de Google Ads", done: false }
+            { id: "t-1", text: "Llamar a La Picantería", done: false, archived: false },
+            { id: "t-2", text: "Enviar propuesta a Restaurante Sol", done: true, archived: false },
+            { id: "t-3", text: "Revisión mensual de métricas comerciales", done: false, archived: false },
+            { id: "t-4", text: "Preparar presentación para Doña Nela", done: false, archived: false },
+            { id: "t-5", text: "Subir contrato firmado de La Cresta BCN", done: true, archived: false },
+            { id: "t-6", text: "Reunión de equipo BarLi", done: false, archived: false },
+            { id: "t-7", text: "Contactar nuevos prospectos de Instagram", done: false, archived: false },
+            { id: "t-8", text: "Enviar reporte semanal de Google Ads", done: false, archived: false }
         ];
 
-        // Initial default meetings data
         const DEFAULT_MEETINGS = [
             { id: "m-1", time: "10:30", title: "Diagnóstico con Restaurante Sol" },
             { id: "m-2", time: "12:00", title: "Presentación Propuesta La Selva" },
@@ -1270,18 +1884,31 @@
             localStorage.setItem('barli_crm_meetings', JSON.stringify(meetingsData));
         }
 
-        // --- NAVIGATION TABS LOGIC ---
-        function switchTab(tabId) {
+        // --- NAVIGATION TABS LOGIC (BACK BUTTON SYNC) ---
+        function navigateTab(tabId) {
+            window.location.hash = tabId; // This pushes history state
+            switchTab(tabId, false);
+        }
+
+        function switchTab(tabId, updateHash = true) {
+            if (updateHash) {
+                window.location.hash = tabId;
+            }
+
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`tab-btn-${tabId}`).classList.add('active');
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            if (activeBtn) activeBtn.classList.add('active');
 
             document.querySelectorAll('.tab-view').forEach(view => view.style.display = 'none');
-            document.getElementById(`tab-view-${tabId}`).style.display = 'block';
+            const activeView = document.getElementById(`tab-view-${tabId}`);
+            if (activeView) activeView.style.display = 'block';
 
             if (tabId === 'dashboard') {
                 renderDashboard();
             } else if (tabId === 'pipeline') {
                 renderPipeline();
+            } else if (tabId === 'operations') {
+                renderOperationsBoard();
             } else if (tabId === 'database') {
                 fetchBudgetData();
             }
@@ -1306,7 +1933,9 @@
                 colGanado.cards.forEach(c => monthlyIncome += (c.value || 0));
             }
 
-            const countPendingTasks = tasksData.filter(t => !t.done).length;
+            // Exclude archived tasks from active counts
+            const activeTasks = tasksData.filter(t => !t.archived);
+            const countPendingTasks = activeTasks.filter(t => !t.done).length;
 
             document.getElementById('kpi-prospects').innerText = countProspects;
             document.getElementById('kpi-meetings-count').innerText = countMeetings;
@@ -1319,6 +1948,7 @@
             const progressPct = Math.min((monthlyIncome / incomeGoal) * 100, 100);
             document.getElementById('income-bar').style.width = `${progressPct}%`;
 
+            // Agenda List
             const meetingsContainer = document.getElementById('meetings-list-container');
             meetingsContainer.innerHTML = '';
             
@@ -1340,13 +1970,15 @@
                 });
             }
 
+            // Tasks List
             const tasksContainer = document.getElementById('tasks-list-container');
             tasksContainer.innerHTML = '';
 
-            if (tasksData.length === 0) {
+            const activeTasksList = tasksData.filter(t => !t.archived);
+            if (activeTasksList.length === 0) {
                 tasksContainer.innerHTML = '<div style="color:#6b7280; font-size:0.85rem; padding:1rem 0;">No tienes tareas registradas para hoy.</div>';
             } else {
-                const sortedTasks = [...tasksData].sort((a, b) => a.done - b.done);
+                const sortedTasks = [...activeTasksList].sort((a, b) => a.done - b.done);
                 sortedTasks.forEach(t => {
                     const el = document.createElement('div');
                     el.className = `task-item ${t.done ? 'done' : ''}`;
@@ -1355,13 +1987,39 @@
                             <input type="checkbox" class="task-checkbox" ${t.done ? 'checked' : ''}>
                             <span>${t.text}</span>
                         </div>
-                        <button class="btn-delete-item" onclick="handleDeleteTask('${t.id}')">✕</button>
+                        <button class="btn-delete-item" onclick="handleArchiveTask('${t.id}')" title="Archivar Tarea">✕</button>
                     `;
                     tasksContainer.appendChild(el);
                 });
             }
+
+            // Archived Tasks List
+            const archivedContainer = document.getElementById('archived-tasks-list-container');
+            archivedContainer.innerHTML = '';
+            const archivedTasks = tasksData.filter(t => t.archived);
+            document.getElementById('archived-count').innerText = archivedTasks.length;
+
+            if (archivedTasks.length === 0) {
+                archivedContainer.innerHTML = '<div style="color:#6b7280; font-size:0.8rem; padding:0.5rem 0; font-style:italic;">No hay tareas archivadas.</div>';
+            } else {
+                archivedTasks.forEach(t => {
+                    const el = document.createElement('div');
+                    el.className = 'task-item done';
+                    el.innerHTML = `
+                        <div class="task-text" style="cursor:default; width:80%;">
+                            <span style="color:#8e8e93;">📁 ${t.text}</span>
+                        </div>
+                        <div>
+                            <button class="btn-delete-item" onclick="handleRestoreTask('${t.id}')" title="Desarchivar" style="color:#101a2b; font-size:1.1rem; margin-right:0.4rem;">♻️</button>
+                            <button class="btn-delete-item" onclick="handleDeleteTaskPermanent('${t.id}')" title="Eliminar permanente">✕</button>
+                        </div>
+                    `;
+                    archivedContainer.appendChild(el);
+                });
+            }
         }
 
+        // Tasks Actions
         function handleAddTask(e) {
             e.preventDefault();
             const input = document.getElementById('task-text-input');
@@ -1371,7 +2029,8 @@
             tasksData.push({
                 id: 't-' + Date.now(),
                 text: text,
-                done: false
+                done: false,
+                archived: false
             });
             input.value = '';
             saveData();
@@ -1387,12 +2046,34 @@
             }
         }
 
-        function handleDeleteTask(id) {
-            tasksData = tasksData.filter(t => t.id !== id);
-            saveData();
-            renderDashboard();
+        // Archive instead of delete permanently
+        function handleArchiveTask(id) {
+            const task = tasksData.find(t => t.id === id);
+            if (task) {
+                task.archived = true;
+                saveData();
+                renderDashboard();
+            }
         }
 
+        function handleRestoreTask(id) {
+            const task = tasksData.find(t => t.id === id);
+            if (task) {
+                task.archived = false;
+                saveData();
+                renderDashboard();
+            }
+        }
+
+        function handleDeleteTaskPermanent(id) {
+            if (confirm("¿Eliminar esta tarea permanentemente del archivo?")) {
+                tasksData = tasksData.filter(t => t.id !== id);
+                saveData();
+                renderDashboard();
+            }
+        }
+
+        // Meetings Actions
         function handleAddMeeting(e) {
             e.preventDefault();
             const timeInput = document.getElementById('meeting-time-input');
@@ -1418,6 +2099,66 @@
             meetingsData = meetingsData.filter(m => m.id !== id);
             saveData();
             renderDashboard();
+            if (document.getElementById('agenda-modal').style.display === 'flex') {
+                renderLargeAgenda();
+            }
+        }
+
+        // --- LARGE AGENDA LOGIC ---
+        function openLargeAgenda() {
+            document.getElementById('agenda-modal').style.display = 'flex';
+            renderLargeAgenda();
+        }
+
+        function closeLargeAgenda() {
+            document.getElementById('agenda-modal').style.display = 'none';
+        }
+
+        function renderLargeAgenda() {
+            const listContainer = document.getElementById('large-agenda-list');
+            listContainer.innerHTML = '';
+
+            if (meetingsData.length === 0) {
+                listContainer.innerHTML = '<div style="color:#6b7280; text-align:center; padding:2rem 0;">No hay reuniones agendadas para hoy.</div>';
+                return;
+            }
+
+            meetingsData.sort((a,b) => a.time.localeCompare(b.time));
+            meetingsData.forEach(m => {
+                const el = document.createElement('div');
+                el.className = 'meeting-item';
+                el.style.padding = '0.9rem 1.2rem';
+                el.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:1rem;">
+                        <span class="meeting-time" style="font-size:0.9rem; padding:0.25rem 0.6rem;">${m.time}</span>
+                        <span style="color:#101a2b; font-weight:600; font-size:0.95rem;">${m.title}</span>
+                    </div>
+                    <button class="btn-delete-item" onclick="handleDeleteMeeting('${m.id}')" style="font-size:1.1rem;">✕</button>
+                `;
+                listContainer.appendChild(el);
+            });
+        }
+
+        function handleAddMeetingLarge(e) {
+            e.preventDefault();
+            const timeInput = document.getElementById('meeting-time-input-large');
+            const titleInput = document.getElementById('meeting-title-input-large');
+            const time = timeInput.value.trim();
+            const title = titleInput.value.trim();
+
+            if (!time || !title) return;
+
+            meetingsData.push({
+                id: 'm-' + Date.now(),
+                time: time,
+                title: title
+            });
+
+            timeInput.value = '';
+            titleInput.value = '';
+            saveData();
+            renderDashboard();
+            renderLargeAgenda();
         }
 
         // --- PIPELINE KANBAN BOARD LOGIC ---
@@ -1538,7 +2279,160 @@
             }
         }
 
-        // --- CARD MODAL LOGIC ---
+        // --- TAB 3: OPERATIONS BOARD (OPERACIONES / PROYECTOS) ---
+        function renderOperationsBoard() {
+            const container = document.getElementById('operations-board-container');
+            container.innerHTML = '';
+
+            const colGanado = pipelineData.find(c => c.id === 'col-ganado');
+            if (!colGanado || colGanado.cards.length === 0) {
+                container.innerHTML = '<div style="color:#6b7280; text-align:center; padding:3rem; grid-column: 1 / -1;">No hay proyectos activos en operaciones. Cierra tratos en el Pipeline para que aparezcan aquí.</div>';
+                return;
+            }
+
+            colGanado.cards.forEach(card => {
+                // Ensure ops structure exists
+                if (!card.ops) {
+                    card.ops = { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false };
+                }
+
+                // Calculate progress
+                const phases = ['kickoff', 'config', 'pruebas', 'training', 'delivery', 'support'];
+                let completedCount = 0;
+                phases.forEach(p => { if (card.ops[p]) completedCount++; });
+                const progressPct = Math.round((completedCount / phases.length) * 100);
+
+                // Get active phase name
+                let activePhaseName = 'Ninguno';
+                if (!card.ops.kickoff) activePhaseName = 'Kick Off';
+                else if (!card.ops.config) activePhaseName = 'Configuración';
+                else if (!card.ops.pruebas) activePhaseName = 'Pruebas';
+                else if (!card.ops.training) activePhaseName = 'Capacitación';
+                else if (!card.ops.delivery) activePhaseName = 'Entrega';
+                else if (!card.ops.support) activePhaseName = 'Soporte';
+                else activePhaseName = 'Completado';
+
+                const cardEl = document.createElement('div');
+                cardEl.className = 'op-card';
+                cardEl.innerHTML = `
+                    <div class="op-card-header">
+                        <div>
+                            <div class="op-client-name">${card.name}</div>
+                            <div style="font-size:0.75rem; color:#6b7280; margin-top:0.2rem;">Contacto: ${card.contact || 'No asignado'}</div>
+                        </div>
+                        <span class="card-badge" style="font-size:0.8rem;">${card.value.toLocaleString('es-ES')}€</span>
+                    </div>
+
+                    <div style="margin-bottom: 1.25rem;">
+                        <div class="op-progress-row">
+                            <span>Implementación</span>
+                            <span>${progressPct}%</span>
+                        </div>
+                        <div class="progress-container" style="margin-top:0;">
+                            <div class="progress-bar" style="width: ${progressPct}%;"></div>
+                        </div>
+                        <div style="font-size:0.75rem; color:#6b7280; margin-top:0.4rem;">Fase activa: <strong>${activePhaseName}</strong></div>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:0.4rem; border-top:1px solid #e7ecf3; padding-top:0.75rem;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem;">
+                            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+                                <input type="checkbox" class="task-checkbox" ${card.ops.kickoff ? 'checked' : ''} onchange="toggleOpPhase('${card.id}', 'kickoff')">
+                                <span style="${card.ops.kickoff ? 'text-decoration:line-through; color:#8e8e93;' : 'font-weight:600;'}">Kick Off</span>
+                            </label>
+                            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+                                <input type="checkbox" class="task-checkbox" ${card.ops.config ? 'checked' : ''} onchange="toggleOpPhase('${card.id}', 'config')">
+                                <span style="${card.ops.config ? 'text-decoration:line-through; color:#8e8e93;' : 'font-weight:600;'}">Configuración</span>
+                            </label>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem;">
+                            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+                                <input type="checkbox" class="task-checkbox" ${card.ops.pruebas ? 'checked' : ''} onchange="toggleOpPhase('${card.id}', 'pruebas')">
+                                <span style="${card.ops.pruebas ? 'text-decoration:line-through; color:#8e8e93;' : 'font-weight:600;'}">Pruebas</span>
+                            </label>
+                            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+                                <input type="checkbox" class="task-checkbox" ${card.ops.training ? 'checked' : ''} onchange="toggleOpPhase('${card.id}', 'training')">
+                                <span style="${card.ops.training ? 'text-decoration:line-through; color:#8e8e93;' : 'font-weight:600;'}">Capacitación</span>
+                            </label>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem;">
+                            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+                                <input type="checkbox" class="task-checkbox" ${card.ops.delivery ? 'checked' : ''} onchange="toggleOpPhase('${card.id}', 'delivery')">
+                                <span style="${card.ops.delivery ? 'text-decoration:line-through; color:#8e8e93;' : 'font-weight:600;'}">Entrega</span>
+                            </label>
+                            <label style="display:flex; align-items:center; gap:0.4rem; cursor:pointer;">
+                                <input type="checkbox" class="task-checkbox" ${card.ops.support ? 'checked' : ''} onchange="toggleOpPhase('${card.id}', 'support')">
+                                <span style="${card.ops.support ? 'text-decoration:line-through; color:#8e8e93;' : 'font-weight:600;'}">Soporte</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; gap:0.5rem; margin-top:1.25rem;">
+                        <button class="btn-crm-action btn-crm-secondary" onclick="openCardModalFromOps('${card.id}')" style="width:100%; justify-content:center; padding:0.4rem;">
+                            👁️ Ficha Médica
+                        </button>
+                    </div>
+                `;
+                container.appendChild(cardEl);
+            });
+        }
+
+        function toggleOpPhase(cardId, phase) {
+            const colGanado = pipelineData.find(c => c.id === 'col-ganado');
+            if (colGanado) {
+                const card = colGanado.cards.find(c => c.id === cardId);
+                if (card && card.ops) {
+                    card.ops[phase] = !card.ops[phase];
+                    saveData();
+                    renderOperationsBoard();
+                }
+            }
+        }
+
+        function openCardModalFromOps(cardId) {
+            const colGanado = pipelineData.find(c => c.id === 'col-ganado');
+            if (colGanado) {
+                const cardIdx = colGanado.cards.findIndex(c => c.id === cardId);
+                if (cardIdx !== -1) {
+                    openCardModal('col-ganado', cardIdx, null);
+                }
+            }
+        }
+
+        // --- FICHA DEL CLIENTE MODAL LOGIC ---
+        let activeModalTab = 'general';
+
+        function switchModalTab(tabId) {
+            activeModalTab = tabId;
+            document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.modal-tab-view').forEach(view => view.classList.remove('active'));
+            document.getElementById(`modal-view-${tabId}`).classList.add('active');
+
+            if (tabId === 'historial') {
+                renderModalTimeline();
+            } else if (tabId === 'archivos') {
+                renderModalArchivos();
+            } else if (tabId === 'operaciones') {
+                renderModalOperations();
+            }
+        }
+
+        function checkModalOpsTabVisibility() {
+            const selectCol = document.getElementById('card-column').value;
+            const opsTab = document.getElementById('modal-tab-ops');
+            if (selectCol === 'col-ganado') {
+                opsTab.style.display = 'block';
+            } else {
+                opsTab.style.display = 'none';
+                if (activeModalTab === 'operaciones') {
+                    switchModalTab('general');
+                    document.querySelector('.modal-tab-btn').classList.add('active');
+                }
+            }
+        }
+
         function openCardModal(colId, cardIdx, event) {
             if (event) event.stopPropagation();
 
@@ -1546,35 +2440,72 @@
             const titleEl = document.getElementById('modal-title');
             const deleteBtn = document.getElementById('btn-delete-card');
 
+            // Reset tab defaults
+            activeModalTab = 'general';
+            document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.modal-tab-btn').classList.add('active');
+            document.querySelectorAll('.modal-tab-view').forEach(view => view.classList.remove('active'));
+            document.getElementById('modal-view-general').classList.add('active');
+
+            // Reset general inputs
             document.getElementById('modal-card-id').value = '';
             document.getElementById('modal-col-id').value = colId;
             document.getElementById('card-name').value = '';
             document.getElementById('card-value').value = '';
             document.getElementById('card-notes').value = '';
-            document.getElementById('card-cif').value = '';
+            document.getElementById('card-contact').value = '';
+            document.getElementById('card-role').value = '';
+            document.getElementById('card-phone').value = '';
             document.getElementById('card-email').value = '';
-            document.getElementById('card-address').value = '';
+            document.getElementById('card-web').value = '';
+            document.getElementById('card-instagram').value = '';
+            document.getElementById('card-maps').value = '';
             document.getElementById('card-column').value = colId;
+            document.getElementById('card-address').value = '';
+            document.getElementById('card-cif').value = '';
+            document.getElementById('card-workers').value = '';
+            document.getElementById('card-ticket').value = '';
+            document.getElementById('card-tpv').value = '';
+            document.getElementById('card-problem').value = '';
+            document.getElementById('card-first-contact').value = '';
+            document.getElementById('card-last-contact').value = '';
+            document.getElementById('card-next-action').value = '';
 
             if (cardIdx !== null) {
+                // EDIT MODE ("FICHA MÉDICA")
                 const col = pipelineData.find(c => c.id === colId);
                 const card = col.cards[cardIdx];
 
-                titleEl.innerText = "Editar Oportunidad";
+                titleEl.innerText = `Ficha Médica: ${card.name}`;
                 deleteBtn.style.display = 'block';
 
                 document.getElementById('modal-card-id').value = card.id;
                 document.getElementById('card-name').value = card.name || '';
-                document.getElementById('card-value').value = card.value || '';
+                document.getElementById('card-value').value = card.value || 0;
                 document.getElementById('card-notes').value = card.notes || '';
-                document.getElementById('card-cif').value = card.cif || '';
+                document.getElementById('card-contact').value = card.contact || '';
+                document.getElementById('card-role').value = card.role || '';
+                document.getElementById('card-phone').value = card.phone || '';
                 document.getElementById('card-email').value = card.email || '';
+                document.getElementById('card-web').value = card.web || '';
+                document.getElementById('card-instagram').value = card.instagram || '';
+                document.getElementById('card-maps').value = card.maps || '';
                 document.getElementById('card-address').value = card.address || '';
+                document.getElementById('card-cif').value = card.cif || '';
+                document.getElementById('card-workers').value = card.workers || '';
+                document.getElementById('card-ticket').value = card.ticket || '';
+                document.getElementById('card-tpv').value = card.tpv || '';
+                document.getElementById('card-problem').value = card.problem || '';
+                document.getElementById('card-first-contact').value = card.firstContact || '';
+                document.getElementById('card-last-contact').value = card.lastContact || '';
+                document.getElementById('card-next-action').value = card.nextAction || '';
             } else {
+                // NEW MODE
                 titleEl.innerText = "Agregar Oportunidad";
                 deleteBtn.style.display = 'none';
             }
 
+            checkModalOpsTabVisibility();
             overlay.style.display = 'flex';
         }
 
@@ -1582,6 +2513,281 @@
             document.getElementById('card-modal').style.display = 'none';
         }
 
+        // RENDER MODAL SUBTABS
+        function getActiveCard() {
+            const cardId = document.getElementById('modal-card-id').value;
+            const colId = document.getElementById('modal-col-id').value;
+            if (!cardId) return null;
+            const col = pipelineData.find(c => c.id === colId);
+            return col ? col.cards.find(c => c.id === cardId) : null;
+        }
+
+        // Timeline History inside Ficha
+        function renderModalTimeline() {
+            const card = getActiveCard();
+            const list = document.getElementById('modal-timeline-list');
+            list.innerHTML = '';
+
+            if (!card) {
+                list.innerHTML = '<div style="color:#6b7280; font-size:0.85rem;">Guarda primero la ficha para añadir interacciones.</div>';
+                return;
+            }
+
+            if (!card.history) card.history = [];
+
+            if (card.history.length === 0) {
+                list.innerHTML = '<div style="color:#6b7280; font-size:0.85rem; font-style:italic;">No hay interacciones registradas en el historial.</div>';
+                return;
+            }
+
+            // Sort descending by date
+            const sortedEvents = [...card.history].sort((a,b) => b.date.localeCompare(a.date));
+            sortedEvents.forEach((ev, idx) => {
+                const el = document.createElement('div');
+                el.className = `timeline-event event-${ev.type}`;
+                
+                const dateObj = new Date(ev.date + 'T00:00:00');
+                const dateStr = dateObj.toLocaleDateString('es-ES', { day:'numeric', month:'long', year:'numeric' });
+
+                el.innerHTML = `
+                    <div class="timeline-date">${dateStr}</div>
+                    <div class="timeline-content">
+                        <strong>${ev.type.toUpperCase()}:</strong> ${ev.desc}
+                    </div>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function handleAddTimelineEvent() {
+            const card = getActiveCard();
+            if (!card) {
+                alert("Por favor, guarda el cliente antes de registrar interacciones.");
+                return;
+            }
+
+            const type = document.getElementById('new-event-type').value;
+            const desc = document.getElementById('new-event-desc').value.trim();
+            let date = document.getElementById('new-event-date').value;
+
+            if (!desc) {
+                alert("Escribe una descripción para la interacción.");
+                return;
+            }
+
+            if (!date) {
+                date = new Date().toISOString().split('T')[0];
+            }
+
+            if (!card.history) card.history = [];
+            card.history.push({ date, type, desc });
+            
+            document.getElementById('new-event-desc').value = '';
+            document.getElementById('new-event-date').value = '';
+            saveData();
+            renderModalTimeline();
+        }
+
+        // Files & Invoices tab inside Ficha
+        function renderModalArchivos() {
+            const card = getActiveCard();
+            const proposalsContainer = document.getElementById('modal-proposals-list');
+            const invoicesContainer = document.getElementById('modal-invoices-list');
+            const filesContainer = document.getElementById('modal-files-list');
+
+            proposalsContainer.innerHTML = '';
+            invoicesContainer.innerHTML = '';
+            filesContainer.innerHTML = '';
+
+            if (!card) {
+                proposalsContainer.innerHTML = '<div style="color:#6b7280; font-size:0.85rem;">Guarda primero la ficha.</div>';
+                return;
+            }
+
+            // 1. Link automatically proposals from budgets database matching name or email
+            const searchKey = card.name.toLowerCase();
+            const emailKey = (card.email || '---').toLowerCase();
+            
+            // Render proposals matching
+            let linkedProposals = [];
+            // Fictional filter on budgets
+            allClients.forEach(c => {
+                if (c.name.toLowerCase().includes(searchKey) || (c.email && c.email.toLowerCase() === emailKey)) {
+                    linkedProposals = [...linkedProposals, ...c.proposals];
+                }
+            });
+
+            if (linkedProposals.length === 0) {
+                proposalsContainer.innerHTML = '<div style="color:#6b7280; font-size:0.8rem; font-style:italic;">No hay cotizaciones emitidas asociadas a este cliente.</div>';
+            } else {
+                linkedProposals.forEach(p => {
+                    const el = document.createElement('div');
+                    el.className = 'proposal-item';
+                    el.style.padding = '0.5rem 1rem';
+                    el.style.background = '#f9fafb';
+                    el.innerHTML = `
+                        <span style="font-size:0.85rem; font-weight:600;">Propuesta Comercial (${p.total.toLocaleString('es-ES')}€)</span>
+                        <a href="${p.link}" target="_blank" class="btn-crm-action btn-crm-secondary" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Ver</a>
+                    `;
+                    proposalsContainer.appendChild(el);
+                });
+            }
+
+            // 2. Invoices list
+            if (!card.invoices) card.invoices = [];
+            if (card.invoices.length === 0) {
+                invoicesContainer.innerHTML = '<div style="color:#6b7280; font-size:0.8rem; font-style:italic;">No se han emitido facturas.</div>';
+            } else {
+                card.invoices.forEach((inv, idx) => {
+                    const el = document.createElement('div');
+                    el.className = 'proposal-item';
+                    el.style.padding = '0.5rem 1rem';
+                    el.style.background = '#f9fafb';
+                    el.innerHTML = `
+                        <span style="font-size:0.85rem; font-weight:600;">🧾 ${inv.num} - ${inv.amt.toLocaleString('es-ES')}€</span>
+                        <button type="button" class="btn-delete-item" onclick="handleRemoveInvoice(${idx})">✕</button>
+                    `;
+                    invoicesContainer.appendChild(el);
+                });
+            }
+
+            // 3. Attached Files list
+            if (!card.files) card.files = [];
+            if (card.files.length === 0) {
+                filesContainer.innerHTML = '<div style="color:#6b7280; font-size:0.8rem; font-style:italic;">No hay archivos adjuntos.</div>';
+            } else {
+                card.files.forEach((file, idx) => {
+                    const el = document.createElement('div');
+                    el.className = 'proposal-item';
+                    el.style.padding = '0.5rem 1rem';
+                    el.style.background = '#f9fafb';
+                    el.innerHTML = `
+                        <span style="font-size:0.85rem; font-weight:600;">📁 ${file.name}</span>
+                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                            <button type="button" class="btn-crm-action btn-crm-secondary" style="padding:0.25rem 0.6rem; font-size:0.75rem;" onclick="alert('Descargando archivo mockup...')">Descargar</button>
+                            <button type="button" class="btn-delete-item" onclick="handleRemoveFile(${idx})">✕</button>
+                        </div>
+                    `;
+                    filesContainer.appendChild(el);
+                });
+            }
+        }
+
+        function handleAddInvoice() {
+            const card = getActiveCard();
+            if (!card) return;
+
+            const num = document.getElementById('new-invoice-num').value.trim();
+            const amt = parseFloat(document.getElementById('new-invoice-amount').value) || 0;
+
+            if (!num || amt <= 0) {
+                alert("Completa el número de factura y un monto válido.");
+                return;
+            }
+
+            if (!card.invoices) card.invoices = [];
+            card.invoices.push({ num, amt });
+            document.getElementById('new-invoice-num').value = '';
+            document.getElementById('new-invoice-amount').value = '';
+            saveData();
+            renderModalArchivos();
+        }
+
+        function handleRemoveInvoice(idx) {
+            const card = getActiveCard();
+            if (card && card.invoices) {
+                card.invoices.splice(idx, 1);
+                saveData();
+                renderModalArchivos();
+            }
+        }
+
+        function handleAddFile() {
+            const card = getActiveCard();
+            if (!card) return;
+
+            const name = document.getElementById('new-file-name').value.trim();
+
+            if (!name) {
+                alert("Escribe el nombre del archivo.");
+                return;
+            }
+
+            if (!card.files) card.files = [];
+            card.files.push({ name });
+            document.getElementById('new-file-name').value = '';
+            saveData();
+            renderModalArchivos();
+        }
+
+        function handleRemoveFile(idx) {
+            const card = getActiveCard();
+            if (card && card.files) {
+                card.files.splice(idx, 1);
+                saveData();
+                renderModalArchivos();
+            }
+        }
+
+        // Operations tab inside Ficha (Kickoff, training, delivery...)
+        function renderModalOperations() {
+            const card = getActiveCard();
+            const checklistContainer = document.getElementById('modal-op-checklist-container');
+            checklistContainer.innerHTML = '';
+
+            if (!card) return;
+            if (!card.ops) {
+                card.ops = { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false };
+            }
+
+            const phases = [
+                { key: 'kickoff', label: 'Kick Off (Reunión inicial)' },
+                { key: 'config', label: 'Configuración de TPV y software' },
+                { key: 'pruebas', label: 'Período de pruebas de comanderos' },
+                { key: 'training', label: 'Capacitación del personal' },
+                { key: 'delivery', label: 'Entrega formal del proyecto' },
+                { key: 'support', label: 'Soporte y mantenimiento' }
+            ];
+
+            let completedCount = 0;
+            phases.forEach(p => {
+                if (card.ops[p.key]) completedCount++;
+
+                const item = document.createElement('div');
+                item.className = 'op-item';
+                
+                let statusBadge = '<span class="op-item-status status-pending">Pendiente</span>';
+                if (card.ops[p.key]) {
+                    statusBadge = '<span class="op-item-status status-completed">Completado ✓</span>';
+                }
+
+                item.innerHTML = `
+                    <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                        <input type="checkbox" class="task-checkbox" ${card.ops[p.key] ? 'checked' : ''} onchange="toggleModalOpPhase('${p.key}')">
+                        <span style="${card.ops[p.key] ? 'text-decoration:line-through; color:#8e8e93;' : 'font-weight:600;'}">${p.label}</span>
+                    </label>
+                    ${statusBadge}
+                `;
+                checklistContainer.appendChild(item);
+            });
+
+            // Update modal progress bar
+            const progressPct = Math.round((completedCount / phases.length) * 100);
+            document.getElementById('modal-op-progress-bar').style.width = `${progressPct}%`;
+            document.getElementById('modal-op-progress-pct').innerText = `${progressPct}%`;
+        }
+
+        function toggleModalOpPhase(key) {
+            const card = getActiveCard();
+            if (card && card.ops) {
+                card.ops[key] = !card.ops[key];
+                saveData();
+                renderModalOperations();
+                renderOperationsBoard();
+            }
+        }
+
+        // SAVE & DELETE CLIENT CARD
         function handleSaveCard() {
             const cardId = document.getElementById('modal-card-id').value;
             const sourceColId = document.getElementById('modal-col-id').value;
@@ -1590,9 +2796,22 @@
             const name = document.getElementById('card-name').value.trim();
             const value = parseFloat(document.getElementById('card-value').value) || 0;
             const notes = document.getElementById('card-notes').value.trim();
-            const cif = document.getElementById('card-cif').value.trim();
+            const contact = document.getElementById('card-contact').value.trim();
+            const role = document.getElementById('card-role').value.trim();
+            const phone = document.getElementById('card-phone').value.trim();
             const email = document.getElementById('card-email').value.trim();
+            const web = document.getElementById('card-web').value.trim();
+            const instagram = document.getElementById('card-instagram').value.trim();
+            const maps = document.getElementById('card-maps').value.trim();
             const address = document.getElementById('card-address').value.trim();
+            const cif = document.getElementById('card-cif').value.trim();
+            const workers = parseInt(document.getElementById('card-workers').value) || '';
+            const ticket = parseFloat(document.getElementById('card-ticket').value) || '';
+            const tpv = document.getElementById('card-tpv').value.trim();
+            const problem = document.getElementById('card-problem').value.trim();
+            const firstContact = document.getElementById('card-first-contact').value;
+            const lastContact = document.getElementById('card-last-contact').value;
+            const nextAction = document.getElementById('card-next-action').value.trim();
 
             if (!name) {
                 alert("Por favor introduce el nombre del negocio o cliente.");
@@ -1600,6 +2819,7 @@
             }
 
             if (cardId) {
+                // Edit Card
                 const sourceCol = pipelineData.find(c => c.id === sourceColId);
                 const cardIdx = sourceCol.cards.findIndex(c => c.id === cardId);
                 
@@ -1608,9 +2828,22 @@
                     card.name = name;
                     card.value = value;
                     card.notes = notes;
-                    card.cif = cif;
+                    card.contact = contact;
+                    card.role = role;
+                    card.phone = phone;
                     card.email = email;
+                    card.web = web;
+                    card.instagram = instagram;
+                    card.maps = maps;
                     card.address = address;
+                    card.cif = cif;
+                    card.workers = workers;
+                    card.ticket = ticket;
+                    card.tpv = tpv;
+                    card.problem = problem;
+                    card.firstContact = firstContact;
+                    card.lastContact = lastContact;
+                    card.nextAction = nextAction;
 
                     if (sourceColId !== targetColId) {
                         sourceCol.cards.splice(cardIdx, 1);
@@ -1618,21 +2851,42 @@
                     }
                 }
             } else {
+                // Add New Card
                 const newCard = {
                     id: 'c-' + Date.now(),
                     name: name,
                     value: value,
                     notes: notes,
-                    cif: cif,
+                    contact: contact,
+                    role: role,
+                    phone: phone,
                     email: email,
-                    address: address
+                    web: web,
+                    instagram: instagram,
+                    maps: maps,
+                    address: address,
+                    cif: cif,
+                    workers: workers,
+                    ticket: ticket,
+                    tpv: tpv,
+                    problem: problem,
+                    firstContact: firstContact,
+                    lastContact: lastContact,
+                    nextAction: nextAction,
+                    history: [{ date: new Date().toISOString().split('T')[0], type: 'nota', desc: 'Ficha médica creada.' }],
+                    files: [],
+                    invoices: [],
+                    ops: { kickoff: false, config: false, pruebas: false, training: false, delivery: false, support: false }
                 };
                 pipelineData.find(c => c.id === targetColId).cards.push(newCard);
             }
 
             saveData();
             closeCardModal();
-            renderPipeline();
+            
+            // Refresh views
+            const activeTab = window.location.hash.substring(1) || 'dashboard';
+            switchTab(activeTab);
         }
 
         function handleDeleteCard() {
@@ -1641,18 +2895,20 @@
 
             if (!cardId) return;
 
-            if (confirm("¿Estás seguro de que quieres eliminar esta oportunidad comercial?")) {
+            if (confirm("¿Estás seguro de que quieres eliminar esta oportunidad comercial? Esto borrará todo su historial médico.")) {
                 const column = pipelineData.find(c => c.id === colId);
                 if (column) {
                     column.cards = column.cards.filter(c => c.id !== cardId);
                     saveData();
                     closeCardModal();
-                    renderPipeline();
+                    
+                    const activeTab = window.location.hash.substring(1) || 'dashboard';
+                    switchTab(activeTab);
                 }
             }
         }
 
-        // --- TAB 3: ORIGINAL CLIENT DATABASE SERVICES LOGIC ---
+        // --- TAB 4: ORIGINAL CLIENT DATABASE SERVICES LOGIC ---
         async function fetchBudgetData() {
             let budgets = [];
             const apiUrl = getApiUrl();
@@ -1824,8 +3080,20 @@
             renderClients(filtered);
         }
 
+        // --- BROWSER BACK/FORWARD INTEGRATION ---
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1) || 'dashboard';
+            if (['dashboard', 'pipeline', 'operations', 'database'].includes(hash)) {
+                switchTab(hash, false);
+            }
+        });
+
+        // --- PAGE INITIALIZATION ---
         initData();
-        switchTab('dashboard');
+        
+        // Initial tab check from URL hash
+        const initialTab = window.location.hash.substring(1) || 'dashboard';
+        switchTab(initialTab);
     </script>
 </body>
 </html>
