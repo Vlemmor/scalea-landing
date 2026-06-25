@@ -9,12 +9,8 @@
     <link rel="stylesheet" href="css/style.css">
     <style>
         body {
-            background-color: #0b0b0f;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(20, 20, 30, 0.5) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(10, 10, 15, 0.5) 0px, transparent 50%),
-                radial-gradient(at 50% 100%, rgba(20, 20, 25, 0.4) 0px, transparent 50%);
-            color: #ffffff;
+            background-color: #f7f9fc;
+            color: #101a2b;
             min-height: 100vh;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -25,15 +21,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e7ecf3;
             padding-bottom: 1.5rem;
         }
 
         .back-btn {
             background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff;
+            border: 1px solid #c7c7cc;
+            color: #101a2b;
             padding: 0.6rem 1.25rem;
             border-radius: 8px;
             cursor: pointer;
@@ -47,19 +43,55 @@
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(16, 26, 43, 0.05);
+            border-color: #101a2b;
         }
 
-        /* Glassmorphism card adaptation */
+        /* Tabs Navigation */
+        .tabs-nav {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e7ecf3;
+            padding-bottom: 0.75rem;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: #6b7280;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            color: #101a2b;
+            background: rgba(16, 26, 43, 0.03);
+        }
+
+        .tab-btn.active {
+            color: #ffffff;
+            background: #101a2b; /* Azul BarLi */
+            border-color: #101a2b;
+        }
+
+        /* Cards */
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #ffffff;
+            border: 1px solid #e7ecf3;
             border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(16, 26, 43, 0.03);
             margin-bottom: 2rem;
         }
 
@@ -73,10 +105,10 @@
         .search-input {
             flex: 1;
             padding: 0.85rem 1.25rem;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid #d1d5db;
             border-radius: 12px;
-            color: #ffffff;
+            color: #101a2b;
             font-family: inherit;
             font-size: 0.95rem;
             transition: all 0.2s;
@@ -84,8 +116,8 @@
 
         .search-input:focus {
             outline: none;
-            border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.08);
+            border-color: #1340fc;
+            box-shadow: 0 0 0 3px rgba(19, 64, 252, 0.1);
         }
 
         /* Client Grid/List */
@@ -96,24 +128,19 @@
         }
 
         .client-row-card {
-            background: rgba(255, 255, 255, 0.015);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #ffffff;
+            border: 1px solid #e7ecf3;
             border-radius: 16px;
             padding: 1.75rem;
             transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(16, 26, 43, 0.015);
         }
 
         .client-row-card:hover {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .client-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 1rem;
+            background: #fafbfc;
+            border-color: #d1d5db;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(16, 26, 43, 0.04);
         }
 
         .client-info h3 {
@@ -121,17 +148,17 @@
             font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 0.4rem;
-            color: #ffffff;
+            color: #101a2b;
         }
 
         .client-badge {
             font-size: 0.75rem;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
             padding: 0.3rem 0.6rem;
             border-radius: 6px;
-            color: #c7c7cc;
-            font-weight: 500;
+            color: #4b5563;
+            font-weight: 600;
             text-transform: uppercase;
         }
 
@@ -139,7 +166,7 @@
             display: flex;
             gap: 1.5rem;
             margin-top: 0.8rem;
-            color: #8e8e93;
+            color: #6b7280;
             font-size: 0.85rem;
             flex-wrap: wrap;
         }
@@ -169,38 +196,38 @@
         }
 
         .btn-crm-primary {
-            background: #ffffff;
-            color: #0b0b0f;
+            background: #101a2b;
+            color: #ffffff;
             border: none;
         }
 
         .btn-crm-primary:hover {
-            background: rgba(255, 255, 255, 0.9);
+            background: #1d2d47;
             transform: translateY(-1px);
         }
 
         .btn-crm-secondary {
             background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff;
+            border: 1px solid #d1d5db;
+            color: #101a2b;
         }
 
         .btn-crm-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(16, 26, 43, 0.03);
+            border-color: #101a2b;
         }
 
         /* Proposals dropdown panel */
         .proposals-history-panel {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid #e7ecf3;
             display: none;
         }
 
         .proposal-item {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
             border-radius: 10px;
             padding: 1rem 1.25rem;
             margin-bottom: 0.75rem;
@@ -224,18 +251,18 @@
         .prop-date {
             font-size: 0.85rem;
             font-weight: 600;
-            color: #ffffff;
+            color: #101a2b;
         }
 
         .prop-services {
             font-size: 0.8rem;
-            color: #8e8e93;
+            color: #6b7280;
         }
 
         .prop-amount {
             font-size: 0.95rem;
             font-weight: 800;
-            color: #4caf50;
+            color: #16a34a;
         }
 
         .prop-actions {
@@ -246,13 +273,582 @@
         .no-clients {
             text-align: center;
             padding: 3rem;
-            color: #8e8e93;
+            color: #6b7280;
         }
 
         .no-clients span {
             font-size: 3rem;
             display: block;
             margin-bottom: 1rem;
+        }
+
+        /* Portada Dashboard Style */
+        .dashboard-banner {
+            margin-bottom: 2rem;
+            border-left: 3px solid #101a2b;
+            padding-left: 1rem;
+        }
+
+        .kpi-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .kpi-card {
+            background: #ffffff;
+            border: 1px solid #e7ecf3;
+            border-radius: 16px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 160px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(16, 26, 43, 0.015);
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            background: #ffffff;
+            border-color: #101a2b;
+            box-shadow: 0 8px 24px rgba(16, 26, 43, 0.05);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .kpi-icon {
+            font-size: 1.5rem;
+        }
+
+        .kpi-value {
+            font-family: 'Bauhaus', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0.75rem 0 0.25rem 0;
+            color: #101a2b;
+        }
+
+        .kpi-sub {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        /* Lists on Dashboard (Tasks & Meetings) */
+        .dashboard-list-card {
+            grid-column: span 1;
+            min-height: 250px;
+        }
+
+        @media (min-width: 900px) {
+            .dashboard-list-card.double-width {
+                grid-column: span 2;
+            }
+        }
+
+        .task-list, .meeting-list {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 0.25rem;
+            scrollbar-width: thin;
+        }
+
+        /* Custom thin scrollbar style */
+        .task-list::-webkit-scrollbar, 
+        .meeting-list::-webkit-scrollbar, 
+        .kanban-cards-container::-webkit-scrollbar,
+        .kanban-board::-webkit-scrollbar,
+        .tabs-nav::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        .task-list::-webkit-scrollbar-track,
+        .meeting-list::-webkit-scrollbar-track,
+        .kanban-cards-container::-webkit-scrollbar-track,
+        .kanban-board::-webkit-scrollbar-track,
+        .tabs-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .task-list::-webkit-scrollbar-thumb,
+        .meeting-list::-webkit-scrollbar-thumb,
+        .kanban-cards-container::-webkit-scrollbar-thumb,
+        .kanban-board::-webkit-scrollbar-thumb,
+        .tabs-nav::-webkit-scrollbar-thumb {
+            background: rgba(16, 26, 43, 0.1);
+            border-radius: 999px;
+        }
+
+        .task-list::-webkit-scrollbar-thumb:hover,
+        .meeting-list::-webkit-scrollbar-thumb:hover,
+        .kanban-cards-container::-webkit-scrollbar-thumb:hover,
+        .kanban-board::-webkit-scrollbar-thumb:hover,
+        .tabs-nav::-webkit-scrollbar-thumb:hover {
+            background: rgba(16, 26, 43, 0.25);
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 0.6rem 0.85rem;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .task-item:hover {
+            background: #f3f4f6;
+            border-color: #d1d5db;
+        }
+
+        .task-text {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #101a2b;
+            cursor: pointer;
+            user-select: none;
+            width: 80%;
+        }
+
+        .task-item.done .task-text {
+            text-decoration: line-through;
+            color: #8e8e93;
+        }
+
+        .task-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid #d1d5db;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            background: #ffffff;
+        }
+
+        .task-checkbox:checked {
+            background: #101a2b;
+            border-color: #101a2b;
+        }
+
+        .task-checkbox:checked::after {
+            content: "✓";
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        .btn-delete-item {
+            background: transparent;
+            border: none;
+            color: rgba(239, 68, 68, 0.6);
+            cursor: pointer;
+            padding: 0.2rem;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn-delete-item:hover {
+            color: rgba(239, 68, 68, 1);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .meeting-item {
+            display: flex;
+            gap: 0.75rem;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 0.6rem 0.85rem;
+            font-size: 0.9rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .meeting-time {
+            background: #101a2b;
+            border: 1px solid #101a2b;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* List Inputs */
+        .list-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .list-input {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            color: #101a2b;
+            font-size: 0.85rem;
+            font-family: inherit;
+        }
+
+        .list-input:focus {
+            outline: none;
+            border-color: #101a2b;
+        }
+
+        .btn-list-add {
+            background: #101a2b;
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-list-add:hover {
+            background: #1d2d47;
+        }
+
+        /* Kanban Board Style */
+        .kanban-board {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1.5rem;
+            min-height: 600px;
+            align-items: flex-start;
+            -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
+        }
+
+        .kanban-column {
+            background: #ffffff;
+            border: 1px solid #e7ecf3;
+            border-radius: 16px;
+            width: 290px;
+            flex-shrink: 0;
+            padding: 1.25rem 1rem;
+            display: flex;
+            flex-direction: column;
+            max-height: 580px;
+            box-shadow: 0 4px 12px rgba(16, 26, 43, 0.015);
+        }
+
+        .kanban-column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e7ecf3;
+        }
+
+        .kanban-column-title {
+            font-family: 'Bauhaus', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #101a2b;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .column-count {
+            background: #f3f4f6;
+            border-radius: 999px;
+            padding: 0.1rem 0.4rem;
+            font-size: 0.75rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #6b7280;
+            border: 1px solid #e5e7eb;
+        }
+
+        .column-value {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #16a34a;
+        }
+
+        .kanban-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 0.2rem;
+            min-height: 100px;
+            scrollbar-width: thin;
+        }
+
+        /* Kanban Card */
+        .kanban-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            box-shadow: 0 2px 6px rgba(16, 26, 43, 0.01);
+        }
+
+        .kanban-card:hover {
+            background: #fafbfc;
+            border-color: #101a2b;
+            box-shadow: 0 6px 16px rgba(16, 26, 43, 0.04);
+            transform: translateY(-1px);
+        }
+
+        .kanban-card-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #101a2b;
+            margin-bottom: 0.4rem;
+            padding-right: 1.5rem;
+        }
+
+        .kanban-card-info {
+            font-size: 0.8rem;
+            color: #6b7280;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .kanban-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-badge {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #16a34a;
+            font-size: 0.75rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .card-actions-row {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .card-btn {
+            background: transparent;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: all 0.15s;
+        }
+
+        .card-btn:hover {
+            color: #101a2b;
+            background: #f3f4f6;
+        }
+
+        .btn-add-card {
+            background: transparent;
+            border: 1px dashed #d1d5db;
+            color: #6b7280;
+            width: 100%;
+            padding: 0.6rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.75rem;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-add-card:hover {
+            color: #101a2b;
+            background: #f9fafb;
+            border-color: #101a2b;
+        }
+
+        /* Modal Structure (Light Theme) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(16, 26, 43, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 480px;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(16, 26, 43, 0.15);
+            color: #101a2b;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-family: 'Bauhaus', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #101a2b;
+        }
+
+        .close-modal-btn {
+            background: transparent;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            font-size: 1.25rem;
+        }
+
+        .close-modal-btn:hover {
+            color: #101a2b;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 0.75rem 1rem;
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            color: #101a2b;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #1340fc;
+            box-shadow: 0 0 0 3px rgba(19, 64, 252, 0.1);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1.75rem;
+        }
+
+        .btn-modal-action {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-modal-primary {
+            background: #101a2b;
+            color: #ffffff;
+        }
+
+        .btn-modal-primary:hover {
+            background: #1d2d47;
+        }
+
+        .btn-modal-secondary {
+            background: transparent;
+            border: 1px solid #d1d5db;
+            color: #101a2b;
+        }
+
+        .btn-modal-secondary:hover {
+            background: #f9fafb;
+        }
+
+        .btn-modal-danger {
+            background: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #fca5a5;
+            margin-right: auto;
+        }
+
+        .btn-modal-danger:hover {
+            background: #fee2e2;
+        }
+
+        /* Progress meta */
+        .progress-container {
+            height: 6px;
+            width: 100%;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.75rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #16a34a;
+            border-radius: 3px;
+            transition: width 0.3s ease;
         }
 
         @media (max-width: 768px) {
@@ -316,47 +912,753 @@
     </script>
 </head>
 <body>
-    <div class="portal-container" style="max-width: 1000px; margin: 0 auto;">
+    <div class="portal-container" style="max-width: 1200px; margin: 0 auto;">
         <!-- Header -->
         <header class="nav-header">
             <div>
                 <h1 style="font-family: 'Bauhaus', sans-serif; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px;">
-                    CRM de <span class="gradient-text" style="background: linear-gradient(135deg, #ffffff 0%, #a1a1a1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Clientes</span>
+                    BarLi <span class="gradient-text" style="background: linear-gradient(135deg, #101a2b 0%, #0b1220 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CRM</span>
                 </h1>
-                <p class="subtitle" style="margin-top: 0.2rem;">Consulta de propuestas y reactivación comercial de clientes</p>
+                <p class="subtitle" style="margin-top: 0.2rem;">Centro de control de ventas y gestión de clientes</p>
             </div>
             <a href="paneladmin" class="back-btn">← Volver al Panel</a>
         </header>
 
-        <!-- Search Bar -->
-        <div class="glass-card" style="padding: 1.5rem;">
-            <div class="filter-bar">
-                <input type="text" id="search-box" class="search-input" placeholder="🔍 Buscar por negocio, CIF o email de cliente..." oninput="filterClients()">
-            </div>
-        </div>
+        <!-- Navigation Tabs -->
+        <nav class="tabs-nav">
+            <button id="tab-btn-dashboard" class="tab-btn active" onclick="switchTab('dashboard')">
+                <span>📊</span> Resumen de Hoy
+            </button>
+            <button id="tab-btn-pipeline" class="tab-btn" onclick="switchTab('pipeline')">
+                <span>📋</span> Pipeline Comercial
+            </button>
+            <button id="tab-btn-database" class="tab-btn" onclick="switchTab('database')">
+                <span>👥</span> Clientes e Historial
+            </button>
+        </nav>
 
-        <!-- Clients Container -->
-        <div class="glass-card" style="min-height: 400px;">
-            <div id="clients-container" class="clients-list">
-                <!-- Dynamic clients load here -->
-                <div class="no-clients">
-                    <span>⏳</span>
-                    Cargando base de datos de clientes...
+        <!-- TAB 1: DASHBOARD / PORTADA -->
+        <section id="tab-view-dashboard" class="tab-view">
+            <div class="dashboard-banner">
+                <h2 style="font-family: 'Bauhaus', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.2rem;">¿Cómo va mi negocio hoy?</h2>
+                <p style="color: #6b7280; font-size: 0.95rem;">Métricas de rendimiento e interacciones comerciales de hoy.</p>
+            </div>
+
+            <div class="kpi-dashboard-grid">
+                <!-- KPI 1: Prospectos Nuevos -->
+                <div class="kpi-card" onclick="switchTab('pipeline')" style="cursor: pointer;">
+                    <div class="kpi-header">
+                        <span>Prospectos</span>
+                        <span class="kpi-icon">👥</span>
+                    </div>
+                    <div>
+                        <h3 class="kpi-value" id="kpi-prospects">0</h3>
+                        <p class="kpi-sub">Contactos en fase inicial</p>
+                    </div>
                 </div>
+
+                <!-- KPI 2: Reuniones Hoy -->
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span>Reuniones Hoy</span>
+                        <span class="kpi-icon">📅</span>
+                    </div>
+                    <div>
+                        <h3 class="kpi-value" id="kpi-meetings-count">0</h3>
+                        <p class="kpi-sub">Agendadas para hoy</p>
+                    </div>
+                </div>
+
+                <!-- KPI 3: Propuestas Pendientes -->
+                <div class="kpi-card" onclick="switchTab('pipeline')" style="cursor: pointer;">
+                    <div class="kpi-header">
+                        <span>Propuestas Pendientes</span>
+                        <span class="kpi-icon">📄</span>
+                    </div>
+                    <div>
+                        <h3 class="kpi-value" id="kpi-pending-prop">0</h3>
+                        <p class="kpi-sub">En negociación o enviadas</p>
+                    </div>
+                </div>
+
+                <!-- KPI 4: Clientes Cerrados -->
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span>Cerrados este mes</span>
+                        <span class="kpi-icon">🤝</span>
+                    </div>
+                    <div>
+                        <h3 class="kpi-value" id="kpi-closed-clients">0</h3>
+                        <p class="kpi-sub">Proyectos ganados</p>
+                    </div>
+                </div>
+
+                <!-- KPI 5: Ingresos del mes -->
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span>Ingresos del mes</span>
+                        <span class="kpi-icon">💰</span>
+                    </div>
+                    <div>
+                        <h3 class="kpi-value" id="kpi-monthly-income">0 €</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="income-bar" style="width: 0%;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #6b7280; margin-top: 0.4rem;">
+                            <span>Progreso</span>
+                            <span>Meta: 10.000€</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI 6: Tareas para hoy -->
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span>Tareas pendientes</span>
+                        <span class="kpi-icon">✓</span>
+                    </div>
+                    <div>
+                        <h3 class="kpi-value" id="kpi-tasks-count">0</h3>
+                        <p class="kpi-sub">Por completar hoy</p>
+                    </div>
+                </div>
+
+                <!-- List 1: Reuniones -->
+                <div class="kpi-card dashboard-list-card">
+                    <div class="kpi-header" style="border-bottom: 1px solid #e7ecf3; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                        <span>Agenda del Día</span>
+                        <span>📅</span>
+                    </div>
+                    <div id="meetings-list-container" class="meeting-list">
+                        <!-- Dynamic items -->
+                    </div>
+                    <form class="list-input-group" onsubmit="handleAddMeeting(event)">
+                        <input type="text" id="meeting-time-input" class="list-input" placeholder="10:30" style="max-width: 60px;" required>
+                        <input type="text" id="meeting-title-input" class="list-input" placeholder="Reunión..." required>
+                        <button type="submit" class="btn-list-add">+</button>
+                    </form>
+                </div>
+
+                <!-- List 2: Tareas -->
+                <div class="kpi-card dashboard-list-card double-width">
+                    <div class="kpi-header" style="border-bottom: 1px solid #e7ecf3; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                        <span>Tareas para hoy</span>
+                        <span>✓</span>
+                    </div>
+                    <div id="tasks-list-container" class="task-list">
+                        <!-- Dynamic items -->
+                    </div>
+                    <form class="list-input-group" onsubmit="handleAddTask(event)">
+                        <input type="text" id="task-text-input" class="list-input" placeholder="Escribe una nueva tarea..." required>
+                        <button type="submit" class="btn-list-add">Añadir Tarea</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: PIPELINE COMERCIAL -->
+        <section id="tab-view-pipeline" class="tab-view" style="display: none;">
+            <div class="dashboard-banner">
+                <h2 style="font-family: 'Bauhaus', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.2rem;">Pipeline de Ventas</h2>
+                <p style="color: #6b7280; font-size: 0.95rem;">Arrastra o mueve los prospectos entre columnas para actualizar su estado comercial.</p>
+            </div>
+
+            <!-- Kanban Board -->
+            <div class="kanban-board" id="kanban-board-container">
+                <!-- 6 Columns will load dynamically here -->
+            </div>
+        </section>
+
+        <!-- TAB 3: CLIENTES E HISTORIAL (ORIGINAL) -->
+        <section id="tab-view-database" class="tab-view" style="display: none;">
+            <!-- Search Bar -->
+            <div class="glass-card" style="padding: 1.5rem;">
+                <div class="filter-bar">
+                    <input type="text" id="search-box" class="search-input" placeholder="🔍 Buscar por negocio, CIF o email de cliente..." oninput="filterClients()">
+                </div>
+            </div>
+
+            <!-- Clients Container -->
+            <div class="glass-card" style="min-height: 400px;">
+                <div id="clients-container" class="clients-list">
+                    <!-- Dynamic clients load here -->
+                    <div class="no-clients">
+                        <span>⏳</span>
+                        Cargando base de datos de clientes...
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL FOR PIPELINE CARDS (NEW/EDIT) -->
+    <div class="modal-overlay" id="card-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Agregar Prospecto</h3>
+                <button class="close-modal-btn" onclick="closeCardModal()">×</button>
+            </div>
+            
+            <input type="hidden" id="modal-card-id">
+            <input type="hidden" id="modal-col-id">
+
+            <div class="form-group">
+                <label for="card-name">Negocio / Cliente</label>
+                <input type="text" id="card-name" placeholder="Ej. La Picantería" required>
+            </div>
+
+            <div class="form-group">
+                <label for="card-value">Valor Estimado (€)</label>
+                <input type="number" id="card-value" placeholder="0" min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="card-column">Fase del Pipeline</label>
+                <select id="card-column">
+                    <option value="col-prospectos">Prospectos</option>
+                    <option value="col-contacto">Primer contacto</option>
+                    <option value="col-diagnostico">Diagnóstico</option>
+                    <option value="col-propuesta">Propuesta enviada</option>
+                    <option value="col-negociacion">Negociación</option>
+                    <option value="col-ganado">Ganado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="card-notes">Comentarios / Notas</label>
+                <textarea id="card-notes" rows="3" placeholder="Detalles de la oportunidad..."></textarea>
+            </div>
+
+            <div style="border-top: 1px solid #e7ecf3; margin: 1rem 0; padding-top: 0.5rem;">
+                <p style="font-size: 0.7rem; color: #6b7280; text-transform: uppercase; font-weight: 600; margin-bottom: 0.75rem;">Datos del Cliente (Opcional, para presupuestar):</p>
+                
+                <div class="form-group">
+                    <label for="card-cif">CIF / NIF</label>
+                    <input type="text" id="card-cif" placeholder="B12345678">
+                </div>
+                <div class="form-group">
+                    <label for="card-email">Correo Electrónico</label>
+                    <input type="email" id="card-email" placeholder="cliente@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="card-address">Dirección</label>
+                    <input type="text" id="card-address" placeholder="Calle Ejemplo 123">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="btn-delete-card" class="btn-modal-action btn-modal-danger" onclick="handleDeleteCard()" style="display: none;">Eliminar</button>
+                <button class="btn-modal-action btn-modal-secondary" onclick="closeCardModal()">Cancelar</button>
+                <button class="btn-modal-action btn-modal-primary" onclick="handleSaveCard()">Guardar</button>
             </div>
         </div>
     </div>
 
     <script>
+        // --- DATA PERSISTENCE & STATES ---
         let allClients = [];
+        let pipelineData = [];
+        let tasksData = [];
+        let meetingsData = [];
 
+        // Initial default pipeline data
+        const DEFAULT_PIPELINE = [
+            {
+                id: "col-prospectos",
+                title: "Prospectos",
+                cards: [
+                    { id: "c-1", name: "Carlos", value: 0, notes: "Interesado en potenciar su marketing digital.", cif: "", email: "", address: "" },
+                    { id: "c-2", name: "La Picantería", value: 1200, notes: "Pendiente de agendar llamada inicial.", cif: "", email: "", address: "" },
+                    { id: "c-3", name: "El Patio", value: 850, notes: "Contacto inicial establecido por WhatsApp.", cif: "", email: "", address: "" }
+                ]
+            },
+            {
+                id: "col-contacto",
+                title: "Primer contacto",
+                cards: [
+                    { id: "c-4", name: "La Cresta", value: 1500, notes: "Llamada de presentación realizada. Interesados.", cif: "", email: "", address: "" },
+                    { id: "c-5", name: "Marisquería X", value: 2000, notes: "Solicitó información detallada sobre carta digital.", cif: "", email: "", address: "" }
+                ]
+            },
+            {
+                id: "col-diagnostico",
+                title: "Diagnóstico",
+                cards: [
+                    { id: "c-6", name: "Restaurante Sol", value: 1800, notes: "Reunión de diagnóstico completada con el dueño.", cif: "", email: "", address: "" }
+                ]
+            },
+            {
+                id: "col-propuesta",
+                title: "Propuesta enviada",
+                cards: [
+                    { id: "c-7", name: "La Selva", value: 2500, notes: "Propuesta enviada por email. Esperando feedback.", cif: "", email: "", address: "" }
+                ]
+            },
+            {
+                id: "col-negociacion",
+                title: "Negociación",
+                cards: [
+                    { id: "c-8", name: "Doña Nela", value: 3000, notes: "Ajustando detalles del acuerdo anual y ROI.", cif: "", email: "", address: "" }
+                ]
+            },
+            {
+                id: "col-ganado",
+                title: "Ganado",
+                cards: [
+                    { id: "c-9", name: "La Cresta BCN", value: 2500, notes: "Contrato firmado y primer pago procesado.", cif: "B67890123", email: "bcn@lacresta.com", address: "Carrer de Balmes 45, Barcelona" },
+                    { id: "c-10", name: "La Cresta Petit", value: 1500, notes: "Segunda sede cerrada este mes de forma exitosa.", cif: "B67890123", email: "petit@lacresta.com", address: "Gran Via 12, Barcelona" }
+                ]
+            }
+        ];
+
+        // Initial default tasks data
+        const DEFAULT_TASKS = [
+            { id: "t-1", text: "Llamar a La Picantería", done: false },
+            { id: "t-2", text: "Enviar propuesta a Restaurante Sol", done: true },
+            { id: "t-3", text: "Revisión mensual de métricas comerciales", done: false },
+            { id: "t-4", text: "Preparar presentación para Doña Nela", done: false },
+            { id: "t-5", text: "Subir contrato firmado de La Cresta BCN", done: true },
+            { id: "t-6", text: "Reunión de equipo BarLi", done: false },
+            { id: "t-7", text: "Contactar nuevos prospectos de Instagram", done: false },
+            { id: "t-8", text: "Enviar reporte semanal de Google Ads", done: false }
+        ];
+
+        // Initial default meetings data
+        const DEFAULT_MEETINGS = [
+            { id: "m-1", time: "10:30", title: "Diagnóstico con Restaurante Sol" },
+            { id: "m-2", time: "12:00", title: "Presentación Propuesta La Selva" },
+            { id: "m-3", time: "16:30", title: "Llamada Seguimiento Doña Nela" }
+        ];
+
+        // Load data from Local Storage or fallback
+        function initData() {
+            try {
+                const storedPipeline = localStorage.getItem('barli_crm_pipeline');
+                pipelineData = storedPipeline ? JSON.parse(storedPipeline) : DEFAULT_PIPELINE;
+                
+                if (pipelineData.length === 0 || !pipelineData[0].id) {
+                    pipelineData = DEFAULT_PIPELINE;
+                }
+            } catch (e) {
+                console.error(e);
+                pipelineData = DEFAULT_PIPELINE;
+            }
+
+            try {
+                const storedTasks = localStorage.getItem('barli_crm_tasks');
+                tasksData = storedTasks ? JSON.parse(storedTasks) : DEFAULT_TASKS;
+            } catch (e) {
+                console.error(e);
+                tasksData = DEFAULT_TASKS;
+            }
+
+            try {
+                const storedMeetings = localStorage.getItem('barli_crm_meetings');
+                meetingsData = storedMeetings ? JSON.parse(storedMeetings) : DEFAULT_MEETINGS;
+            } catch (e) {
+                console.error(e);
+                meetingsData = DEFAULT_MEETINGS;
+            }
+
+            saveData();
+        }
+
+        // Save data to Local Storage
+        function saveData() {
+            localStorage.setItem('barli_crm_pipeline', JSON.stringify(pipelineData));
+            localStorage.setItem('barli_crm_tasks', JSON.stringify(tasksData));
+            localStorage.setItem('barli_crm_meetings', JSON.stringify(meetingsData));
+        }
+
+        // --- NAVIGATION TABS LOGIC ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-btn-${tabId}`).classList.add('active');
+
+            document.querySelectorAll('.tab-view').forEach(view => view.style.display = 'none');
+            document.getElementById(`tab-view-${tabId}`).style.display = 'block';
+
+            if (tabId === 'dashboard') {
+                renderDashboard();
+            } else if (tabId === 'pipeline') {
+                renderPipeline();
+            } else if (tabId === 'database') {
+                fetchBudgetData();
+            }
+        }
+
+        // --- DASHBOARD PORTADA LOGIC ---
+        function renderDashboard() {
+            const colProspects = pipelineData.find(c => c.id === 'col-prospectos');
+            const countProspects = colProspects ? colProspects.cards.length : 0;
+
+            const countMeetings = meetingsData.length;
+
+            const colPropuesta = pipelineData.find(c => c.id === 'col-propuesta');
+            const colNegociacion = pipelineData.find(c => c.id === 'col-negociacion');
+            const countPending = (colPropuesta ? colPropuesta.cards.length : 0) + (colNegociacion ? colNegociacion.cards.length : 0);
+
+            const colGanado = pipelineData.find(c => c.id === 'col-ganado');
+            const countGanados = colGanado ? colGanado.cards.length : 0;
+
+            let monthlyIncome = 0;
+            if (colGanado) {
+                colGanado.cards.forEach(c => monthlyIncome += (c.value || 0));
+            }
+
+            const countPendingTasks = tasksData.filter(t => !t.done).length;
+
+            document.getElementById('kpi-prospects').innerText = countProspects;
+            document.getElementById('kpi-meetings-count').innerText = countMeetings;
+            document.getElementById('kpi-pending-prop').innerText = countPending;
+            document.getElementById('kpi-closed-clients').innerText = countGanados;
+            document.getElementById('kpi-monthly-income').innerText = monthlyIncome.toLocaleString('es-ES') + ' €';
+            document.getElementById('kpi-tasks-count').innerText = countPendingTasks;
+
+            const incomeGoal = 10000;
+            const progressPct = Math.min((monthlyIncome / incomeGoal) * 100, 100);
+            document.getElementById('income-bar').style.width = `${progressPct}%`;
+
+            const meetingsContainer = document.getElementById('meetings-list-container');
+            meetingsContainer.innerHTML = '';
+            
+            if (meetingsData.length === 0) {
+                meetingsContainer.innerHTML = '<div style="color:#6b7280; font-size:0.85rem; padding:1rem 0;">No hay reuniones registradas hoy.</div>';
+            } else {
+                meetingsData.sort((a,b) => a.time.localeCompare(b.time));
+                meetingsData.forEach(m => {
+                    const el = document.createElement('div');
+                    el.className = 'meeting-item';
+                    el.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:0.5rem; max-width:80%;">
+                            <span class="meeting-time">${m.time}</span>
+                            <span style="color:#101a2b; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${m.title}</span>
+                        </div>
+                        <button class="btn-delete-item" onclick="handleDeleteMeeting('${m.id}')">✕</button>
+                    `;
+                    meetingsContainer.appendChild(el);
+                });
+            }
+
+            const tasksContainer = document.getElementById('tasks-list-container');
+            tasksContainer.innerHTML = '';
+
+            if (tasksData.length === 0) {
+                tasksContainer.innerHTML = '<div style="color:#6b7280; font-size:0.85rem; padding:1rem 0;">No tienes tareas registradas para hoy.</div>';
+            } else {
+                const sortedTasks = [...tasksData].sort((a, b) => a.done - b.done);
+                sortedTasks.forEach(t => {
+                    const el = document.createElement('div');
+                    el.className = `task-item ${t.done ? 'done' : ''}`;
+                    el.innerHTML = `
+                        <div class="task-text" onclick="toggleTask('${t.id}')">
+                            <input type="checkbox" class="task-checkbox" ${t.done ? 'checked' : ''}>
+                            <span>${t.text}</span>
+                        </div>
+                        <button class="btn-delete-item" onclick="handleDeleteTask('${t.id}')">✕</button>
+                    `;
+                    tasksContainer.appendChild(el);
+                });
+            }
+        }
+
+        function handleAddTask(e) {
+            e.preventDefault();
+            const input = document.getElementById('task-text-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            tasksData.push({
+                id: 't-' + Date.now(),
+                text: text,
+                done: false
+            });
+            input.value = '';
+            saveData();
+            renderDashboard();
+        }
+
+        function toggleTask(id) {
+            const task = tasksData.find(t => t.id === id);
+            if (task) {
+                task.done = !task.done;
+                saveData();
+                renderDashboard();
+            }
+        }
+
+        function handleDeleteTask(id) {
+            tasksData = tasksData.filter(t => t.id !== id);
+            saveData();
+            renderDashboard();
+        }
+
+        function handleAddMeeting(e) {
+            e.preventDefault();
+            const timeInput = document.getElementById('meeting-time-input');
+            const titleInput = document.getElementById('meeting-title-input');
+            const time = timeInput.value.trim();
+            const title = titleInput.value.trim();
+
+            if (!time || !title) return;
+
+            meetingsData.push({
+                id: 'm-' + Date.now(),
+                time: time,
+                title: title
+            });
+
+            timeInput.value = '';
+            titleInput.value = '';
+            saveData();
+            renderDashboard();
+        }
+
+        function handleDeleteMeeting(id) {
+            meetingsData = meetingsData.filter(m => m.id !== id);
+            saveData();
+            renderDashboard();
+        }
+
+        // --- PIPELINE KANBAN BOARD LOGIC ---
+        function renderPipeline() {
+            const container = document.getElementById('kanban-board-container');
+            container.innerHTML = '';
+
+            pipelineData.forEach((column, colIdx) => {
+                let colSum = 0;
+                column.cards.forEach(c => colSum += (c.value || 0));
+
+                const colEl = document.createElement('div');
+                colEl.className = 'kanban-column';
+                colEl.setAttribute('ondrop', `drop(event, '${column.id}')`);
+                colEl.setAttribute('ondragover', 'allowDrop(event)');
+
+                colEl.innerHTML = `
+                    <div class="kanban-column-header">
+                        <div class="kanban-column-title">
+                            ${column.title}
+                            <span class="column-count">${column.cards.length}</span>
+                        </div>
+                        ${colSum > 0 ? `<div class="column-value">${colSum.toLocaleString('es-ES')}€</div>` : ''}
+                    </div>
+                    <div class="kanban-cards-container" id="cards-container-${column.id}">
+                        <!-- Cards load dynamically -->
+                    </div>
+                    <button class="btn-add-card" onclick="openCardModal('${column.id}', null)">
+                        + Agregar prospecto
+                    </button>
+                `;
+
+                container.appendChild(colEl);
+
+                const cardsContainer = document.getElementById(`cards-container-${column.id}`);
+
+                column.cards.forEach((card, cardIdx) => {
+                    const cardEl = document.createElement('div');
+                    cardEl.className = 'kanban-card';
+                    cardEl.setAttribute('draggable', 'true');
+                    cardEl.setAttribute('ondragstart', `drag(event, '${card.id}', '${column.id}')`);
+                    cardEl.setAttribute('onclick', `openCardModal('${column.id}', ${cardIdx}, event)`);
+
+                    const queryParams = new URLSearchParams({
+                        businessName: card.name,
+                        clientCif: card.cif || '',
+                        clientEmail: card.email || '',
+                        clientAddress: card.address || ''
+                    }).toString();
+
+                    cardEl.innerHTML = `
+                        <div class="kanban-card-title">${card.name}</div>
+                        ${card.notes ? `<div class="kanban-card-info">${card.notes}</div>` : `<div class="kanban-card-info" style="color: #c7c7cc; font-style: italic;">Sin notas de seguimiento</div>`}
+                        <div class="kanban-card-footer">
+                            ${card.value > 0 ? `<span class="card-badge">${card.value.toLocaleString('es-ES')}€</span>` : '<span></span>'}
+                            
+                            <div class="card-actions-row">
+                                ${colIdx > 0 ? `
+                                    <button class="card-btn" onclick="moveCard('${column.id}', ${cardIdx}, -1, event)" title="Mover izquierda">◀</button>
+                                ` : ''}
+                                ${colIdx < pipelineData.length - 1 ? `
+                                    <button class="card-btn" onclick="moveCard('${column.id}', ${cardIdx}, 1, event)" title="Mover derecha">▶</button>
+                                ` : ''}
+                                <a href="admin.html?${queryParams}" class="card-btn" style="text-decoration:none;" onclick="event.stopPropagation();" title="Nueva Propuesta">
+                                    ➕
+                                </a>
+                            </div>
+                        </div>
+                    `;
+
+                    cardsContainer.appendChild(cardEl);
+                });
+            });
+        }
+
+        function moveCard(columnId, cardIndex, direction, event) {
+            if (event) event.stopPropagation();
+
+            const currentColumn = pipelineData.find(c => c.id === columnId);
+            const currentColIdx = pipelineData.findIndex(c => c.id === columnId);
+            const targetColIdx = currentColIdx + direction;
+
+            if (targetColIdx >= 0 && targetColIdx < pipelineData.length) {
+                const card = currentColumn.cards.splice(cardIndex, 1)[0];
+                pipelineData[targetColIdx].cards.push(card);
+                saveData();
+                renderPipeline();
+            }
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev, cardId, colId) {
+            ev.dataTransfer.setData("text/card-id", cardId);
+            ev.dataTransfer.setData("text/source-col-id", colId);
+        }
+
+        function drop(ev, targetColId) {
+            ev.preventDefault();
+            const cardId = ev.dataTransfer.getData("text/card-id");
+            const sourceColId = ev.dataTransfer.getData("text/source-col-id");
+
+            if (sourceColId === targetColId) return;
+
+            const sourceColumn = pipelineData.find(c => c.id === sourceColId);
+            const targetColumn = pipelineData.find(c => c.id === targetColId);
+
+            if (sourceColumn && targetColumn) {
+                const cardIdx = sourceColumn.cards.findIndex(c => c.id === cardId);
+                if (cardIdx !== -1) {
+                    const card = sourceColumn.cards.splice(cardIdx, 1)[0];
+                    targetColumn.cards.push(card);
+                    saveData();
+                    renderPipeline();
+                }
+            }
+        }
+
+        // --- CARD MODAL LOGIC ---
+        function openCardModal(colId, cardIdx, event) {
+            if (event) event.stopPropagation();
+
+            const overlay = document.getElementById('card-modal');
+            const titleEl = document.getElementById('modal-title');
+            const deleteBtn = document.getElementById('btn-delete-card');
+
+            document.getElementById('modal-card-id').value = '';
+            document.getElementById('modal-col-id').value = colId;
+            document.getElementById('card-name').value = '';
+            document.getElementById('card-value').value = '';
+            document.getElementById('card-notes').value = '';
+            document.getElementById('card-cif').value = '';
+            document.getElementById('card-email').value = '';
+            document.getElementById('card-address').value = '';
+            document.getElementById('card-column').value = colId;
+
+            if (cardIdx !== null) {
+                const col = pipelineData.find(c => c.id === colId);
+                const card = col.cards[cardIdx];
+
+                titleEl.innerText = "Editar Oportunidad";
+                deleteBtn.style.display = 'block';
+
+                document.getElementById('modal-card-id').value = card.id;
+                document.getElementById('card-name').value = card.name || '';
+                document.getElementById('card-value').value = card.value || '';
+                document.getElementById('card-notes').value = card.notes || '';
+                document.getElementById('card-cif').value = card.cif || '';
+                document.getElementById('card-email').value = card.email || '';
+                document.getElementById('card-address').value = card.address || '';
+            } else {
+                titleEl.innerText = "Agregar Oportunidad";
+                deleteBtn.style.display = 'none';
+            }
+
+            overlay.style.display = 'flex';
+        }
+
+        function closeCardModal() {
+            document.getElementById('card-modal').style.display = 'none';
+        }
+
+        function handleSaveCard() {
+            const cardId = document.getElementById('modal-card-id').value;
+            const sourceColId = document.getElementById('modal-col-id').value;
+            const targetColId = document.getElementById('card-column').value;
+
+            const name = document.getElementById('card-name').value.trim();
+            const value = parseFloat(document.getElementById('card-value').value) || 0;
+            const notes = document.getElementById('card-notes').value.trim();
+            const cif = document.getElementById('card-cif').value.trim();
+            const email = document.getElementById('card-email').value.trim();
+            const address = document.getElementById('card-address').value.trim();
+
+            if (!name) {
+                alert("Por favor introduce el nombre del negocio o cliente.");
+                return;
+            }
+
+            if (cardId) {
+                const sourceCol = pipelineData.find(c => c.id === sourceColId);
+                const cardIdx = sourceCol.cards.findIndex(c => c.id === cardId);
+                
+                if (cardIdx !== -1) {
+                    const card = sourceCol.cards[cardIdx];
+                    card.name = name;
+                    card.value = value;
+                    card.notes = notes;
+                    card.cif = cif;
+                    card.email = email;
+                    card.address = address;
+
+                    if (sourceColId !== targetColId) {
+                        sourceCol.cards.splice(cardIdx, 1);
+                        pipelineData.find(c => c.id === targetColId).cards.push(card);
+                    }
+                }
+            } else {
+                const newCard = {
+                    id: 'c-' + Date.now(),
+                    name: name,
+                    value: value,
+                    notes: notes,
+                    cif: cif,
+                    email: email,
+                    address: address
+                };
+                pipelineData.find(c => c.id === targetColId).cards.push(newCard);
+            }
+
+            saveData();
+            closeCardModal();
+            renderPipeline();
+        }
+
+        function handleDeleteCard() {
+            const cardId = document.getElementById('modal-card-id').value;
+            const colId = document.getElementById('modal-col-id').value;
+
+            if (!cardId) return;
+
+            if (confirm("¿Estás seguro de que quieres eliminar esta oportunidad comercial?")) {
+                const column = pipelineData.find(c => c.id === colId);
+                if (column) {
+                    column.cards = column.cards.filter(c => c.id !== cardId);
+                    saveData();
+                    closeCardModal();
+                    renderPipeline();
+                }
+            }
+        }
+
+        // --- TAB 3: ORIGINAL CLIENT DATABASE SERVICES LOGIC ---
         async function fetchBudgetData() {
             let budgets = [];
             const apiUrl = getApiUrl();
             const loc = window.location;
             const cleanApiUrl = (apiUrl === loc.origin) ? '' : apiUrl;
 
-            // 1. Fetch Cloud Budgets
             try {
                 if (cleanApiUrl) {
                     const response = await fetch(`${cleanApiUrl}/api/budgets`);
@@ -368,7 +1670,6 @@
                 console.warn("Could not load cloud budgets. Checking local backup.", err);
             }
 
-            // 2. Fetch Local Storage Budgets
             let localBudgets = [];
             try {
                 localBudgets = JSON.parse(localStorage.getItem('barli_local_budgets') || '[]');
@@ -376,13 +1677,9 @@
                 console.error(e);
             }
 
-            // Combine both sources
             budgets = [...budgets, ...localBudgets];
-
-            // Sort all budgets by date descending
             budgets.sort((a, b) => new Date(b.timestamp || b.createdAt) - new Date(a.timestamp || a.createdAt));
 
-            // Group proposals by client (keyed by name/CIF)
             const clientsMap = {};
             budgets.forEach(b => {
                 const key = (b.clientCif || b.businessName || 'Desconocido').trim().toLowerCase();
@@ -397,19 +1694,15 @@
                     };
                 }
                 
-                // Calculate proposal total
                 let totalAmount = 0;
                 if (b.services) {
                     b.services.forEach(s => totalAmount += (s.price || 0));
                 }
 
-                // Generate view link
                 let proposalLink = '';
                 if (b.id) {
-                    // Cloud URL
                     proposalLink = `proposal.html?id=${b.id}&api=${encodeURIComponent(cleanApiUrl || loc.origin)}`;
                 } else {
-                    // Portable URL
                     const dataStr = btoa(unescape(encodeURIComponent(JSON.stringify(b))));
                     proposalLink = `proposal.html?data=${dataStr}`;
                 }
@@ -476,9 +1769,8 @@
                         </div>
                     </div>
 
-                    <!-- Proposals Dropdown Panel -->
                     <div id="history-panel-${idx}" class="proposals-history-panel">
-                        <h4 style="font-size: 0.9rem; text-transform: uppercase; color: #8e8e93; margin-bottom: 0.8rem; letter-spacing: 0.05em;">Propuestas Emitidas:</h4>
+                        <h4 style="font-size: 0.9rem; text-transform: uppercase; color: #6b7280; margin-bottom: 0.8rem; letter-spacing: 0.05em;">Propuestas Emitidas:</h4>
                         <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                             ${client.proposals.map(p => {
                                 const dateObj = new Date(p.timestamp);
@@ -532,8 +1824,8 @@
             renderClients(filtered);
         }
 
-        // Fetch client lists on load
-        fetchBudgetData();
+        initData();
+        switchTab('dashboard');
     </script>
 </body>
 </html>
