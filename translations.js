@@ -1,12 +1,12 @@
 const translations = {
     es: {
         dir: "ltr",
-        nav_btn: "Diagnóstico Gratis",
+        nav_btn: "Demo Gratis",
         hero_badge: "Ecosistemas digitales a medida",
         hero_title: "Tu restaurante no necesita más herramientas.",
         hero_title_span: "Necesita un sistema que conecte ventas, reservas, costes y operación.",
         hero_subtitle: "Ecosistemas digitales a medida de BarLi para operar, vender y decidir mejor.",
-        hero_btn_cta: "Agendar Diagnóstico Gratuito",
+        hero_btn_cta: "Solicitar Demo Gratis",
         hero_btn_explore: "Explorar Módulos",
         badge_reservas: "Reservas 24/7 sin Comisiones",
         badge_offline: "Soporte Offline-First",
@@ -160,11 +160,11 @@ const translations = {
         
         // CTA & footer
         cta_title: "El primer paso no te cuesta nada",
-        cta_subtitle: "Agendemos un diagnóstico gratuito de 30 minutos por WhatsApp. Analizaremos tu menú, localizaremos tus fugas de rentabilidad y te propondremos soluciones claras.",
+        cta_subtitle: "Solicita tu demo gratis por WhatsApp. Te configuramos el TPV durante 1 mes completo sin compromiso para que compares y sientas la diferencia.",
         form_name: "Tu nombre",
         form_rest: "Nombre de tu local",
         form_phone: "Tu número de móvil / WhatsApp",
-        form_btn: "Solicitar Diagnóstico por WhatsApp",
+        form_btn: "Solicitar Demo Gratis por WhatsApp",
         footer_contact: "Contacto",
         footer_desc: "Ecosistemas digitales a medida para hostelería. Creamos herramientas tecnológicas estables para operar, vender y decidir mejor.",
         
@@ -182,12 +182,12 @@ const translations = {
     },
     en: {
         dir: "ltr",
-        nav_btn: "Free Diagnosis",
+        nav_btn: "Free Demo",
         hero_badge: "Custom B2B digital ecosystems",
         hero_title: "Your restaurant doesn't need more tools.",
         hero_title_span: "It needs a system that connects sales, reservations, costs, and operation.",
         hero_subtitle: "Custom B2B digital ecosystems by BarLi to operate, sell, and decide better.",
-        hero_btn_cta: "Schedule Free Diagnosis",
+        hero_btn_cta: "Request Free Demo",
         hero_btn_explore: "Explore Modules",
         badge_reservas: "24/7 Commission-Free Bookings",
         badge_offline: "Offline-First Support",
@@ -341,11 +341,11 @@ const translations = {
         
         // CTA & footer
         cta_title: "The first step costs you nothing",
-        cta_subtitle: "Let's schedule a free 30-minute diagnosis via WhatsApp. We will analyze your menu, locate your profit leaks, and propose clear solutions.",
+        cta_subtitle: "Request your free demo via WhatsApp. We will configure your POS for 1 full month with no commitment so you can compare and feel the difference.",
         form_name: "Your name",
         form_rest: "Your restaurant name",
         form_phone: "Your mobile / WhatsApp number",
-        form_btn: "Request Diagnosis on WhatsApp",
+        form_btn: "Request Free Demo on WhatsApp",
         footer_contact: "Contact",
         footer_desc: "Tailored B2B digital ecosystems for hospitality. We build stable technology systems to help you operate, sell, and decide better.",
         
@@ -363,12 +363,12 @@ const translations = {
     },
     ca: {
         dir: "ltr",
-        nav_btn: "Diagnòstic Gratis",
+        nav_btn: "Demo Gratis",
         hero_badge: "Ecosistemes digitals a mida",
         hero_title: "El teu restaurant no necessita més eines.",
         hero_title_span: "Necessita un sistema que connecti vendes, reserves, costos i operació.",
         hero_subtitle: "Ecosistemes digitals a mida de BarLi per operar, vendre i decidir millor.",
-        hero_btn_cta: "Reservar Diagnòstic Gratuït",
+        hero_btn_cta: "Sol·licitar Demo Gratis",
         hero_btn_explore: "Explorar Mòduls",
         badge_reservas: "Reserves 24/7 sense Comissions",
         badge_offline: "Suport Offline-First",
@@ -522,11 +522,11 @@ const translations = {
         
         // CTA & footer
         cta_title: "El primer pas no et costa res",
-        cta_subtitle: "Programem un diagnòstic gratuït de 30 minuts per WhatsApp. Analitzarem el teu menú, localitzarem les teves fugues de rendibilitat i et proposarem solucions clares.",
+        cta_subtitle: "Sol·licita la teva demo gratis per WhatsApp. Et configurem el TPV durant 1 mes complet sense compromís perquè comparis i sentis la diferència.",
         form_name: "El teu nom",
         form_rest: "Nom del teu local",
         form_phone: "El teu número de mòbil / WhatsApp",
-        form_btn: "Sol·licitar Diagnòstic per WhatsApp",
+        form_btn: "Sol·licitar Demo Gratis per WhatsApp",
         footer_contact: "Contacte",
         footer_desc: "Ecosistemes digitals a mida per a hostaleria. Creem eines tecnològiques estables per operar, vendre i decidir millor.",
         
@@ -544,12 +544,12 @@ const translations = {
     },
     ar: {
         dir: "rtl",
-        nav_btn: "تشخيص مجاني",
+        nav_btn: "تجربة مجانية",
         hero_badge: "أنظمة رقمية مخصصة",
         hero_title: "مطعمك لا يحتاج إلى المزيد من الأدوات.",
         hero_title_span: "إنه بحاجة إلى نظام يربط المبيعات والحجوزات والتكاليف والتشغيل.",
         hero_subtitle: "أنظمة رقمية مخصصة من BarLi للتشغيل والبيع واتخاذ قرارات أفضل للمطاعم.",
-        hero_btn_cta: "حجز موعد تشخيص مجاني",
+        hero_btn_cta: "طلب تجربة مجانية",
         hero_btn_explore: "استكشف الوحدات",
         badge_reservas: "حجوزات 24/7 بدون عمولات",
         badge_offline: "دعم العمل بدون إنترنت أولاً",
@@ -703,11 +703,11 @@ const translations = {
         
         // CTA & footer
         cta_title: "الخطوة الأولى مجانية بالكامل",
-        cta_subtitle: "لنحدد موعد تشخيص مجاني لمدة 30 دقيقة عبر واتساب. سنحلل قائمتك، ونحدد نقاط تسرب الأرباح ونقترح حلولاً واضحة.",
+        cta_subtitle: "اطلب تجربتك المجانية عبر واتساب. سنقوم بإعداد النظام لك لمدة شهر كامل بدون أي التزام لتتمكن من المقارنة والشعور بالفرق.",
         form_name: "اسمك",
         form_rest: "اسم مطعمك",
         form_phone: "رقم جوالك / واتساب",
-        form_btn: "طلب موعد تشخيص عبر واتساب",
+        form_btn: "طلب تجربة مجانية عبر واتساب",
         footer_contact: "اتصل بنا",
         footer_desc: "أنظمة بيئية رقمية مخصصة لقطاع المطاعم والضيافة. نبتكر حلولاً تكنولوجية مستقرة لتشغيل وبيع واتخاذ قرارات أفضل.",
         
