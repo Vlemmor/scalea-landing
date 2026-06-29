@@ -1,0 +1,3321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="solo_logo.png?v=2" />
+    <title>BarLi | Ecosistema Digital a Medida para Restauración y Hostelería</title>
+    <meta name="description" content="Digitaliza tu restaurante con BarLi. Conecta TPV, reservas 24/7 sin comisiones, control de escandallos en tiempo real e IA. Aumenta tus ventas y recupera tu tiempo." />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Palette & Typography */
+            --font-head: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            --bg-primary: #FAFBFD;
+            --bg-card: #FFFFFF;
+            --text-main: #0E1624;
+            --text-muted: #64748B;
+            --text-light: #94A3B8;
+            
+            --brand-primary: #1340FC;
+            --brand-hover: #002BD6;
+            --brand-light: #F0F4FF;
+            --brand-light-hover: #E0E7FF;
+            
+            --color-success: #10B981;
+            --color-success-light: #ECFDF5;
+            --color-danger: #EF4444;
+            --color-danger-light: #FEF2F2;
+            --color-warning: #F59E0B;
+            --color-warning-light: #FEF3C7;
+            
+            --border-color: rgba(226, 232, 240, 0.8);
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+            
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.02);
+            --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
+            --shadow-lg: 0 20px 40px rgba(19, 64, 252, 0.05), 0 1px 10px rgba(0,0,0,0.01);
+            
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Global Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: radial-gradient(rgba(19, 64, 252, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-head);
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--text-main);
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-smooth);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 50px;
+            margin-bottom: 16px;
+            gap: 6px;
+        }
+
+        .badge-brand {
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+        }
+
+        .badge-danger {
+            background-color: var(--color-danger-light);
+            color: var(--color-danger);
+        }
+
+        .badge-success {
+            background-color: var(--color-success-light);
+            color: var(--color-success);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            font-family: var(--font-head);
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            gap: 8px;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--brand-primary);
+            color: #FFFFFF;
+            box-shadow: 0 4px 14px rgba(19, 64, 252, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--brand-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(19, 64, 252, 0.35);
+        }
+
+        .btn-secondary {
+            background-color: #FFFFFF;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+            border-color: var(--brand-primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: #FFFFFF;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #20BA5A;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+        }
+
+        /* Header / Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(250, 251, 253, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--text-main);
+        }
+
+        .logo span {
+            color: var(--brand-primary);
+            position: relative;
+        }
+
+        .logo span::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: var(--brand-primary);
+            border-radius: 50%;
+            top: 4px;
+            right: -6px;
+        }
+
+        .logo-img {
+            height: 32px;
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 160px 0 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        @media (max-width: 950px) {
+            .hero-layout {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .hero-text h1 {
+            font-size: 44px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero-text h1 span {
+            color: var(--brand-primary);
+            display: block;
+            font-size: 32px;
+            margin-top: 8px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            margin-bottom: 36px;
+            line-height: 1.5;
+            max-width: 580px;
+        }
+
+        @media (max-width: 950px) {
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 950px) {
+            .hero-cta {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .hero-cta {
+                flex-direction: column;
+            }
+        }
+
+        .hero-badges-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 950px) {
+            .hero-badges-grid {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+
+        .hero-badge-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-card);
+            padding: 12px 16px;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            text-align: left;
+        }
+
+        .hero-badge-item svg {
+            color: var(--brand-primary);
+            flex-shrink: 0;
+        }
+
+        .hero-badge-item span {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Premium Tablet Simulator (Mockup) */
+        .tablet-mockup {
+            background-color: #1e293b;
+            border-radius: 24px;
+            padding: 10px;
+            box-shadow: var(--shadow-lg);
+            border: 3px solid #475569;
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .tablet-screen {
+            background-color: #FAFBFD;
+            border-radius: 16px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 80px 1fr;
+        }
+
+        /* Mockup App Layout */
+        .tablet-sidebar {
+            background-color: #0E1624;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 0;
+            gap: 20px;
+            border-right: 1px solid #1A2536;
+        }
+
+        .sidebar-logo {
+            color: #FFFFFF;
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .sidebar-logo span { color: var(--brand-primary); }
+
+        .sidebar-item {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94A3B8;
+            font-size: 16px;
+        }
+
+        .sidebar-item.active {
+            background-color: var(--brand-primary);
+            color: #FFFFFF;
+        }
+
+        .tablet-main {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+        }
+
+        .main-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main-title-lbl {
+            font-family: var(--font-head);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .kpis-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .kpi-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .kpi-lbl {
+            font-size: 9px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .kpi-val {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .kpi-val.green { color: var(--color-success); }
+
+        .chart-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .chart-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .svg-chart {
+            width: 100%;
+            height: 80px;
+        }
+
+        /* Order feed simulation */
+        .mock-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .feed-item {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9px;
+        }
+
+        .feed-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feed-table {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .feed-badge {
+            background-color: var(--color-success-light);
+            color: var(--color-success);
+            padding: 2px 6px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .feed-badge.blue {
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+        }
+
+        /* Section Global Styles */
+        .section-padding {
+            padding: 100px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px auto;
+        }
+
+        .section-header h2 {
+            font-size: 38px;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header p {
+            font-size: 16px;
+        }
+
+        /* Problems Section (Iceberg SVG) */
+        .problem-section {
+            background-color: #FFFFFF;
+        }
+
+        .problem-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        @media (max-width: 950px) {
+            .problem-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Advanced SVG Iceberg Container */
+        .iceberg-wrapper {
+            position: relative;
+            background: linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            height: 520px;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .iceberg-svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .iceberg-label {
+            position: absolute;
+            z-index: 10;
+            padding: 8px 14px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            max-width: 190px;
+        }
+
+        .iceberg-label:hover {
+            transform: scale(1.05);
+            z-index: 15;
+            box-shadow: var(--shadow-md);
+        }
+
+        .label-badge {
+            font-size: 9px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--brand-primary);
+            background-color: var(--brand-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            align-self: flex-start;
+        }
+
+        .danger-badge {
+            font-size: 9px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--color-danger);
+            background-color: var(--color-danger-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            align-self: flex-start;
+        }
+
+        .iceberg-label strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .label-tooltip {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            line-height: 1.3;
+            margin-top: 4px;
+        }
+
+        /* Precise layouts for labels over the SVG */
+        .val-1 { top: 35px; left: 10%; background-color: #FFFFFF; }
+        .val-2 { top: 95px; right: 8%; background-color: #FFFFFF; }
+        
+        .hid-1 { bottom: 250px; left: 6%; background-color: #FFF5F5; border-color: #FEB2B2; }
+        .hid-2 { bottom: 175px; right: 6%; background-color: #FFF5F5; border-color: #FEB2B2; }
+        .hid-3 { bottom: 105px; left: 8%; background-color: #FFF5F5; border-color: #FEB2B2; }
+        .hid-4 { bottom: 35px; right: 10%; background-color: #FFF5F5; border-color: #FEB2B2; }
+
+        .problem-list {
+            list-style: none;
+        }
+
+        .problem-item {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .problem-item:hover, .problem-item.active {
+            border-color: var(--color-danger);
+            background-color: var(--color-danger-light);
+        }
+
+        .problem-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .problem-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .problem-icon {
+            color: var(--color-danger);
+            display: flex;
+            align-items: center;
+        }
+
+        .problem-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-top: 0;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .problem-item.active .problem-body {
+            max-height: 150px;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(239, 68, 68, 0.2);
+            margin-top: 8px;
+        }
+
+        /* Indicators section (La Realidad) */
+        .indicators-section {
+            background-color: var(--bg-primary);
+            padding: 80px 0;
+        }
+
+        .indicators-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 800px) {
+            .indicators-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .indicator-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 32px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+        }
+
+        .indicator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .indicator-stat {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--brand-primary);
+            margin-bottom: 8px;
+            font-family: var(--font-head);
+        }
+
+        .indicator-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .indicator-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .indicator-source {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-light);
+            background-color: var(--bg-primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Modules Section (Ecosistema) */
+        .modules-section {
+            background-color: #FFFFFF;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 1100px) {
+            .modules-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .module-card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .module-card:hover {
+            border-color: var(--brand-primary);
+            background-color: #FFFFFF;
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        .module-icon-box {
+            width: 48px;
+            height: 48px;
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            transition: var(--transition-smooth);
+        }
+
+        .module-card:hover .module-icon-box {
+            background-color: var(--brand-primary);
+            color: #FFFFFF;
+        }
+
+        .module-num {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--brand-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .module-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .module-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .module-action {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--brand-primary);
+        }
+
+        .module-action svg {
+            transition: transform 0.2s;
+        }
+
+        .module-card:hover .module-action svg {
+            transform: translateX(4px);
+        }
+
+        /* Drawer for Details */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(14, 22, 36, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .drawer-panel {
+            position: fixed;
+            top: 0;
+            right: -500px;
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            background-color: var(--bg-card);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.1);
+            z-index: 2001;
+            padding: 40px;
+            overflow-y: auto;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .drawer-panel.active {
+            right: 0;
+        }
+
+        .drawer-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .drawer-close:hover {
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+            border-color: var(--brand-primary);
+        }
+
+        .drawer-module-num {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--brand-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            margin-top: 16px;
+        }
+
+        .drawer-title {
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .drawer-desc {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        .drawer-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .drawer-list {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .drawer-list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .drawer-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .drawer-list li strong {
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* Demo Chat Asistente Virtual */
+        .chat-section {
+            background-color: var(--bg-primary);
+        }
+
+        .chat-layout {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .chat-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mockup de Teléfono Móvil */
+        .phone-mockup {
+            background-color: #1E293B;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 4px solid #475569;
+            width: 100%;
+            max-width: 340px;
+            height: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background-color: #1E293B;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            background-color: #FAFBFD;
+            border-radius: 32px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .chat-header {
+            background-color: #075E54;
+            color: #FFFFFF;
+            padding: 32px 16px 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #FFFFFF;
+            color: #075E54;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .chat-header-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-name {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .chat-status {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        .chat-body {
+            flex-grow: 1;
+            padding: 16px;
+            overflow-y: auto;
+            background-color: #ECE5DD;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            position: relative;
+            line-height: 1.4;
+        }
+
+        .chat-bubble-received {
+            background-color: #FFFFFF;
+            color: var(--text-main);
+            align-self: flex-start;
+            border-top-left-radius: 0;
+        }
+
+        .chat-bubble-sent {
+            background-color: #DCF8C6;
+            color: var(--text-main);
+            align-self: flex-end;
+            border-top-right-radius: 0;
+        }
+
+        .chat-time {
+            font-size: 8px;
+            color: var(--text-light);
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background-color: #FFFFFF;
+            padding: 8px 16px;
+            border-radius: 12px;
+            border-top-left-radius: 0;
+        }
+
+        .typing-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: var(--text-light);
+            border-radius: 50%;
+            margin-right: 3px;
+            animation: wave 1.3s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.3s; margin-right: 0; }
+
+        @keyframes wave {
+            0%, 60%, 100% { transform: translateY(0px); }
+            30% { transform: translateY(-4px); }
+        }
+
+        .chat-footer {
+            padding: 12px;
+            background-color: #F0F0F0;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-demo-btn {
+            background-color: #FFFFFF;
+            border: 1px solid var(--brand-primary);
+            color: var(--brand-primary);
+            padding: 10px 16px;
+            border-radius: var(--border-radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: left;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chat-demo-btn:hover {
+            background-color: var(--brand-primary);
+            color: #FFFFFF;
+        }
+
+        /* ROI Calculator (Premium Comparison Layout) */
+        .calculator-section {
+            background-color: #FFFFFF;
+        }
+
+        .calculator-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        @media (max-width: 950px) {
+            .calculator-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .calc-sliders {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slider-group {
+            margin-bottom: 28px;
+        }
+
+        .slider-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .slider-label {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .slider-val {
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--brand-primary);
+            background-color: #FFFFFF;
+            padding: 4px 12px;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--border-color);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .slider-input {
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #E2E8F0;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .slider-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--brand-primary);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(19, 64, 252, 0.3);
+            transition: transform 0.1s;
+        }
+
+        .slider-input::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Visual Comparison Box for ROI */
+        .comparison-roi-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .comparison-roi-box {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .roi-col-card {
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .roi-col-card.current {
+            background-color: #FFF5F5;
+            border-color: #FEB2B2;
+        }
+
+        .roi-col-card.barli {
+            background-color: #F0FDF4;
+            border-color: #BBF7D0;
+        }
+
+        .roi-col-title {
+            font-family: var(--font-head);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .roi-col-title.red { color: var(--color-danger); }
+        .roi-col-title.green { color: var(--color-success); }
+
+        .roi-stat-row {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.05);
+        }
+
+        .roi-stat-row:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .roi-stat-lbl {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .roi-stat-val-small {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .roi-stat-val-small.red { color: var(--color-danger); }
+        .roi-stat-val-small.green { color: var(--color-success); }
+
+        .roi-stat-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            line-height: 1.3;
+        }
+
+        .roi-summary-footer {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 2px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .roi-summary-val {
+            font-family: var(--font-head);
+            font-size: 32px;
+            font-weight: 800;
+            margin: 4px 0;
+        }
+
+        .roi-summary-val.red { color: var(--color-danger); }
+        .roi-summary-val.green { color: var(--color-success); }
+
+        .roi-summary-lbl {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* Escandallos & Punto de Equilibrio (Break-Even) Section */
+        .escandallos-section {
+            background-color: #FFFFFF;
+        }
+
+        .escandallos-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 950px) {
+            .escandallos-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .escandallos-card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .escandallos-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13.5px;
+        }
+
+        .escandallos-table th {
+            text-align: left;
+            padding: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .escandallos-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .escandallos-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .escandallos-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .escandallo-metric-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .escandallo-metric-val {
+            font-family: var(--font-head);
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--brand-primary);
+        }
+
+        .escandallo-metric-val.green {
+            color: var(--color-success);
+        }
+
+        /* Break-even Widget layout */
+        .breakeven-widget {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .breakeven-progress-container {
+            margin: 24px 0;
+            background-color: #E2E8F0;
+            height: 24px;
+            border-radius: 50px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .breakeven-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-danger) 0%, var(--color-warning) 50%, var(--color-success) 100%);
+            width: 75%;
+            transition: width 0.5s ease-out;
+        }
+
+        .breakeven-marker {
+            position: absolute;
+            top: 0;
+            left: 60%; /* Point of break-even */
+            width: 3px;
+            height: 100%;
+            background-color: var(--text-main);
+            z-index: 5;
+        }
+
+        .breakeven-marker-lbl {
+            position: absolute;
+            top: -22px;
+            left: 60%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+            background-color: var(--bg-primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .be-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            padding: 16px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .ventas-tpv-card {
+            border-left: 4px solid var(--brand-primary);
+            background-color: var(--brand-light);
+        }
+
+        .target-be-card {
+            border-left: 4px solid var(--color-warning);
+            background-color: var(--color-warning-light);
+            margin-bottom: 20px;
+        }
+
+        .be-card-lbl {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .be-card-val-large {
+            font-family: var(--font-head);
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--brand-primary);
+        }
+
+        .be-card-val-medium {
+            font-family: var(--font-head);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--color-warning);
+        }
+
+        .be-card-sub {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background-color: var(--bg-primary);
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 48px;
+            gap: 16px;
+        }
+
+        .toggle-label {
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 32px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #CBD5E1;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 24px;
+            width: 24px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: var(--shadow-sm);
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--brand-primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(28px);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        @media (max-width: 950px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 450px;
+                margin: 0 auto;
+            }
+        }
+
+        .pricing-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--brand-primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-card.popular::before {
+            content: 'Más Recomendado';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--brand-primary);
+            color: #FFFFFF;
+            padding: 4px 16px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pricing-header {
+            margin-bottom: 24px;
+        }
+
+        .plan-name {
+            font-family: var(--font-head);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .plan-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            min-height: 40px;
+        }
+
+        .plan-price-box {
+            margin-bottom: 28px;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .plan-price-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-right: 4px;
+        }
+
+        .plan-price {
+            font-family: var(--font-head);
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .plan-price-period {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .plan-price-info {
+            font-size: 11px;
+            color: var(--brand-primary);
+            font-weight: 600;
+            margin-top: -20px;
+            margin-bottom: 24px;
+        }
+
+        .pricing-divider {
+            border: 0;
+            border-top: 1px solid var(--border-color);
+            margin-bottom: 28px;
+        }
+
+        .plan-features-title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 32px;
+            flex-grow: 1;
+        }
+
+        .plan-features li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--brand-primary);
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .plan-features li.not-included {
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .plan-features li.not-included::before {
+            content: '✕';
+            color: var(--text-light);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: var(--bg-primary);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-accordion {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-trigger {
+            width: 100%;
+            padding: 24px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition-smooth);
+        }
+
+        .faq-trigger:hover {
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+        }
+
+        .faq-trigger-icon {
+            font-size: 20px;
+            color: var(--text-light);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-trigger-icon {
+            transform: rotate(45deg);
+            color: var(--brand-primary);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 24px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 250px;
+            padding-bottom: 24px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background-color: #FFFFFF;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #0E1624 0%, #1A2536 100%);
+            border-radius: var(--border-radius-lg);
+            padding: 60px;
+            color: #FFFFFF;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -150px;
+            right: -150px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: rgba(19, 64, 252, 0.15);
+            filter: blur(50px);
+        }
+
+        .cta-box h2 {
+            color: #FFFFFF;
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .cta-box p {
+            color: #94A3B8;
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto 36px auto;
+        }
+
+        .cta-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 32px;
+            border-radius: var(--border-radius-md);
+            backdrop-filter: blur(8px);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-sm);
+            color: #FFFFFF;
+            font-family: var(--font-body);
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .form-input:focus {
+            border-color: var(--brand-primary);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #64748B;
+        }
+
+        /* Floating WhatsApp Bubble */
+        .whatsapp-bubble {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: #FFFFFF;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .whatsapp-bubble:hover {
+            transform: scale(1.1) rotate(5deg);
+            background-color: #20BA5A;
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-bubble svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0E1624;
+            color: #94A3B8;
+            padding: 60px 0 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 700px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-logo {
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 24px;
+            color: #FFFFFF;
+            margin-bottom: 16px;
+        }
+
+        .footer-logo span {
+            color: var(--brand-primary);
+        }
+
+        .footer-col h4 {
+            color: #FFFFFF;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a:hover {
+            color: #FFFFFF;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 30px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        /* Utility classes */
+        .text-center { text-align: center; }
+        .flex { display: flex; }
+        .align-center { align-items: center; }
+        .justify-center { justify-content: center; }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="container nav-container" style="justify-content: space-between;">
+            <a href="#" class="logo">
+                <img src="logo_horizontal.png" alt="BarLi Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+                <span style="display:none;">BarLi</span>
+            </a>
+            <a href="https://wa.me/34631651232?text=Hola,%20quiero%20más%20información%20sobre%20el%20ecosistema%20digital%20BarLi%20para%20mi%20restaurante." target="_blank" class="btn btn-primary" style="padding: 10px 24px; font-size: 13px;">
+                Diagnóstico Gratis
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-layout">
+            <div class="hero-text">
+                <span class="badge badge-brand">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Ecosistemas digitales a medida
+                </span>
+                <h1>Tu restaurante no necesita más herramientas.
+                    <span>Necesita un sistema que conecte ventas, reservas, costes y operación.</span>
+                </h1>
+                <p>Ecosistemas digitales a medida de BarLi para operar, vender y decidir mejor.</p>
+                <div class="hero-cta">
+                    <a href="https://wa.me/34631651232?text=Hola%20Rommel,%20quiero%20agendar%20el%20diagnóstico%20gratuito%20de%2030%20minutos%20para%20mi%20restaurante." target="_blank" class="btn btn-primary">
+                        Agendar Diagnóstico Gratuito
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                    <a href="#modulos" class="btn btn-secondary">Explorar Módulos</a>
+                </div>
+                <div class="hero-badges-grid">
+                    <div class="hero-badge-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+                        <span>Reservas 24/7 sin Comisiones</span>
+                    </div>
+                    <div class="hero-badge-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+                        <span>Soporte Offline-First</span>
+                    </div>
+                    <div class="hero-badge-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        <span>Escandallos en Tiempo Real</span>
+                    </div>
+                    <div class="hero-badge-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                        <span>App Multidispositivo</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-mockup">
+                <!-- High-tech iPad Dashboard Simulator -->
+                <div class="tablet-mockup">
+                    <div class="tablet-screen">
+                        <div class="tablet-sidebar">
+                            <div class="sidebar-logo">B<span>L</span></div>
+                            <div class="sidebar-item active">📊</div>
+                            <div class="sidebar-item">🥘</div>
+                            <div class="sidebar-item">📅</div>
+                            <div class="sidebar-item">👤</div>
+                        </div>
+                        <div class="tablet-main">
+                            <div class="main-header-row">
+                                <span class="main-title-lbl">Panel de Control BarLi</span>
+                                <span class="feed-badge" style="font-size:8px;">Live</span>
+                            </div>
+                            
+                            <div class="kpis-row">
+                                <div class="kpi-card">
+                                    <div class="kpi-lbl">Ventas Hoy</div>
+                                    <div class="kpi-val">€1,002.10</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-lbl">Ahorro Comis.</div>
+                                    <div class="kpi-val green">100%</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-lbl">Reservas Mes</div>
+                                    <div class="kpi-val">326</div>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-card">
+                                <span class="chart-title">Facturación de la Semana</span>
+                                <svg class="svg-chart" viewBox="0 0 200 80">
+                                    <path d="M 10 70 L 40 55 L 70 60 L 100 40 L 130 45 L 160 25 L 190 15" stroke="var(--brand-primary)" stroke-width="2.5" fill="none" />
+                                    <!-- Dots -->
+                                    <circle cx="10" cy="70" r="3" fill="var(--brand-primary)" />
+                                    <circle cx="40" cy="55" r="3" fill="var(--brand-primary)" />
+                                    <circle cx="70" cy="60" r="3" fill="var(--brand-primary)" />
+                                    <circle cx="100" cy="40" r="3" fill="var(--brand-primary)" />
+                                    <circle cx="130" cy="45" r="3" fill="var(--brand-primary)" />
+                                    <circle cx="160" cy="25" r="3" fill="var(--brand-primary)" />
+                                    <circle cx="190" cy="15" r="3" fill="var(--color-success)" />
+                                </svg>
+                            </div>
+                            
+                            <div class="mock-feed">
+                                <div class="feed-item">
+                                    <div class="feed-details">
+                                        <span class="feed-table">Mesa 5 - Terraza 1</span>
+                                        <span style="color:var(--text-light); font-size:7px;">Hamburguesa BarLi x2, Cerveza x2</span>
+                                    </div>
+                                    <span class="feed-badge">Cobrado (78.4% Margen)</span>
+                                </div>
+                                <div class="feed-item">
+                                    <div class="feed-details">
+                                        <span class="feed-table">Reserva Online 21:00h</span>
+                                        <span style="color:var(--text-light); font-size:7px;">Familia Gómez - 4 pax</span>
+                                    </div>
+                                    <span class="feed-badge blue">Confirmada (Asistente IA)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems Section (Iceberg) -->
+    <section id="problemas" class="section-padding problem-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge badge-danger">El Diagnóstico del Sector</span>
+                <h2>Los problemas invisibles que frenan tu restaurante</h2>
+                <p>Lo que a menudo parece "falta de tiempo" es en realidad una falta de sistema ordenado de control.</p>
+            </div>
+            
+            <div class="problem-layout">
+                <div class="iceberg-wrapper">
+                    <!-- High-tech SVG Iceberg Graph -->
+                    <svg class="iceberg-svg" viewBox="0 0 400 500" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#F1F5F9" />
+                                <stop offset="100%" stop-color="#E2E8F0" />
+                            </linearGradient>
+                            <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#EFF6FF" />
+                                <stop offset="100%" stop-color="#DBEAFE" />
+                            </linearGradient>
+                            <linearGradient id="iceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#FFFFFF" />
+                                <stop offset="35%" stop-color="#E0E7FF" />
+                                <stop offset="100%" stop-color="#A5B4FC" />
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Background components -->
+                        <rect x="0" y="0" width="400" height="170" fill="url(#skyGrad)" />
+                        <rect x="0" y="170" width="400" height="330" fill="url(#oceanGrad)" />
+
+                        <!-- Water waves -->
+                        <path d="M 0 170 Q 100 180, 200 170 T 400 170 L 400 500 L 0 500 Z" fill="url(#oceanGrad)" />
+
+                        <!-- Iceberg Structure -->
+                        <polygon points="150,170 200,35 250,170 300,300 210,460 110,330 130,220" fill="url(#iceGrad)" stroke="#818CF8" stroke-width="2.5" stroke-linejoin="round" />
+                        <polygon points="200,35 250,170 200,170" fill="#E2E8F0" opacity="0.6" />
+                        <polygon points="200,170 300,300 210,460 200,460" fill="#6366F1" opacity="0.25" />
+
+                        <!-- Water level line -->
+                        <line x1="0" y1="170" x2="400" y2="170" stroke="#1340FC" stroke-width="3" stroke-dasharray="1 1" />
+                    </svg>
+
+                    <!-- Labels -->
+                    <div class="iceberg-label val-1">
+                        <span class="label-badge">Visible</span>
+                        <strong>Falta de Tiempo</strong>
+                    </div>
+                    <div class="iceberg-label val-2">
+                        <span class="label-badge">Visible</span>
+                        <strong>Todo depende del Dueño</strong>
+                    </div>
+                    
+                    <div class="iceberg-label hid-1">
+                        <span class="danger-badge">Oculto</span>
+                        <strong>Ceguera Financiera</strong>
+                        <span class="label-tooltip">Descontrol total de costes e ingredientes.</span>
+                    </div>
+                    <div class="iceberg-label hid-2">
+                        <span class="danger-badge">Oculto</span>
+                        <strong>Fuga de Clientes</strong>
+                        <span class="label-tooltip">Reservas de WhatsApp no atendidas a tiempo.</span>
+                    </div>
+                    <div class="iceberg-label hid-3">
+                        <span class="danger-badge">Oculto</span>
+                        <strong>Desgaste Operativo</strong>
+                        <span class="label-tooltip">Horas perdidas cuadrando cajas a mano.</span>
+                    </div>
+                    <div class="iceberg-label hid-4">
+                        <span class="danger-badge">Oculto</span>
+                        <strong>Desconocer el Margen</strong>
+                        <span class="label-tooltip">Vender platos estrella a pérdidas sin saberlo.</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 26px; margin-bottom: 24px;">Cuando no hay sistema, el problema escala</h3>
+                    <p style="margin-bottom: 32px;">Haz clic en cada riesgo operativo para ver el impacto contable y operativo en tu local y cómo lo frena BarLi:</p>
+                    
+                    <ul class="problem-list">
+                        <li class="problem-item active" onclick="toggleProblem(this)">
+                            <div class="problem-header-row">
+                                <div class="problem-title">
+                                    <span class="problem-icon">📉</span>
+                                    <span>1. Ceguera Financiera y Costes Fuera de Control</span>
+                                </div>
+                                <span>▼</span>
+                            </div>
+                            <div class="problem-body">
+                                La subida de precios de los proveedores desdibuja el margen real de tus platos. Si no cruzas compras con el TPV al instante, puedes estar vendiendo tus platos estrella a pérdidas.
+                            </div>
+                        </li>
+                        
+                        <li class="problem-item" onclick="toggleProblem(this)">
+                            <div class="problem-header-row">
+                                <div class="problem-title">
+                                    <span class="problem-icon">💸</span>
+                                    <span>2. Fuga de Clientes y Comisiones de Reserva</span>
+                                </div>
+                                <span>▼</span>
+                            </div>
+                            <div class="problem-body">
+                                No responder WhatsApp a tiempo cuesta reservas los fines de semana. Además, regalar entre 1.50€ y 3€ por comensal a portales de reservas de terceros destruye tu margen neto.
+                            </div>
+                        </li>
+                        
+                        <li class="problem-item" onclick="toggleProblem(this)">
+                            <div class="problem-header-row">
+                                <div class="problem-title">
+                                    <span class="problem-icon">⏳</span>
+                                    <span>3. Desgaste Operativo en Burocracia Manual</span>
+                                </div>
+                                <span>▼</span>
+                            </div>
+                            <div class="problem-body">
+                                Registrar facturas de proveedores a mano, calcular horas del personal y enviar informes a la gestoría quita más de 15 horas al mes al dueño, horas robadas al descanso y la estrategia.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Indicators section (La Realidad) -->
+    <section class="section-padding indicators-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Indicadores de la Realidad de la Hostelería</h2>
+                <p>Las estadísticas del mercado hostelero actual demuestran la urgencia de estructurar tu gestión operativa:</p>
+            </div>
+            
+            <div class="indicators-grid">
+                <div class="indicator-card">
+                    <div class="indicator-stat">4 / 10</div>
+                    <div class="indicator-title">Mortalidad del Negocio</div>
+                    <p class="indicator-desc">Negocios de restauración que cierran o se traspasan en los primeros 18 meses debido a la ceguera financiera y el desgaste operativo.</p>
+                    <span class="indicator-source">Fuente: Barcelona Culinary Hub</span>
+                </div>
+                
+                <div class="indicator-card">
+                    <div class="indicator-stat">38%</div>
+                    <div class="indicator-title">Traspasos del Sector</div>
+                    <p class="indicator-desc">De todos los traspasos de locales comerciales registrados a nivel nacional ocurren en el sector de la hostelería.</p>
+                    <span class="indicator-source">Fuente: Portal Traspasalo.com</span>
+                </div>
+                
+                <div class="indicator-card">
+                    <div class="indicator-stat">3,500 - 5,000</div>
+                    <div class="indicator-title">Nuevos Locales Anuales</div>
+                    <p class="indicator-desc">La apertura constante de competencia obliga a digitalizarse para asegurar la retención de clientes y la eficiencia operativa.</p>
+                    <span class="indicator-source">Fuente: Anuario Patronal de Hostelería</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section (Ecosistema) -->
+    <section id="modulos" class="section-padding modules-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge badge-brand">El Ecosistema BarLi</span>
+                <h2>Un ecosistema unificado de control a tu medida</h2>
+                <p>Nuestros servicios no son aplicaciones aisladas. Son módulos que se conectan entre sí para optimizar todo tu restaurante.</p>
+            </div>
+            
+            <div class="modules-grid">
+                <!-- Module 1 -->
+                <div class="module-card" onclick="openDrawer(1)">
+                    <div class="module-icon-box">🖥️</div>
+                    <span class="module-num">Módulo 01</span>
+                    <h3 class="module-title">TPV Personalizado</h3>
+                    <p class="module-desc">Sistema ultra-simplificado adaptado a tu salón, sin botones inútiles. Fichaje de pedidos desde móvil o tablet.</p>
+                    <span class="module-action">
+                        Ver funcionalidades
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </div>
+                
+                <!-- Module 2 -->
+                <div class="module-card" onclick="openDrawer(2)">
+                    <div class="module-icon-box">📅</div>
+                    <span class="module-num">Módulo 02</span>
+                    <h3 class="module-title">Reservas 24/7</h3>
+                    <p class="module-desc">Botón de reserva en tu web o redes con 0€ de comisión. Asistente IA que atiende clientes por llamada o texto.</p>
+                    <span class="module-action">
+                        Ver funcionalidades
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </div>
+                
+                <!-- Module 3 -->
+                <div class="module-card" onclick="openDrawer(3)">
+                    <div class="module-icon-box">📱</div>
+                    <span class="module-num">Módulo 03</span>
+                    <h3 class="module-title">Carta Tipo TikTok/IG</h3>
+                    <p class="module-desc">Carta web interactiva basada en videos cortos. Genera deseo visual inmediato y aumenta el ticket promedio.</p>
+                    <span class="module-action">
+                        Ver funcionalidades
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </div>
+                
+                <!-- Module 4 -->
+                <div class="module-card" onclick="openDrawer(4)">
+                    <div class="module-icon-box">📊</div>
+                    <span class="module-num">Módulo 04</span>
+                    <h3 class="module-title">Admin y Escandallos</h3>
+                    <p class="module-desc">Cruce de ventas y compras en tiempo real. Lector OCR de facturas de proveedores y cálculo dinámico de costes.</p>
+                    <span class="module-action">
+                        Ver funcionalidades
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </div>
+                
+                <!-- Module 5 -->
+                <div class="module-card" onclick="openDrawer(5)">
+                    <div class="module-icon-box">🤖</div>
+                    <span class="module-num">Módulo 05</span>
+                    <h3 class="module-title">Respuestas Automáticas</h3>
+                    <p class="module-desc">IA que responde tus reseñas de Google Maps al instante. Sistema de alerta y propuestas ante opiniones negativas.</p>
+                    <span class="module-action">
+                        Ver funcionalidades
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </div>
+                
+                <!-- Module 6 -->
+                <div class="module-card" onclick="openDrawer(6)">
+                    <div class="module-icon-box">📍</div>
+                    <span class="module-num">Módulo 06</span>
+                    <h3 class="module-title">SEO Google Business</h3>
+                    <p class="module-desc">Optimización total de tu ficha de Google Maps para aparecer primero cuando la gente busque comida en tu zona.</p>
+                    <span class="module-action">
+                        Ver funcionalidades
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </div>
+                
+                <!-- Module 7 -->
+                <div class="module-card" onclick="openDrawer(7)">
+                    <div class="module-icon-box">🌐</div>
+                    <span class="module-num">Módulo 07</span>
+                    <h3 class="module-title">Páginas Web</h3>
+                    <p class="module-desc">Web corporativa ultrarrápida adaptada al móvil con integración directa de tu carta digital y el motor de reservas.</p>
+                    <span class="module-action">
+                        Ver funcionalidades
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </div>
+                
+                <!-- Module 8 -->
+                <div class="module-card" onclick="openDrawer(8)">
+                    <div class="module-icon-box">🎯</div>
+                    <span class="module-num">Módulo 08</span>
+                    <h3 class="module-title">Campañas Google Ads</h3>
+                    <p class="module-desc">Configuración y medición de anuncios de pago segmentados localmente para llenar tu salón en días flojos.</p>
+                    <span class="module-action">
+                        Ver funcionalidades
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Drawer Panel -->
+    <div id="drawerOverlay" class="drawer-overlay" onclick="closeDrawer()">
+        <div id="drawerPanel" class="drawer-panel" onclick="event.stopPropagation()">
+            <div class="drawer-close" onclick="closeDrawer()">✕</div>
+            <div id="drawerContent">
+                <!-- Content generated dynamically by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Chat Asistente Virtual -->
+    <section id="demo" class="section-padding chat-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge badge-brand">Demostración en Vivo</span>
+                <h2>Pon a prueba al Asistente Virtual 24/7</h2>
+                <p>Experimenta cómo un cliente reserva una mesa o realiza preguntas al robot del restaurante por WhatsApp a cualquier hora del día.</p>
+            </div>
+            
+            <div class="chat-layout">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="chat-header">
+                            <div class="chat-avatar">B</div>
+                            <div class="chat-header-info">
+                                <span class="chat-name">Asistente Virtual - BarLi</span>
+                                <span class="chat-status">En línea (IA Activa)</span>
+                            </div>
+                        </div>
+                        <div id="chatBody" class="chat-body">
+                            <div class="chat-bubble chat-bubble-received">
+                                Hola, gracias por contactar con nuestro restaurante. Soy el asistente de reservas BarLi. ¿En qué te puedo ayudar hoy?
+                                <div class="chat-time">14:00</div>
+                            </div>
+                            
+                            <!-- Typing indicator -->
+                            <div id="typingIndicator" class="typing-indicator">
+                                <span class="typing-dot"></span>
+                                <span class="typing-dot"></span>
+                                <span class="typing-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 26px; margin-bottom: 20px;">Interactúa con el chat</h3>
+                    <p style="margin-bottom: 28px;">Haz clic en cualquiera de las consultas comunes de los clientes para ver cómo responde el chatbot en menos de 3 segundos:</p>
+                    
+                    <div class="chat-options-container">
+                        <button class="chat-demo-btn" onclick="sendDemoMessage(1, 'Hola, quiero reservar una mesa para cenar hoy')">
+                            📅 "Quiero reservar una mesa para cenar hoy"
+                        </button>
+                        <button class="chat-demo-btn" onclick="sendDemoMessage(2, '¿Tienen terraza disponible o salón interior?')">
+                            ☀️ "¿Tienen terraza disponible?"
+                        </button>
+                        <button class="chat-demo-btn" onclick="sendDemoMessage(3, '¿Tenéis opciones sin gluten en la carta?')">
+                            🌾 "¿Tenéis opciones sin gluten?"
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 36px; background-color:#FFFFFF; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); padding:20px;">
+                        <h4 style="font-size: 15px; margin-bottom: 8px; color: var(--brand-primary)">🤖 Inteligencia de Salón Conectada</h4>
+                        <p style="font-size: 13.5px;">El asistente está conectado al <strong>Control de Salón en tiempo real</strong>. Si las mesas están llenas para esa hora, el asistente le ofrecerá alternativas automáticamente al cliente en vez de generar sobreventas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Calculator -->
+    <section id="calculadora" class="section-padding calculator-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge badge-success">Calcular el Retorno</span>
+                <h2>¿Cuánto dinero pierde tu restaurante hoy sin BarLi?</h2>
+                <p>Usa los controles deslizantes para configurar el tamaño de tu restaurante y compara tu pérdida actual vs. tu beneficio al digitalizarte.</p>
+            </div>
+            
+            <div class="calculator-layout">
+                <div class="calc-sliders">
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span class="slider-label">Mesas Disponibles</span>
+                            <span id="mesasVal" class="slider-val">20</span>
+                        </div>
+                        <input type="range" id="mesasInput" class="slider-input" min="5" max="60" value="20" oninput="calculateROI()">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span class="slider-label">Ticket Promedio por Mesa (€)</span>
+                            <span id="ticketVal" class="slider-val">30 €</span>
+                        </div>
+                        <input type="range" id="ticketInput" class="slider-input" min="15" max="100" value="30" oninput="calculateROI()">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span class="slider-label">Reservas al Mes</span>
+                            <span id="reservasVal" class="slider-val">300</span>
+                        </div>
+                        <input type="range" id="reservasInput" class="slider-input" min="20" max="800" value="300" oninput="calculateROI()">
+                    </div>
+                </div>
+                
+                <!-- Visual comparison ROI Columns -->
+                <div class="comparison-roi-box">
+                    <div class="roi-col-card current">
+                        <div class="roi-col-title red">
+                            <span>❌</span> Situación Actual
+                        </div>
+                        
+                        <div class="roi-stat-row">
+                            <div class="roi-stat-lbl">Pérdida en comisiones</div>
+                            <div id="lostComisiones" class="roi-stat-val-small red">1,125 €/mes</div>
+                            <div class="roi-stat-desc">Dinero regalado a portales externos cobrándote por cada comensal.</div>
+                        </div>
+                        
+                        <div class="roi-stat-row">
+                            <div class="roi-stat-lbl">Tiempo perdido</div>
+                            <div class="roi-stat-val-small red">15 horas/mes</div>
+                            <div class="roi-stat-desc">Horas del propietario consumidas en contabilidad y gestión manual.</div>
+                        </div>
+                        
+                        <div class="roi-summary-footer">
+                            <div class="roi-summary-lbl">Fuga de dinero estimada</div>
+                            <div id="lostTotal" class="roi-summary-val red">1,125 €</div>
+                        </div>
+                    </div>
+                    
+                    <div class="roi-col-card barli">
+                        <div class="roi-col-title green">
+                            <span>🚀</span> Optimizado con BarLi
+                        </div>
+                        
+                        <div class="roi-stat-row">
+                            <div class="roi-stat-lbl">Comisiones a portales</div>
+                            <div class="roi-stat-val-small green">0 €/mes</div>
+                            <div class="roi-stat-desc">¡Ahorro total del 100%! Reservas directas en redes y web.</div>
+                        </div>
+                        
+                        <div class="roi-stat-row">
+                            <div class="roi-stat-lbl">Ventas extras estimadas</div>
+                            <div id="extraVentas" class="roi-stat-val-small green">+315 €/mes</div>
+                            <div class="roi-stat-desc">Por incremento del 20% en ticket promedio con la carta en video.</div>
+                        </div>
+                        
+                        <div class="roi-summary-footer">
+                            <div class="roi-summary-lbl">Beneficio Neto Mensual</div>
+                            <div id="roiTotal" class="roi-summary-val green">1,440 €</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 32px; text-align: center; background-color: var(--brand-light); border-radius: var(--border-radius-sm); padding: 16px; font-size: 14px; font-weight: 600; border: 1px solid rgba(19, 64, 252, 0.15)">
+                💡 Con este beneficio neto estimado, la inversión única del <strong style="color: var(--brand-primary)">Plan Inteligente</strong> se amortiza sola en menos de <span id="amortMonths" style="color: var(--brand-primary); font-weight: 800;">3</span> meses.
+            </div>
+        </div>
+    </section>
+
+    <!-- Escandallos & Break-Even Section (NUEVA) -->
+    <section class="section-padding escandallos-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge badge-brand">Control de Costes</span>
+                <h2>El Cerebro Financiero: Escandallos y Punto de Equilibrio</h2>
+                <p>Estima los gastos totales de tu negocio y visualiza cómo las ventas registradas por el TPV te impulsan a superar tu punto de equilibrio.</p>
+            </div>
+            
+            <div class="escandallos-layout">
+                <!-- Recipe Escandallo Card -->
+                <div class="escandallos-card">
+                    <h3 style="font-size: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <span>🍔</span> Escandallo de Plato: Hamburguesa Gourmet BarLi
+                    </h3>
+                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+                        El sistema cruza el coste real de los ingredientes con el precio de compra más reciente de tus proveedores.
+                    </p>
+                    
+                    <table class="escandallos-table">
+                        <thead>
+                            <tr>
+                                <th>Ingrediente / Concepto</th>
+                                <th>Peso / Cantidad</th>
+                                <th>Costo Unitario</th>
+                                <th>Costo Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Carne Vacuno Seleccionada</td>
+                                <td>180g</td>
+                                <td>10.00 €/kg</td>
+                                <td>1.80 €</td>
+                            </tr>
+                            <tr>
+                                <td>Pan Brioche Artesanal</td>
+                                <td>1 ud</td>
+                                <td>0.50 €/ud</td>
+                                <td>0.50 €</td>
+                            </tr>
+                            <tr>
+                                <td>Queso Cheddar + Salsas</td>
+                                <td>1 ración</td>
+                                <td>0.40 €/ud</td>
+                                <td>0.40 €</td>
+                            </tr>
+                            <tr>
+                                <td>Guarnición (Patatas Rústicas)</td>
+                                <td>150g</td>
+                                <td>2.00 €/kg</td>
+                                <td>0.30 €</td>
+                            </tr>
+                            <tr style="font-weight: 700; background-color: rgba(0,0,0,0.02)">
+                                <td>Coste Total Materia Prima (Food Cost)</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>3.00 €</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="escandallos-metrics-grid">
+                        <div class="escandallo-metric-card">
+                            <div class="roi-stat-lbl">PVP Neto</div>
+                            <div class="escandallo-metric-val">13.50 €</div>
+                        </div>
+                        <div class="escandallo-metric-card">
+                            <div class="roi-stat-lbl">Margen Bruto</div>
+                            <div class="escandallo-metric-val green">10.50 €</div>
+                        </div>
+                        <div class="escandallo-metric-card">
+                            <div class="roi-stat-lbl">% Margen</div>
+                            <div class="escandallo-metric-val green">77.7%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Break-Even Widget -->
+                <div class="breakeven-widget">
+                    <h3 style="font-size: 18px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                        <span>📊</span> Simulador de Punto de Equilibrio
+                    </h3>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 24px;">
+                        Visualiza si tus ventas superan el volumen mínimo para cubrir tus costes fijos mensuales.
+                    </p>
+                    
+                    <!-- 1. Ventas del TPV Grande Arriba -->
+                    <div class="be-card ventas-tpv-card">
+                        <div class="be-card-lbl">Ventas del TPV (Mensuales)</div>
+                        <div id="beVentasTpv" class="be-card-val-large">9,000 €</div>
+                        <div class="be-card-sub">Simuladas según tus mesas, ticket y reservas de arriba</div>
+                    </div>
+                    
+                    <!-- 2. Gastos Fijos Slider -->
+                    <div class="slider-group" style="margin: 20px 0;">
+                        <div class="slider-header" style="margin-bottom: 8px;">
+                            <span class="slider-label" style="font-size: 13px; font-weight: 600;">Gastos Fijos del Local (Alquiler, Personal, Suministros...)</span>
+                            <span id="gastosFijosVal" class="slider-val" style="font-size: 15px; min-width: 90px; padding: 2px 8px;">6,000 €</span>
+                        </div>
+                        <input type="range" id="gastosFijosInput" class="slider-input" min="2000" max="15000" step="500" value="6000" oninput="calculateBreakEven()">
+                    </div>
+
+                    <!-- 3. Punto de Equilibrio -->
+                    <div class="be-card target-be-card">
+                        <div class="be-card-lbl">Punto de Equilibrio (Ventas Mínimas)</div>
+                        <div id="beTargetVal" class="be-card-val-medium">7,722 €</div>
+                        <div class="be-card-sub">Ventas necesarias para cubrir los gastos fijos + el coste de los ingredientes (basado en el 77.7% de margen del escandallo)</div>
+                    </div>
+                    
+                    <!-- 4. Termómetro Visual -->
+                    <div class="breakeven-progress-container" style="margin-top: 10px;">
+                        <div id="breakevenBar" class="breakeven-progress-bar"></div>
+                        <div id="markerBE" class="breakeven-marker"></div>
+                        <span id="markerBELabel" class="breakeven-marker-lbl">Punto de Equilibrio</span>
+                    </div>
+                    
+                    <!-- 5. Diagnóstico en Vivo -->
+                    <div style="margin-top: 16px; font-size: 13.5px; font-weight: 700; text-align: center;" id="beConclusion">
+                        🚀 ¡Tu negocio se encuentra en zona de Ganancias Netas de +1,278 €/mes!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="precios" class="section-padding pricing-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge badge-brand">Inversión Inteligente</span>
+                <h2>Estructura de Planes BarLi Restauración</h2>
+                <p>Nuestros planes se adaptan a la madurez de tu negocio. Elige entre pago único de implementación y tarifas mensuales opcionales de mantenimiento.</p>
+            </div>
+            
+            <div class="toggle-container">
+                <span class="toggle-label" id="labelImp" onclick="setPriceToggle(false)">Pago de Implementación</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="priceToggle" onchange="togglePriceMode()">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label" id="labelMant" onclick="setPriceToggle(true)">Soporte y Mantenimiento</span>
+            </div>
+            
+            <div class="pricing-grid">
+                <!-- Plan Base -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="plan-name">Base</h3>
+                        <p class="plan-desc">Para digitalizar lo esencial y ordenar tus ventas, reservas y base de datos de clientes.</p>
+                    </div>
+                    <div class="plan-price-box">
+                        <span id="priceLabelBase" class="plan-price-label">Desde</span>
+                        <span id="priceValBase" class="plan-price">1000 €</span>
+                        <span id="pricePeriodBase" class="plan-price-period">pago único</span>
+                    </div>
+                    <div id="priceInfoBase" class="plan-price-info">Incluye 3 meses de soporte de arranque gratis</div>
+                    <hr class="pricing-divider">
+                    <h4 class="plan-features-title">Funcionalidades Incluidas:</h4>
+                    <ul class="plan-features">
+                        <li>TPV personalizado y adaptado</li>
+                        <li>Gestión de productos y platos</li>
+                        <li>Fichaje de pedidos desde móvil/sala</li>
+                        <li>Cierre de caja y panel analítico básico</li>
+                        <li>Motor de reservas directo (enlace propio)</li>
+                        <li>Base de datos de clientes automatizada</li>
+                        <li>Formación presencial del equipo</li>
+                        <li class="not-included">Control de fichaje laboral del personal</li>
+                        <li class="not-included">Pantalla de cocina KDS digital</li>
+                        <li class="not-included">Escandallos y cruce de contabilidad</li>
+                        <li class="not-included">Robot e IA de respuesta de reseñas</li>
+                    </ul>
+                    <a href="https://wa.me/34631651232?text=Hola,%20quiero%20más%20información%20sobre%20el%20Plan%20Base%20de%20BarLi." target="_blank" class="btn btn-secondary">Seleccionar Plan Base</a>
+                </div>
+                
+                <!-- Plan Operativo -->
+                <div class="pricing-card popular">
+                    <div class="pricing-header">
+                        <h3 class="plan-name">Operativo</h3>
+                        <p class="plan-desc">Para controlar en tiempo real la cocina y el salón, el personal y optimizar tiempos de mesa.</p>
+                    </div>
+                    <div class="plan-price-box">
+                        <span id="priceLabelOperativo" class="plan-price-label">Desde</span>
+                        <span id="priceValOperativo" class="plan-price">2000 €</span>
+                        <span id="pricePeriodOperativo" class="plan-price-period">pago único</span>
+                    </div>
+                    <div id="priceInfoOperativo" class="plan-price-info">Reunión de análisis y mejora mensual</div>
+                    <hr class="pricing-divider">
+                    <h4 class="plan-features-title">Todo lo de Base y además:</h4>
+                    <ul class="plan-features">
+                        <li>Fichaje laboral / control asistencia</li>
+                        <li>Cierre de caja avanzado por camarero/turno</li>
+                        <li>Pantalla digital de cocina (KDS)</li>
+                        <li>Coordinación de sala y cocina interactiva</li>
+                        <li>Control visual de salón en tiempo real</li>
+                        <li>Cálculo de permanencia de mesas</li>
+                        <li>Envío automático de solicitud de reseñas</li>
+                        <li>Panel analítico avanzado comparativo</li>
+                        <li class="not-included">Lector OCR de facturas de proveedores</li>
+                        <li class="not-included">Control de escandallos dinámicos</li>
+                        <li class="not-included">IA asistente interna del negocio</li>
+                    </ul>
+                    <a href="https://wa.me/34631651232?text=Hola,%20quiero%20más%20información%20sobre%20el%20Plan%20Operativo%20de%20BarLi." target="_blank" class="btn btn-primary">Seleccionar Plan Operativo</a>
+                </div>
+                
+                <!-- Plan Inteligente -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="plan-name">Inteligente</h3>
+                        <p class="plan-desc">Para automatizar la contabilidad, cruzar ventas con compras reales y usar la IA para el marketing.</p>
+                    </div>
+                    <div class="plan-price-box">
+                        <span id="priceLabelInteligente" class="plan-price-label">Desde</span>
+                        <span id="priceValInteligente" class="plan-price">4000 €</span>
+                        <span id="pricePeriodInteligente" class="plan-price-period">pago único</span>
+                    </div>
+                    <div id="priceInfoInteligente" class="plan-price-info">Acompañamiento estratégico e IA de negocio</div>
+                    <hr class="pricing-divider">
+                    <h4 class="plan-features-title">Todo lo de Operativo y además:</h4>
+                    <ul class="plan-features">
+                        <li>Robot de reseñas inteligente 24/7 (IA)</li>
+                        <li>Alertas automáticas por reseñas negativas</li>
+                        <li>Landing visual con carta en video TikTok</li>
+                        <li>SEO local Google Business optimizado</li>
+                        <li>Lector OCR de facturas de compra</li>
+                        <li>Carga de facturas automática a Gestoría</li>
+                        <li>Escandallos y costes dinámicos por plato</li>
+                        <li>Cruce ventas vs compras y punto de equilibrio</li>
+                        <li>Asistente IA interno financiero de negocio</li>
+                        <li>Propuestas automáticas de mejora de carta</li>
+                    </ul>
+                    <a href="https://wa.me/34631651232?text=Hola,%20quiero%20más%20información%20sobre%20el%20Plan%20Inteligente%20de%20BarLi." target="_blank" class="btn btn-secondary">Seleccionar Plan Inteligente</a>
+                </div>
+            </div>
+            
+            <!-- Specific Intelligent Maintenance detail block -->
+            <div style="margin-top: 40px; background-color:#FFFFFF; border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 32px; box-shadow: var(--shadow-sm);">
+                <h4 style="font-size: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <span style="color: var(--brand-primary)">⭐</span> 
+                    Mantenimiento Inteligente: Acceso Inmediato e Innovación Continua
+                </h4>
+                <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6;">
+                    Al contratar el <strong>Mantenimiento Inteligente (300 €/mes - Opcional)</strong>, tu restaurante no solo recibe soporte prioritario, sino que tu TPV tendrá <strong>acceso inmediato a todas las nuevas mejoras de software</strong> del TPV que vayamos desarrollando. Además, contarás de forma ilimitada con las <strong>nuevas herramientas y optimizaciones continuas de nuestros modelos de Inteligencia Artificial</strong>, garantizando que tu negocio siempre opere con la tecnología más avanzada del mercado.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section-padding faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Preguntas Frecuentes</h2>
+                <p>Respondemos las dudas más comunes sobre la implementación de nuestro ecosistema.</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-accordion">
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <button class="faq-trigger">
+                            <span>¿Necesito comprar hardware costoso y propietario?</span>
+                            <span class="faq-trigger-icon">+</span>
+                        </button>
+                        <div class="faq-content">
+                            No. BarLi es multidispositivo y funciona en cualquier tablet Android, ordenador de barra o móvil de los camareros. Esto reduce a cero el coste de entrada por maquinaria innecesaria.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <button class="faq-trigger">
+                            <span>¿Cómo se integran las ventas con Google Sheets?</span>
+                            <span class="faq-trigger-icon">+</span>
+                        </button>
+                        <div class="faq-content">
+                            Al cerrar cada mesa, BarLi copia las métricas de la venta en segundo plano a una hoja de cálculo en la nube. Esto te permite auditar tus ingresos diarios desde cualquier lugar usando tu propio móvil.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <button class="faq-trigger">
+                            <span>¿El mantenimiento mensual es obligatorio?</span>
+                            <span class="faq-trigger-icon">+</span>
+                        </button>
+                        <div class="faq-content">
+                            No. Es 100% opcional en los tres planes y sirve para cubrir soporte técnico continuo, actualizaciones y copias de seguridad. Puedes decidir no contratarlo y el sistema seguirá funcionando exactamente igual tras su implementación.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <button class="faq-trigger">
+                            <span>¿Cuánto tiempo se tarda en poner en marcha el sistema?</span>
+                            <span class="faq-trigger-icon">+</span>
+                        </button>
+                        <div class="faq-content">
+                            Una vez que tenemos tu menú cargado, la puesta en marcha técnica se realiza en 24-48 horas. Incluye una capacitación guiada al personal de unos 30 minutos para asegurar el despegue sin fricciones.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section-padding cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2>El primer paso no te cuesta nada</h2>
+                <p>Agendemos un diagnóstico gratuito de 30 minutos por WhatsApp. Analizaremos tu menú, localizaremos tus fugas de rentabilidad y te propondremos soluciones claras.</p>
+                
+                <form class="cta-form" onsubmit="sendForm(event)">
+                    <div class="form-row">
+                        <input type="text" id="formName" class="form-input" placeholder="Tu nombre" required>
+                        <input type="text" id="formRestaurant" class="form-input" placeholder="Nombre de tu local" required>
+                    </div>
+                    <input type="tel" id="formPhone" class="form-input" placeholder="Tu número de móvil / WhatsApp" required>
+                    <button type="submit" class="btn btn-whatsapp" style="width: 100%;">
+                        Solicitar Diagnóstico por WhatsApp
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp Bubble -->
+    <a href="https://wa.me/34631651232?text=Hola%20Rommel,%20quiero%20agendar%20el%20diagnóstico%20gratuito%20de%2030%20minutos%20para%20mi%20restaurante." target="_blank" class="whatsapp-bubble" title="Contactar por WhatsApp">
+        <svg viewBox="0 0 448 512">
+            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+        </svg>
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <div class="footer-logo">Bar<span>Li</span></div>
+                <p style="color: #64748B; font-size: 13.5px;">Ecosistemas digitales a medida para hostelería. Creamos herramientas tecnológicas estables para operar, vender y decidir mejor.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <ul class="footer-links">
+                    <li>📞 WhatsApp: +34 631 65 12 32</li>
+                    <li>📧 scaleadigital@gmail.com</li>
+                    <li>📍 Santa Coloma de Gramenet - Barcelona</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Ecosistema</h4>
+                <ul class="footer-links">
+                    <li><a href="#problemas">El Diagnóstico</a></li>
+                    <li><a href="#modulos">Nuestros Módulos</a></li>
+                    <li><a href="#precios">Nuestras Tarifas</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <div>© 2026 BarLi. Todos los derechos reservados.</div>
+            <div>Especialistas en Conversión y Operaciones Hosteleras</div>
+        </div>
+    </footer>
+
+    <!-- Core Logic JavaScript -->
+    <script>
+        // Problem list toggle accordion
+        function toggleProblem(element) {
+            const list = document.querySelectorAll('.problem-item');
+            list.forEach(item => {
+                if (item !== element) {
+                    item.classList.remove('active');
+                }
+            });
+            element.classList.toggle('active');
+        }
+
+        // FAQ Toggle accordion
+        function toggleFaq(element) {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                if (item !== element) {
+                    item.classList.remove('active');
+                }
+            });
+            element.classList.toggle('active');
+        }
+
+        // Modules Drawer Panel logic
+        const modulesData = {
+            1: {
+                num: "Módulo 01",
+                title: "TPV Personalizado e Interactivo",
+                desc: "Diseñado para agilizar el registro de comandas sin fricciones operativas ni botones innecesarios que distraigan al camarero.",
+                features: [
+                    { t: "Hiper-Personalización", d: "Adaptamos la interfaz al menú y a la operativa física específica de tu local." },
+                    { t: "Fichaje de pedidos intuitivo", d: "Registro de comandas desde cualquier barra, móvil, tablet u ordenador conectado." },
+                    { t: "Control de asistencia integrado", d: "El personal de sala y barra ficha su entrada y salida directamente en el TPV de manera rápida." },
+                    { t: "Uso multidispositivo total", d: "El sistema no requiere hardware cerrado; funciona en dispositivos Android, iOS o Windows." },
+                    { t: "Cierre de caja simplificado", d: "Proceso guiado al final de cada turno para cuadrar efectivo y cobros con tarjeta rápidamente." }
+                ]
+            },
+            2: {
+                num: "Módulo 02",
+                title: "Motor de Reservas 24/7 sin Comisiones",
+                desc: "Captura reservas directamente desde tus redes sociales o web corporativa sin pagar comisiones por cubierto a portales intermediarios.",
+                features: [
+                    { t: "0€ en Comisiones", d: "Ahorra comisiones cobradas por portales externos. Las reservas son ilimitadas y directas." },
+                    { t: "Asistente Virtual por Voz/Texto", d: "Atiende reservas las 24 horas a través de WhatsApp o llamadas con IA integrada." },
+                    { t: "Panel de Ocupación en Vivo", d: "Línea de tiempo visual del salón que divide las reservas por mesa y horas automáticamente." },
+                    { t: "Alertas Sonoras de Sala", d: "El TPV emite un aviso sonoro para notificar de inmediato cuando entra una reserva online." },
+                    { t: "Base de Datos Propedéutica", d: "Registro automático de la ficha de tus clientes y sus hábitos para personalizar su experiencia." }
+                ]
+            },
+            3: {
+                num: "Módulo 03",
+                title: "Carta Web tipo TikTok e Instagram",
+                desc: "Aumenta tus ventas captando la atención de tus comensales mediante formatos de video interactivos en móvil.",
+                features: [
+                    { t: "Visualización Real en Video", d: "Los platos estrella se presentan en videos verticales de alta calidad en vez de fotos estáticas." },
+                    { t: "Botones de Acción Integrados", d: "Enlace directo para reservar mesa o pedir el plato con un clic desde el video." },
+                    { t: "Optimizado para Redes", d: "Enlace perfecto para colocar en tu biografía de Instagram o tus códigos QR de mesa." },
+                    { t: "Mayor Alcance y Conversión", d: "El formato de feed dinámico fomenta una mayor permanencia web e interactividad." }
+                ]
+            },
+            4: {
+                num: "Módulo 04",
+                title: "Admin Automatizado e Inteligencia Financiera",
+                desc: "Conecta la cocina y la administración contable de tu negocio para eliminar los procesos de gestión manual.",
+                features: [
+                    { t: "Escandallos Dinámicos", d: "Calcula el coste real por ingrediente y el margen dinámico por plato de forma automática." },
+                    { t: "Lectura OCR de Facturas de Compra", d: "Toma fotos a las facturas de proveedores; la IA extrae e ingresa los importes de inmediato." },
+                    { t: "Envío Mensual a Gestoría", d: "Organiza las facturas emitidas y recibidas al mes y las envía de forma automática a tu gestor." },
+                    { t: "Cruce Ventas vs Compras", d: "Gráfica comparativa financiera que evalúa tu punto de equilibrio y rentabilidad diaria." },
+                    { t: "Pantallas de Cocina (KDS)", d: "Envía los pedidos del TPV al instante a una pantalla interactiva, eliminando tickets perdidos." }
+                ]
+            },
+            5: {
+                num: "Módulo 05",
+                title: "Reputación Online Automatizada con IA",
+                desc: "Protege y potencia tu posicionamiento en Google Maps contestando opiniones en segundos y gestionando las crisis de reputación.",
+                features: [
+                    { t: "Robot de Reseñas Google 24/7", d: "Responde de forma personalizada y en el idioma correspondiente a cada opinión de Google Maps." },
+                    { t: "Filtro de Reseñas Negativas", d: "Alerta en tu móvil si entra una valoración baja con una respuesta propuesta para tu aprobación." },
+                    { t: "Panel de Análisis de Reputación", d: "Estadísticas gráficas sobre la evolución de la satisfacción de tus clientes a lo largo del tiempo." },
+                    { t: "Respuesta con Tono Propio", d: "Configuramos la IA para responder con el tono formal o cercano que identifique a tu local." }
+                ]
+            },
+            6: {
+                num: "Módulo 06",
+                title: "SEO Local Google Business Profile",
+                desc: "Posiciona tu restaurante de manera estratégica para liderar las búsquedas gastronómicas locales de Google.",
+                features: [
+                    { t: "Optimización de Ficha Técnica", d: "Configuración profesional de tu perfil, fotos y categorías clave de hostelería." },
+                    { t: "Posts y Novedades Dinámicas", d: "Programación de contenidos periódicos automáticos sobre tus platos o eventos en Google." },
+                    { t: "Aumento de Visitas Físicas", d: "Mejora en las conversiones de llamadas, clics de indicaciones de ruta y visitas web directas." }
+                ]
+            },
+            7: {
+                num: "Módulo 07",
+                title: "Creación de Páginas Web Optimizadas",
+                desc: "Desarrollamos una web corporativa rápida, de diseño premium y enfocada al 100% en la venta y conversión de visitas.",
+                features: [
+                    { t: "Diseño Adaptativo Móvil", d: "Optimizada para cargar a máxima velocidad y facilidad de lectura en móviles." },
+                    { t: "Carta y Reservas Integradas", d: "Acceso inmediato al motor de reservas directas y al visualizador de platos." },
+                    { t: "Personalización Completa", d: "Estética adaptada a los colores, logotipos e identidad visual de tu marca." }
+                ]
+            },
+            8: {
+                num: "Módulo 08",
+                title: "Campañas de Google Ads",
+                desc: "Atrae comensales a tu local mediante campañas de publicidad segmentada en Google de manera efectiva.",
+                features: [
+                    { t: "Segmentación Local Precisa", d: "Anuncios dirigidos exclusivamente a usuarios que se encuentran en el radio de tu restaurante." },
+                    { t: "Enfoque en Reservas y Llamadas", d: "Estructura de anuncios optimizada para capturar el contacto telefónico o la reserva online." },
+                    { t: "Medición Clara de Resultados", d: "Informes de conversiones para evaluar cuántas mesas lograste llenar con tu inversión." }
+                ]
+            }
+        };
+
+        function openDrawer(id) {
+            const module = modulesData[id];
+            if (!module) return;
+            
+            let listHTML = '';
+            module.features.forEach(f => {
+                listHTML += `<li><strong>${f.t}</strong> ${f.d}</li>`;
+            });
+            
+            const html = `
+                <div class="drawer-module-num">${module.num}</div>
+                <h3 class="drawer-title">${module.title}</h3>
+                <p class="drawer-desc">${module.desc}</p>
+                <div class="drawer-section-title">Funcionalidades del Módulo</div>
+                <ul class="drawer-list">
+                    ${listHTML}
+                </ul>
+                <a href="https://wa.me/34631651232?text=Hola%20Rommel,%20quiero%20más%20información%20sobre%20el%20${module.num}%20para%20mi%20restaurante." target="_blank" class="btn btn-primary" style="width:100%; text-align:center;">
+                    Preguntar por este módulo
+                </a>
+            `;
+            
+            document.getElementById('drawerContent').innerHTML = html;
+            document.getElementById('drawerOverlay').classList.add('active');
+            document.getElementById('drawerPanel').classList.add('active');
+        }
+
+        function closeDrawer() {
+            document.getElementById('drawerOverlay').classList.remove('active');
+            document.getElementById('drawerPanel').classList.remove('active');
+        }
+
+        // Interactive Chat Demo Logic
+        function sendDemoMessage(optionId, text) {
+            const chatBody = document.getElementById('chatBody');
+            const typingIndicator = document.getElementById('typingIndicator');
+            
+            // Add user bubble
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble chat-bubble-sent';
+            userBubble.innerHTML = `${text}<div class="chat-time">${getFormattedTime()}</div>`;
+            chatBody.insertBefore(userBubble, typingIndicator);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            
+            // Show typing indicator
+            typingIndicator.style.display = 'block';
+            chatBody.scrollTop = chatBody.scrollHeight;
+            
+            // Bot response latency simulation
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                
+                let responseText = '';
+                if (optionId === 1) {
+                    responseText = "¡Perfecto! Tengo disponibilidad en el salón principal para cenar hoy. ¿A qué hora te gustaría asistir y para cuántas personas sería?";
+                } else if (optionId === 2) {
+                    responseText = "Contamos con terraza exterior (equipada con calefactores para invierno) y un salón interior climatizado. Al registrar tu reserva, puedes elegir qué zona prefieres.";
+                } else if (optionId === 3) {
+                    responseText = "Sí, disponemos de carta sin gluten con platos específicos de carne, entrantes y opciones vegetarianas adaptadas. Por favor, indícalo al reservar.";
+                }
+                
+                const botBubble = document.createElement('div');
+                botBubble.className = 'chat-bubble chat-bubble-received';
+                botBubble.innerHTML = `${responseText}<div class="chat-time">${getFormattedTime()}</div>`;
+                chatBody.insertBefore(botBubble, typingIndicator);
+                chatBody.scrollTop = chatBody.scrollHeight;
+                
+            }, 1500);
+        }
+
+        function getFormattedTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            if (hours < 10) hours = '0' + hours;
+            if (minutes < 10) minutes = '0' + minutes;
+            return `${hours}:${minutes}`;
+        }
+
+        // ROI & Break-Even Calculator Logic
+        let calculatedRevenue = 9000; // global state for sync
+
+        function calculateROI() {
+            const mesas = parseInt(document.getElementById('mesasInput').value);
+            const ticket = parseInt(document.getElementById('ticketInput').value);
+            const reservas = parseInt(document.getElementById('reservasInput').value);
+            
+            // Update labels
+            document.getElementById('mesasVal').innerText = mesas;
+            document.getElementById('ticketVal').innerText = ticket + ' €';
+            document.getElementById('reservasVal').innerText = reservas;
+            
+            // Calculations
+            const lostComisiones = Math.round(reservas * 2.5 * 1.50);
+            const extraVentas = Math.round((reservas * 2.5) * (ticket * 0.20) * 0.35);
+            const netBeneficio = lostComisiones + extraVentas;
+            const amortMonths = Math.max(1, Math.round(4000 / netBeneficio));
+            
+            // Render outputs
+            document.getElementById('lostComisiones').innerText = lostComisiones.toLocaleString('es-ES') + ' €/mes';
+            document.getElementById('lostTotal').innerText = lostComisiones.toLocaleString('es-ES') + ' €';
+            
+            document.getElementById('extraVentas').innerText = '+' + extraVentas.toLocaleString('es-ES') + ' €/mes';
+            document.getElementById('roiTotal').innerText = netBeneficio.toLocaleString('es-ES') + ' €';
+            document.getElementById('amortMonths').innerText = amortMonths;
+
+            // Sync with Break-Even
+            calculatedRevenue = Math.round(reservas * ticket);
+            document.getElementById('beVentasTpv').innerText = calculatedRevenue.toLocaleString('es-ES') + ' €';
+            calculateBreakEven();
+        }
+
+        function calculateBreakEven() {
+            const gastosFijos = parseInt(document.getElementById('gastosFijosInput').value);
+            document.getElementById('gastosFijosVal').innerText = gastosFijos.toLocaleString('es-ES') + ' €';
+
+            // Margen bruto promedio (escandallo): 77.7%
+            const margenPromedio = 0.777;
+            
+            // Punto de equilibrio = Gastos Fijos / Margen Bruto %
+            const targetBE = Math.round(gastosFijos / margenPromedio);
+            document.getElementById('beTargetVal').innerText = targetBE.toLocaleString('es-ES') + ' €';
+
+            // Visual representations
+            const progressContainerWidth = 100; // percentage base
+            // Map real sales and break-even targets visually
+            let currentPct = 0;
+            let markerPct = 60; // fix marker visually at 60%
+            
+            // If ventas = targetBE, progress bar should reach exactly markerPct
+            if (targetBE > 0) {
+                currentPct = Math.min(100, Math.round((calculatedRevenue / targetBE) * markerPct));
+            }
+
+            document.getElementById('breakevenBar').style.width = currentPct + '%';
+            
+            const difference = calculatedRevenue - targetBE;
+            const conclusionEl = document.getElementById('beConclusion');
+
+            if (difference >= 0) {
+                document.getElementById('breakevenBar').style.background = 'linear-gradient(90deg, var(--color-danger) 0%, var(--color-warning) 50%, var(--color-success) 100%)';
+                conclusionEl.innerHTML = `🎉 ¡Tu negocio se encuentra en zona de <strong>Ganancias Netas</strong> de <strong>+${difference.toLocaleString('es-ES')} €/mes</strong>!`;
+                conclusionEl.style.color = 'var(--color-success)';
+            } else {
+                document.getElementById('breakevenBar').style.background = 'linear-gradient(90deg, var(--color-danger) 0%, var(--color-warning) 100%)';
+                conclusionEl.innerHTML = `⚠️ Estás a <strong>${Math.abs(difference).toLocaleString('es-ES')} €</strong> de alcanzar tu punto de equilibrio.`;
+                conclusionEl.style.color = 'var(--color-danger)';
+            }
+        }
+
+        // Initialize Calculator
+        calculateROI();
+
+        // Pricing Toggle Logic
+        function togglePriceMode() {
+            const isChecked = document.getElementById('priceToggle').checked;
+            updatePrices(isChecked);
+        }
+
+        function setPriceToggle(state) {
+            document.getElementById('priceToggle').checked = state;
+            updatePrices(state);
+        }
+
+        function updatePrices(showMonthlyMaintenance) {
+            const labelImp = document.getElementById('labelImp');
+            const labelMant = document.getElementById('labelMant');
+            
+            const pBase = document.getElementById('priceValBase');
+            const pBasePer = document.getElementById('pricePeriodBase');
+            const pBaseInfo = document.getElementById('priceInfoBase');
+            const pBaseLabel = document.getElementById('priceLabelBase');
+            
+            const pOperativo = document.getElementById('priceValOperativo');
+            const pOperativoPer = document.getElementById('pricePeriodOperativo');
+            const pOperativoInfo = document.getElementById('priceInfoOperativo');
+            const pOperativoLabel = document.getElementById('priceLabelOperativo');
+            
+            const pInteligente = document.getElementById('priceValInteligente');
+            const pInteligentePer = document.getElementById('pricePeriodInteligente');
+            const pInteligenteInfo = document.getElementById('priceInfoInteligente');
+            const pInteligenteLabel = document.getElementById('priceLabelInteligente');
+            
+            const maintFlags = document.querySelectorAll('.maint-flag');
+
+            if (showMonthlyMaintenance) {
+                labelMant.style.color = 'var(--brand-primary)';
+                labelImp.style.color = 'var(--text-muted)';
+                
+                pBase.innerText = "100 €";
+                pBasePer.innerText = "/mes";
+                pBaseInfo.innerText = "Soporte técnico continuo del TPV y copias de seguridad";
+                pBaseLabel.innerText = "";
+                
+                pOperativo.innerText = "150 €";
+                pOperativoPer.innerText = "/mes";
+                pOperativoInfo.innerText = "Soporte Base + reunión de análisis de rentabilidad mensual";
+                pOperativoLabel.innerText = "";
+                
+                pInteligente.innerText = "300 €";
+                pInteligentePer.innerText = "/mes";
+                pInteligenteInfo.innerText = "Todo lo Operativo + optimización del motor de IA 24/7";
+                pInteligenteLabel.innerText = "";
+
+                // Show Maintenance Optional label only in maintenance toggle
+                maintFlags.forEach(f => f.style.display = 'inline-block');
+            } else {
+                labelImp.style.color = 'var(--brand-primary)';
+                labelMant.style.color = 'var(--text-muted)';
+                
+                pBase.innerText = "1000 €";
+                pBasePer.innerText = "pago único";
+                pBaseInfo.innerText = "Incluye 3 meses de soporte de arranque gratis";
+                pBaseLabel.innerText = "Desde";
+                
+                pOperativo.innerText = "2000 €";
+                pOperativoPer.innerText = "pago único";
+                pOperativoInfo.innerText = "Reunión de análisis y mejora mensual";
+                pOperativoLabel.innerText = "Desde";
+                
+                pInteligente.innerText = "4000 €";
+                pInteligentePer.innerText = "pago único";
+                pInteligenteInfo.innerText = "Acompañamiento estratégico e IA de negocio";
+                pInteligenteLabel.innerText = "Desde";
+
+                // Hide Maintenance Optional label in implementation cost toggle
+                maintFlags.forEach(f => f.style.display = 'none');
+            }
+        }
+
+        // WhatsApp Form sender
+        function sendForm(event) {
+            event.preventDefault();
+            const name = document.getElementById('formName').value;
+            const restaurant = document.getElementById('formRestaurant').value;
+            const phone = document.getElementById('formPhone').value;
+            
+            const message = `Hola Rommel, mi nombre es ${name} del restaurante ${restaurant}. Quiero solicitar el diagnóstico gratuito de 30 minutos sobre el ecosistema digital BarLi. Mi móvil es ${phone}.`;
+            const encoded = encodeURIComponent(message);
+            
+            window.open(`https://wa.me/34631651232?text=${encoded}`, '_blank');
+        }
+    </script>
+</body>
+</html>
