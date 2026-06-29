@@ -135,24 +135,24 @@ const translations = {
         fin_be_sub: "Ventas necesarias para cubrir los gastos fijos + el coste de los ingredientes (basado en el 77.7% de margen del escandallo)",
         
         // Pricing
-        price_badge: "Inversión Inteligente",
-        price_title: "Estructura de Planes BarLi Restauración",
-        price_subtitle: "Nuestros planes se adaptan a la madurez de tu negocio. Elige entre pago único de implementación y tarifas mensuales opcionales de mantenimiento.",
+        price_badge: "Demo de 1 Mes Gratis",
+        price_title: "Prueba BarLi en tu Restaurante sin Compromiso",
+        price_subtitle: "Compara BarLi con tu TPV actual completamente gratis durante un mes. Siente la diferencia en control de inventario, velocidad de comandas y reservas sin comisiones.",
         price_toggle_imp: "Pago de Implementación",
         price_toggle_maint: "Soporte y Mantenimiento",
         
         // Plans details
-        plan_btn_base: "Seleccionar Plan Base",
-        plan_btn_ope: "Seleccionar Plan Operativo",
-        plan_btn_intel: "Seleccionar Plan Inteligente",
-        price_lbl_from: "Desde",
-        price_lbl_once: "pago único",
-        price_lbl_monthly: "/mes",
-        price_lbl_maint_label: "Mantenimiento Opcional",
+        plan_btn_base: "Solicitar Demo Gratis",
+        plan_btn_ope: "Solicitar Demo Gratis",
+        plan_btn_intel: "Solicitar Demo Gratis",
+        price_lbl_from: "",
+        price_lbl_once: "",
+        price_lbl_monthly: "",
+        price_lbl_maint_label: "Prueba Gratuita",
         
         // Intelligent maintenance detail
         maint_detail_title: "⭐ Mantenimiento Inteligente: Acceso Inmediato e Innovación Continua",
-        maint_detail_desc: "Al contratar el Mantenimiento Inteligente (300 €/mes - Opcional), tu restaurante no solo recibe soporte prioritario, sino que tu TPV tendrá acceso inmediato a todas las nuevas mejoras de software del TPV que vayamos desarrollando. Además, contarás de forma ilimitada con las nuevas herramientas y optimizaciones continuas de nuestros modelos de Inteligencia Artificial, garantizando que tu negocio siempre opere con la tecnología más avanzada del mercado.",
+        maint_detail_desc: "Al contratar el <strong>Soporte y Mantenimiento Inteligente (Opcional)</strong>, tu restaurante no solo recibe soporte prioritario, sino que tu TPV tendrá <strong>acceso inmediato a todas las nuevas mejoras de software</strong> del TPV que vayamos desarrollando. Además, contarás de forma ilimitada con las <strong>nuevas herramientas y optimizaciones continuas de nuestros modelos de Inteligencia Artificial</strong>, garantizando que tu negocio siempre opere con la tecnología más avanzada del mercado.",
         
         // FAQs
         faq_title: "Preguntas Frecuentes",
@@ -316,24 +316,24 @@ const translations = {
         fin_be_sub: "Sales needed to cover fixed expenses + ingredient costs (based on the 77.7% escandallo margin)",
         
         // Pricing
-        price_badge: "Smart Investment",
-        price_title: "BarLi Restaurant Plans Structure",
-        price_subtitle: "Our plans adapt to the maturity of your business. Choose between a one-time implementation fee and optional monthly support rates.",
+        price_badge: "Free 1-Month Demo",
+        price_title: "Try BarLi in Your Restaurant Risk-Free",
+        price_subtitle: "Compare BarLi with your current POS completely free for a month. Feel the difference in inventory control, order speed, and commission-free bookings.",
         price_toggle_imp: "Implementation Fee",
         price_toggle_maint: "Support & Maintenance",
         
         // Plans details
-        plan_btn_base: "Select Base Plan",
-        plan_btn_ope: "Select Operativo Plan",
-        plan_btn_intel: "Select Inteligente Plan",
-        price_lbl_from: "From",
-        price_lbl_once: "one-time fee",
-        price_lbl_monthly: "/month",
-        price_lbl_maint_label: "Optional Maintenance",
+        plan_btn_base: "Request Free Demo",
+        plan_btn_ope: "Request Free Demo",
+        plan_btn_intel: "Request Free Demo",
+        price_lbl_from: "",
+        price_lbl_once: "",
+        price_lbl_monthly: "",
+        price_lbl_maint_label: "Free Trial",
         
         // Intelligent maintenance detail
         maint_detail_title: "⭐ Intelligent Maintenance: Immediate Access & Continuous Innovation",
-        maint_detail_desc: "By contracting the Intelligent Maintenance (300 €/month - Optional), your restaurant not only receives priority support, but your POS will also have immediate access to all new software upgrades we develop. Furthermore, you will enjoy unlimited access to continuous updates and features of our Artificial Intelligence models, ensuring your business always operates with the most advanced technology on the market.",
+        maint_detail_desc: "By contracting the <strong>Intelligent Support & Maintenance (Optional)</strong>, your restaurant not only receives priority support, but your POS will also have <strong>immediate access to all new software upgrades</strong> we develop. Furthermore, you will enjoy unlimited access to <strong>continuous updates and features of our Artificial Intelligence models</strong>, ensuring your business always operates with the most advanced technology on the market.",
         
         // FAQs
         faq_title: "Frequently Asked Questions",
@@ -497,24 +497,24 @@ const translations = {
         fin_be_sub: "Vendes necessàries per cobrir les despeses fixes + el cost dels ingredients (basat en el 77.7% de marge de l'escandall)",
         
         // Pricing
-        price_badge: "Inversió Intel·ligent",
-        price_title: "Estructura de Plans BarLi Restauració",
-        price_subtitle: "Els nostres plans s'adapten a la maduresa del teu negoci. Tria entre pagament únic d'implementació i tarifes mensuals opcionals de manteniment.",
+        price_badge: "Demo d'1 Mes Gratis",
+        price_title: "Proba BarLi al teu Restaurant sense Compromís",
+        price_subtitle: "Compara BarLi amb el teu TPV actual completament gratis durant un mes. Sent la diferència en control d'inventari, velocitat de comandes i reserves sense comissions.",
         price_toggle_imp: "Pagament d'Implementació",
-        price_toggle_maint: "Suport i Mantenimiento",
+        price_toggle_maint: "Suport i Manteniment",
         
         // Plans details
-        plan_btn_base: "Seleccionar Plan Base",
-        plan_btn_ope: "Seleccionar Plan Operativo",
-        plan_btn_intel: "Seleccionar Plan Inteligente",
-        price_lbl_from: "Des de",
-        price_lbl_once: "pagament únic",
-        price_lbl_monthly: "/mes",
-        price_lbl_maint_label: "Manteniment Opcional",
+        plan_btn_base: "Sol·licitar Demo Gratis",
+        plan_btn_ope: "Sol·licitar Demo Gratis",
+        plan_btn_intel: "Sol·licitar Demo Gratis",
+        price_lbl_from: "",
+        price_lbl_once: "",
+        price_lbl_monthly: "",
+        price_lbl_maint_label: "Prova Gratuïta",
         
         // Intelligent maintenance detail
         maint_detail_title: "⭐ Manteniment Intel·ligent: Accés Immediat i Innovació Contínua",
-        maint_detail_desc: "En contractar el Manteniment Intel·ligent (300 €/mes - Opcional), el teu restaurant no només rep suport prioritari, sinó que el teu TPV tindrà accés immediat a totes les noves millores de programari del TPV que anem desenvolupant. A més, comptaràs de forma il·limitada amb les noves eines i optimitzacions contínues dels nostres models d'Intel·ligència Artificial, garantint que el teu negoci sempre operi amb la tecnologia més avançada del mercat.",
+        maint_detail_desc: "En contractar el <strong>Suport i Manteniment Intel·ligent (Opcional)</strong>, el teu restaurant no només rep suport prioritari, sinó que el teu TPV tindrà <strong>accés immediat a totes les noves millores de programari</strong> del TPV que anem desenvolupant. A més, comptaràs de forma il·limitada amb les <strong>noves eines i optimitzacions contínues dels nostres models d'Intel·ligència Artificial</strong>, garantint que el teu negoci sempre operi amb la tecnologia més avançada del mercat.",
         
         // FAQs
         faq_title: "Preguntes Frecuents",
@@ -678,24 +678,24 @@ const translations = {
         fin_be_sub: "المبيعات المطلوبة لتغطية المصاريف الثابتة + تكلفة المواد الخام (بناءً على هامش ربح 77.7% للطبق)",
         
         // Pricing
-        price_badge: "استثمار ذكي",
-        price_title: "هيكلية باقات BarLi للمطاعم",
-        price_subtitle: "تتناسب خططنا مع مرحلة نمو مشروعك. اختر بين رسوم التأسيس لمرة واحدة أو رسوم الدعم الاختيارية شهرياً.",
+        price_badge: "تجربة مجانية لمدة شهر",
+        price_title: "جرّب نظام BarLi في مطعمك بدون أي التزام",
+        price_subtitle: "قارن بين نظام BarLi ونظام بيعك الحالي مجانًا تمامًا لمدة شهر كامل. اشعر بالفرق في مراقبة المخزون، وسرعة الطلبات، والحجوزات بدون عمولات.",
         price_toggle_imp: "رسوم التأسيس والتجهيز",
         price_toggle_maint: "الدعم والصيانة",
         
         // Plans details
-        plan_btn_base: "اختر الباقة الأساسية",
-        plan_btn_ope: "اختر الباقة التشغيلية",
-        plan_btn_intel: "اختر الباقة الذكية",
-        price_lbl_from: "تبدأ من",
-        price_lbl_once: "دفع لمرة واحدة",
-        price_lbl_monthly: "/شهرياً",
-        price_lbl_maint_label: "صيانة اختيارية",
+        plan_btn_base: "طلب تجربة مجانية",
+        plan_btn_ope: "طلب تجربة مجانية",
+        plan_btn_intel: "طلب تجربة مجانية",
+        price_lbl_from: "",
+        price_lbl_once: "",
+        price_lbl_monthly: "",
+        price_lbl_maint_label: "تجربة مجانية",
         
         // Intelligent maintenance detail
         maint_detail_title: "⭐ الصيانة الذكية: وصول فوري وابتكار مستمر",
-        maint_detail_desc: "عند اشتراكك في خدمة الصيانة الذكية (300 يورو شهرياً - اختيارية)، لن يحصل مطعمك على دعم فني ذي أولوية فحسب، بل سيحصل نظام البيع TPV لديك على وصول فوري ومباشر لجميع تحديثات وميزات البرامج التي نطورها. بالإضافة إلى ذلك، ستستفيد بشكل غير محدود من الأدوات والتحسينات المستمرة لنماذج الذكاء الاصطناعي الخاصة بنا، مما يضمن تشغيل عملك دائماً بأحدث التقنيات المتاحة في السوق.",
+        maint_detail_desc: "عند اشتراكك في خدمة <strong>الدعم والصيانة الذكية (اختيارية)</strong>، لن يحصل مطعمك على دعم فني ذي أولوية فحسب، بل سيحصل نظام البيع TPV لديك على <strong>وصول فوري ومباشر لجميع تحديثات وميزات البرامج</strong> التي نطورها. بالإضافة إلى ذلك، ستستفيد بشكل غير محدود من <strong>الأدوات والتحسينات المستمرة لنماذج الذكاء الاصطناعي</strong> الخاصة بنا، مما يضمن تشغيل عملك دائماً بأحدث التقنيات المتاحة في السوق.",
         
         // FAQs
         faq_title: "الأسئلة الشائعة",

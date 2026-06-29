@@ -2842,13 +2842,22 @@
                 <p>Nuestros planes se adaptan a la madurez de tu negocio. Elige entre pago único de implementación y tarifas mensuales opcionales de mantenimiento.</p>
             </div>
             
-            <div class="toggle-container">
+            <!-- Hidden pricing toggle (kept for JS layout translation safety) -->
+            <div class="toggle-container" style="display: none !important;">
                 <span class="toggle-label" id="labelImp" onclick="setPriceToggle(false)">Pago de Implementación</span>
                 <label class="toggle-switch">
                     <input type="checkbox" id="priceToggle" onchange="togglePriceMode()">
                     <span class="toggle-slider"></span>
                 </label>
                 <span class="toggle-label" id="labelMant" onclick="setPriceToggle(true)">Soporte y Mantenimiento</span>
+            </div>
+
+            <!-- Prominent Callout Banner for Free 1-Month Trial -->
+            <div style="background-color: var(--brand-light); border: 1.5px dashed var(--brand-primary); border-radius: var(--border-radius-md); padding: 20px 24px; text-align: center; margin: 0 auto 40px auto; max-width: 800px; display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: var(--shadow-sm);">
+                <span style="font-size: 24px; line-height: 1;">🎁</span>
+                <strong style="font-family: var(--font-head); font-size: 15px; color: var(--text-main); font-weight: 700;" id="pricingFreeTrialCallout">
+                    Comparativa sin compromiso: Te configuramos una demo gratis durante 1 mes completo para que compares con tu TPV actual en tu propio local.
+                </strong>
             </div>
             
             <div class="pricing-grid">
@@ -2858,12 +2867,12 @@
                         <h3 class="plan-name">Base</h3>
                         <p class="plan-desc">Para digitalizar lo esencial y ordenar tus ventas, reservas y base de datos de clientes.</p>
                     </div>
-                    <div class="plan-price-box">
-                        <span id="priceLabelBase" class="plan-price-label">Desde</span>
-                        <span id="priceValBase" class="plan-price">1000 €</span>
-                        <span id="pricePeriodBase" class="plan-price-period">pago único</span>
+                    <div class="plan-price-box" style="margin-bottom: 8px;">
+                        <span id="priceLabelBase" style="display:none;"></span>
+                        <span id="priceValBase" class="plan-price" style="font-size: 24px; color: var(--brand-primary);">Demo Gratis</span>
+                        <span id="pricePeriodBase" class="plan-price-period" style="font-weight: 600; color: var(--color-success); font-size: 14.5px;">1 mes sin compromiso</span>
                     </div>
-                    <div id="priceInfoBase" class="plan-price-info">Incluye 3 meses de soporte de arranque gratis</div>
+                    <div id="priceInfoBase" style="display:none;"></div>
                     <hr class="pricing-divider">
                     <h4 class="plan-features-title">Funcionalidades Incluidas:</h4>
                     <ul class="plan-features">
@@ -2888,12 +2897,12 @@
                         <h3 class="plan-name">Operativo</h3>
                         <p class="plan-desc">Para controlar en tiempo real la cocina y el salón, el personal y optimizar tiempos de mesa.</p>
                     </div>
-                    <div class="plan-price-box">
-                        <span id="priceLabelOperativo" class="plan-price-label">Desde</span>
-                        <span id="priceValOperativo" class="plan-price">2000 €</span>
-                        <span id="pricePeriodOperativo" class="plan-price-period">pago único</span>
+                    <div class="plan-price-box" style="margin-bottom: 8px;">
+                        <span id="priceLabelOperativo" style="display:none;"></span>
+                        <span id="priceValOperativo" class="plan-price" style="font-size: 24px; color: var(--brand-primary);">Demo Gratis</span>
+                        <span id="pricePeriodOperativo" class="plan-price-period" style="font-weight: 600; color: var(--color-success); font-size: 14.5px;">1 mes sin compromiso</span>
                     </div>
-                    <div id="priceInfoOperativo" class="plan-price-info">Reunión de análisis y mejora mensual</div>
+                    <div id="priceInfoOperativo" style="display:none;"></div>
                     <hr class="pricing-divider">
                     <h4 class="plan-features-title">Todo lo de Base y además:</h4>
                     <ul class="plan-features">
@@ -2918,12 +2927,12 @@
                         <h3 class="plan-name">Inteligente</h3>
                         <p class="plan-desc">Para automatizar la contabilidad, cruzar ventas con compras reales y usar la IA para el marketing.</p>
                     </div>
-                    <div class="plan-price-box">
-                        <span id="priceLabelInteligente" class="plan-price-label">Desde</span>
-                        <span id="priceValInteligente" class="plan-price">4000 €</span>
-                        <span id="pricePeriodInteligente" class="plan-price-period">pago único</span>
+                    <div class="plan-price-box" style="margin-bottom: 8px;">
+                        <span id="priceLabelInteligente" style="display:none;"></span>
+                        <span id="priceValInteligente" class="plan-price" style="font-size: 24px; color: var(--brand-primary);">Demo Gratis</span>
+                        <span id="pricePeriodInteligente" class="plan-price-period" style="font-weight: 600; color: var(--color-success); font-size: 14.5px;">1 mes sin compromiso</span>
                     </div>
-                    <div id="priceInfoInteligente" class="plan-price-info">Acompañamiento estratégico e IA de negocio</div>
+                    <div id="priceInfoInteligente" style="display:none;"></div>
                     <hr class="pricing-divider">
                     <h4 class="plan-features-title">Todo lo de Operativo y además:</h4>
                     <ul class="plan-features">
@@ -2949,7 +2958,7 @@
                     Mantenimiento Inteligente: Acceso Inmediato e Innovación Continua
                 </h4>
                 <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6;">
-                    Al contratar el <strong>Mantenimiento Inteligente (300 €/mes - Opcional)</strong>, tu restaurante no solo recibe soporte prioritario, sino que tu TPV tendrá <strong>acceso inmediato a todas las nuevas mejoras de software</strong> del TPV que vayamos desarrollando. Además, contarás de forma ilimitada con las <strong>nuevas herramientas y optimizaciones continuas de nuestros modelos de Inteligencia Artificial</strong>, garantizando que tu negocio siempre opere con la tecnología más avanzada del mercado.
+                    Al contratar el <strong>Soporte y Mantenimiento Inteligente (Opcional)</strong>, tu restaurante no solo recibe soporte prioritario, sino que tu TPV tendrá <strong>acceso inmediato a todas las nuevas mejoras de software</strong> del TPV que vayamos desarrollando. Además, contarás de forma ilimitada con las <strong>nuevas herramientas y optimizaciones continuas de nuestros modelos de Inteligencia Artificial</strong>, garantizando que tu negocio siempre opere con la tecnología más avanzada del mercado.
                 </p>
             </div>
         </div>
@@ -3623,6 +3632,20 @@
             document.querySelector('.footer-bottom div:first-child').innerHTML = `© 2026 BarLi. ${lang === 'en' ? 'All rights reserved.' : (lang === 'ca' ? 'Tots els drets reservats.' : (lang === 'ar' ? 'جميع الحقوق محفوظة.' : 'Todos los derechos reservados.'))}`;
             document.querySelector('.footer-bottom div:last-child').innerHTML = lang === 'en' ? 'Restaurant Conversion & Operations Specialists' : (lang === 'ca' ? 'Especialistes en Conversió i Operacions Hostaleres' : (lang === 'ar' ? 'أخصائيو تحويل العمليات والمبيعات للمطاعم' : 'Especialistas en Conversión y Operaciones Hosteleras'));
 
+            // Free Trial Callout translation
+            const calloutEl = document.getElementById('pricingFreeTrialCallout');
+            if (calloutEl) {
+                if (lang === 'en') {
+                    calloutEl.innerHTML = "No-obligation comparison: We set up a free demo for 1 full month so you can compare it with your current POS in your own venue.";
+                } else if (lang === 'ca') {
+                    calloutEl.innerHTML = "Comparativa sense compromís: Et configurem una demo gratis durant 1 mes complet perquè comparis amb el teu TPV actual al teu propi local.";
+                } else if (lang === 'ar') {
+                    calloutEl.innerHTML = "مقارنة بدون التزام: نقوم بإعداد تجربة مجانية لمدة شهر كامل لتتمكن من المقارنة بينه وبين نظام بيعك الحالي في مطعمك الخاص.";
+                } else {
+                    calloutEl.innerHTML = "Comparativa sin compromiso: Te configuramos una demo gratis durante 1 mes completo para que compares con tu TPV actual en tu propio local.";
+                }
+            }
+
             // Sync calculators UI
             calculateROI();
             updatePrices(document.getElementById('priceToggle').checked);
@@ -3810,70 +3833,33 @@
         }
 
         function updatePrices(showMonthlyMaintenance) {
-            const labelImp = document.getElementById('labelImp');
-            const labelMant = document.getElementById('labelMant');
-            
             const pBase = document.getElementById('priceValBase');
             const pBasePer = document.getElementById('pricePeriodBase');
-            const pBaseInfo = document.getElementById('priceInfoBase');
-            const pBaseLabel = document.getElementById('priceLabelBase');
             
             const pOperativo = document.getElementById('priceValOperativo');
             const pOperativoPer = document.getElementById('pricePeriodOperativo');
-            const pOperativoInfo = document.getElementById('priceInfoOperativo');
-            const pOperativoLabel = document.getElementById('priceLabelOperativo');
             
             const pInteligente = document.getElementById('priceValInteligente');
             const pInteligentePer = document.getElementById('pricePeriodInteligente');
-            const pInteligenteInfo = document.getElementById('priceInfoInteligente');
-            const pInteligenteLabel = document.getElementById('priceLabelInteligente');
             
-            const maintFlags = document.querySelectorAll('.maint-flag');
             const dict = translations[currentLang];
 
-            if (showMonthlyMaintenance) {
-                labelMant.style.color = 'var(--brand-primary)';
-                labelImp.style.color = 'var(--text-muted)';
-                
-                pBase.innerText = "100 €";
-                pBasePer.innerText = dict.price_lbl_monthly;
-                pBaseInfo.innerText = dict.calc_maint_b_desc;
-                pBaseLabel.innerText = "";
-                
-                pOperativo.innerText = "150 €";
-                pOperativoPer.innerText = dict.price_lbl_monthly;
-                pOperativoInfo.innerText = dict.calc_maint_o_desc;
-                pOperativoLabel.innerText = "";
-                
-                pInteligente.innerText = "300 €";
-                pInteligentePer.innerText = dict.price_lbl_monthly;
-                pInteligenteInfo.innerText = dict.calc_maint_i_desc;
-                pInteligenteLabel.innerText = "";
+            // Set all price values to "Demo Gratis" and "1 mes sin compromiso" in active language
+            const demoText = currentLang === 'en' ? "Free Demo" : (currentLang === 'ca' ? "Demo Gratis" : (currentLang === 'ar' ? "تجربة مجانية" : "Demo Gratis"));
+            const subText = currentLang === 'en' ? "1 month risk-free" : (currentLang === 'ca' ? "1 mes sense compromís" : (currentLang === 'ar' ? "شهر بدون أي التزام" : "1 mes sin compromiso"));
 
-                // Show Maintenance Optional label only in maintenance toggle
-                maintFlags.forEach(f => f.style.display = 'inline-block');
-            } else {
-                labelImp.style.color = 'var(--brand-primary)';
-                labelMant.style.color = 'var(--text-muted)';
-                
-                pBase.innerText = "1000 €";
-                pBasePer.innerText = dict.price_lbl_once;
-                pBaseInfo.innerText = dict.calc_imp_b_desc;
-                pBaseLabel.innerText = dict.price_lbl_from;
-                
-                pOperativo.innerText = "2000 €";
-                pOperativoPer.innerText = dict.price_lbl_once;
-                pOperativoInfo.innerText = dict.calc_imp_o_desc;
-                pOperativoLabel.innerText = dict.price_lbl_from;
-                
-                pInteligente.innerText = "4000 €";
-                pInteligentePer.innerText = dict.price_lbl_once;
-                pInteligenteInfo.innerText = dict.calc_imp_i_desc;
-                pInteligenteLabel.innerText = dict.price_lbl_from;
-
-                // Hide Maintenance Optional label in implementation cost toggle
-                maintFlags.forEach(f => f.style.display = 'none');
-            }
+            pBase.innerText = demoText;
+            pBasePer.innerText = subText;
+            
+            pOperativo.innerText = demoText;
+            pOperativoPer.innerText = subText;
+            
+            pInteligente.innerText = demoText;
+            pInteligentePer.innerText = subText;
+            
+            // Hide the maintenance flag badges
+            const maintFlags = document.querySelectorAll('.maint-flag');
+            maintFlags.forEach(f => f.style.display = 'none');
         }
 
         // WhatsApp Form sender
