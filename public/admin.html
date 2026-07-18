@@ -200,7 +200,34 @@
             </div>
 
             <div class="form-section">
-                <h3>4. Condiciones de la Propuesta</h3>
+                <h3>4. Configuración de Moneda e Impuestos</h3>
+                <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">Configura la moneda y el impuesto que se aplicará en la propuesta visual de cara al cliente.</p>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="currency-select">Moneda</label>
+                        <select id="currency-select" onchange="handleCurrencyChange(this)">
+                            <option value="€" selected>Euros (€)</option>
+                            <option value="S/">Soles Peruanos (S/)</option>
+                            <option value="$">Dólares ($)</option>
+                            <option value="custom">Otro (Personalizado)...</option>
+                        </select>
+                        <input type="text" id="custom-currency" placeholder="Símbolo personalizado (ej: S/.)" style="display: none; margin-top: 0.5rem;">
+                    </div>
+                    <div class="form-group">
+                        <label for="tax-select">Etiqueta de Impuesto</label>
+                        <select id="tax-select" onchange="handleTaxChange(this)">
+                            <option value="IVA" selected>IVA (Impuesto al Valor Añadido)</option>
+                            <option value="IGV">IGV (Impuesto General a las Ventas - Perú)</option>
+                            <option value="">Ninguno</option>
+                            <option value="custom">Otro (Personalizado)...</option>
+                        </select>
+                        <input type="text" id="custom-tax" placeholder="Nombre de impuesto (ej: Tax)" style="display: none; margin-top: 0.5rem;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>5. Condiciones de la Propuesta</h3>
                 <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">Detalla las condiciones comerciales o notas adicionales (puedes editarlas libremente).</p>
                 <div class="form-group">
                     <textarea id="conditions" rows="4" placeholder="Ej. ▪ Validez de la oferta: 15 días naturales.">▪ Validez de la oferta: 15 días naturales.
@@ -281,6 +308,58 @@
                 row.querySelector('.row-desc').value = service.desc;
                 row.querySelector('.row-price').value = service.price;
             }
+        }
+
+        function handleCurrencyChange(select) {
+            const customInput = document.getElementById('custom-currency');
+            if (select.value === 'custom') {
+                customInput.style.display = 'block';
+                customInput.value = '';
+            } else {
+                customInput.style.display = 'none';
+                customInput.value = select.value;
+            }
+        }
+
+        // Initialize with one row and load CRM tools
+        function handleTaxChange(select) {
+            const customInput = document.getElementById('custom-tax');
+            let taxVal = select.value;
+            
+            if (select.value === 'custom') {
+                customInput.style.display = 'block';
+                customInput.value = '';
+                taxVal = '';
+            } else {
+                customInput.style.display = 'none';
+                customInput.value = select.value;
+            }
+            
+            updateConditionsTaxLabel(taxVal);
+        }
+
+        function updateConditionsTaxLabel(newTax) {
+            const conditionsArea = document.getElementById('conditions');
+            let text = conditionsArea.value;
+            
+            const regex = /sin\s+([A-Za-z0-9]+)\s+incluido/i;
+            
+            if (newTax) {
+                if (regex.test(text)) {
+                    text = text.replace(regex, `sin ${newTax} incluido`);
+                } else {
+                    text = text.replace(/\bIVA\b/g, newTax);
+                    text = text.replace(/\bIGV\b/g, newTax);
+                }
+            } else {
+                if (regex.test(text)) {
+                    text = text.replace(regex, `sin impuestos incluidos`);
+                } else {
+                    text = text.replace(/\bIVA\b/g, 'impuestos');
+                    text = text.replace(/\bIGV\b/g, 'impuestos');
+                }
+            }
+            conditionsArea.value = text;
         }
 
         async function suggestRoiWithAI(event) {
@@ -371,6 +450,12 @@
 
             const conditions = document.getElementById('conditions').value;
 
+            const currencySelect = document.getElementById('currency-select').value;
+            const currencySymbol = currencySelect === 'custom' ? document.getElementById('custom-currency').value : currencySelect;
+            
+            const taxSelect = document.getElementById('tax-select').value;
+            const taxLabel = taxSelect === 'custom' ? document.getElementById('custom-tax').value : taxSelect;
+
             const budgetData = {
                 businessName,
                 clientCif,
@@ -379,6 +464,8 @@
                 services,
                 roi,
                 conditions,
+                currencySymbol: currencySymbol || '€',
+                taxLabel: taxLabel,
                 timestamp: new Date().toISOString()
             };
 
@@ -595,6 +682,14 @@
         addServiceRow();
         checkUrlParams();
         loadClientsForAutofill();
+
+        // Bind custom tax input event listener
+        const customTaxInput = document.getElementById('custom-tax');
+        if (customTaxInput) {
+            customTaxInput.addEventListener('input', (e) => {
+                updateConditionsTaxLabel(e.target.value.toUpperCase());
+            });
+        }
     </script>
 </body>
 </html>

@@ -101,7 +101,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td style="padding-top: 2rem;"><strong>TOTAL INVERSIÓN (más IVA)</strong></td>
+                        <td style="padding-top: 2rem;" id="display-total-label"><strong>TOTAL INVERSIÓN (más IVA)</strong></td>
                         <td style="padding-top: 2rem; text-align: right;"><span id="display-total" style="font-size: 1.8rem; font-weight: 800; border-bottom: 4px solid var(--accent);">0€</span></td>
                     </tr>
                 </tfoot>
@@ -168,10 +168,35 @@
             const conditions = data.conditions || `▪ Validez de la oferta: 15 días naturales.\n▪ Precios netos sin IVA incluido.\n▪ Forma de pago: 50% inicio / 50% entrega.`;
             document.getElementById('display-conditions').innerText = conditions;
 
+            const currencySymbol = data.currencySymbol || '€';
+            const taxLabel = data.taxLabel !== undefined ? data.taxLabel : 'IVA';
+            
+            const taxText = taxLabel ? ` (más ${taxLabel})` : '';
+            const totalLabelEl = document.getElementById('display-total-label');
+            if (totalLabelEl) {
+                totalLabelEl.innerHTML = `<strong>TOTAL INVERSIÓN${taxText}</strong>`;
+            }
+
             const tbody = document.getElementById('services-tbody');
             tbody.innerHTML = "";
             let total = 0;
             
+            // Format currency helper
+            function formatCurrency(amount, symbol) {
+                symbol = symbol || '€';
+                const formattedAmount = amount.toLocaleString('es-ES');
+                if (symbol === '€') {
+                    return `${formattedAmount}€`;
+                } else if (symbol === 'S/' || symbol === 'S/.' || symbol === '$' || symbol === 'US$') {
+                    return `${symbol} ${formattedAmount}`;
+                } else {
+                    if (symbol.includes('€') || symbol.toLowerCase().includes('eur')) {
+                        return `${formattedAmount} ${symbol}`;
+                    }
+                    return `${symbol} ${formattedAmount}`;
+                }
+            }
+
             if (data.services) {
                 data.services.forEach(service => {
                     const tr = document.createElement('tr');
@@ -180,14 +205,14 @@
                             <span class="item-name">${service.name}</span>
                             <div class="item-desc">${service.description}</div>
                         </td>
-                        <td class="price-col">${service.price.toLocaleString()}€</td>
+                        <td class="price-col">${formatCurrency(service.price, currencySymbol)}</td>
                     `;
                     tbody.appendChild(tr);
                     total += service.price;
                 });
             }
             
-            document.getElementById('display-total').innerText = `${total.toLocaleString()}€`;
+            document.getElementById('display-total').innerText = formatCurrency(total, currencySymbol);
         }
 
         async function loadProposal() {

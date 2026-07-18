@@ -2626,7 +2626,7 @@
                     el.style.padding = '0.5rem 1rem';
                     el.style.background = '#f9fafb';
                     el.innerHTML = `
-                        <span style="font-size:0.85rem; font-weight:600;">Propuesta Comercial (${p.total.toLocaleString('es-ES')}€)</span>
+                        <span style="font-size:0.85rem; font-weight:600;">Propuesta Comercial (${formatProposalCurrency(p.total, p.currencySymbol)})</span>
                         <a href="${p.link}" target="_blank" class="btn-crm-action btn-crm-secondary" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Ver</a>
                     `;
                     proposalsContainer.appendChild(el);
@@ -2908,6 +2908,21 @@
             }
         }
 
+        function formatProposalCurrency(amount, symbol) {
+            symbol = symbol || '€';
+            const formattedAmount = amount.toLocaleString('es-ES');
+            if (symbol === '€') {
+                return `${formattedAmount}€`;
+            } else if (symbol === 'S/' || symbol === 'S/.' || symbol === '$' || symbol === 'US$') {
+                return `${symbol} ${formattedAmount}`;
+            } else {
+                if (symbol.includes('€') || symbol.toLowerCase().includes('eur')) {
+                    return `${formattedAmount} ${symbol}`;
+                }
+                return `${symbol} ${formattedAmount}`;
+            }
+        }
+
         // --- TAB 4: ORIGINAL CLIENT DATABASE SERVICES LOGIC ---
         async function fetchBudgetData() {
             let budgets = [];
@@ -2967,6 +2982,7 @@
                     id: b.id || '',
                     timestamp: b.timestamp || b.createdAt,
                     total: totalAmount,
+                    currencySymbol: b.currencySymbol || '€',
                     servicesCount: b.services ? b.services.length : 0,
                     servicesList: b.services ? b.services.map(s => s.name).join(', ') : '',
                     link: proposalLink
@@ -3038,7 +3054,7 @@
                                             <span class="prop-services">${p.servicesList || 'Sin servicios especificados'}</span>
                                         </div>
                                         <div style="display: flex; align-items: center; gap: 1.5rem;">
-                                            <span class="prop-amount">${p.total.toLocaleString('es-ES')}€</span>
+                                            <span class="prop-amount">${formatProposalCurrency(p.total, p.currencySymbol)}</span>
                                             <div class="prop-actions">
                                                 <a href="${p.link}" target="_blank" class="btn-crm-action btn-crm-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">
                                                     Ver Propuesta
