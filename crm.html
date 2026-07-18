@@ -2627,7 +2627,10 @@
                     el.style.background = '#f9fafb';
                     el.innerHTML = `
                         <span style="font-size:0.85rem; font-weight:600;">Propuesta Comercial (${formatProposalCurrency(p.total, p.currencySymbol)})</span>
-                        <a href="${p.link}" target="_blank" class="btn-crm-action btn-crm-secondary" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Ver</a>
+                        <div style="display: flex; gap: 5px;">
+                            <a href="${p.link}" target="_blank" class="btn-crm-action btn-crm-secondary" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Ver</a>
+                            <a href="admin.html?${p.id ? `edit=${p.id}` : `data=${p.link.split('data=')[1]}`}" class="btn-crm-action btn-crm-primary" style="padding:0.25rem 0.6rem; font-size:0.75rem; text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">Editar</a>
+                        </div>
                     `;
                     proposalsContainer.appendChild(el);
                 });
@@ -3055,9 +3058,12 @@
                                         </div>
                                         <div style="display: flex; align-items: center; gap: 1.5rem;">
                                             <span class="prop-amount">${formatProposalCurrency(p.total, p.currencySymbol)}</span>
-                                            <div class="prop-actions">
+                                            <div class="prop-actions" style="display: flex; gap: 5px;">
                                                 <a href="${p.link}" target="_blank" class="btn-crm-action btn-crm-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">
-                                                    Ver Propuesta
+                                                    Ver
+                                                </a>
+                                                <a href="admin.html?${p.id ? `edit=${p.id}` : `data=${p.link.split('data=')[1]}`}" class="btn-crm-action btn-crm-primary" style="padding: 0.4rem 0.8rem; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                                                    Editar
                                                 </a>
                                             </div>
                                         </div>

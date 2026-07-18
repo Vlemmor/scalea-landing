@@ -419,6 +419,165 @@
         }
 
         let currentBudgetId = '';
+        let currentBudgetCreatedAt = null;
+
+        function prefillFormWithBudgetData(budget) {
+            currentBudgetId = budget.id || '';
+            currentBudgetCreatedAt = budget.timestamp || budget.createdAt || null;
+
+            // Prefill client details
+            document.getElementById('businessName').value = budget.businessName || '';
+            document.getElementById('clientCif').value = budget.clientCif || '';
+            document.getElementById('clientEmail').value = budget.clientEmail || '';
+            document.getElementById('clientAddress').value = budget.clientAddress || '';
+
+            // Prefill currency and tax
+            if (budget.currencySymbol) {
+                const currencySelect = document.getElementById('currency-select');
+                const customCurrencyInput = document.getElementById('custom-currency');
+                if (['€', 'S/', '$'].includes(budget.currencySymbol)) {
+                    currencySelect.value = budget.currencySymbol;
+                    customCurrencyInput.style.display = 'none';
+                    customCurrencyInput.value = budget.currencySymbol;
+                } else {
+                    currencySelect.value = 'custom';
+                    customCurrencyInput.style.display = 'block';
+                    customCurrencyInput.value = budget.currencySymbol;
+                }
+            }
+
+            if (budget.taxLabel !== undefined) {
+                const taxSelect = document.getElementById('tax-select');
+                const customTaxInput = document.getElementById('custom-tax');
+                if (['IVA', 'IGV', ''].includes(budget.taxLabel)) {
+                    taxSelect.value = budget.taxLabel;
+                    customTaxInput.style.display = 'none';
+                    customTaxInput.value = budget.taxLabel;
+                } else {
+                    taxSelect.value = 'custom';
+                    customTaxInput.style.display = 'block';
+                    customTaxInput.value = budget.taxLabel;
+                }
+            }
+
+            // Prefill services
+            const container = document.getElementById('services-container');
+            container.innerHTML = ''; // Clear default row
+            if (budget.services && budget.services.length > 0) {
+                budget.services.forEach(service => {
+                    addServiceRowWithData(service);
+                });
+            } else {
+                addServiceRow();
+            }
+
+            // Prefill ROI
+            if (budget.roi) {
+                document.getElementById('roiHours').value = budget.roi.hours || '';
+                document.getElementById('roiHoursLabel').value = budget.roi.hoursLabel || '';
+                document.getElementById('roiReservations').value = budget.roi.reservations || '';
+                document.getElementById('roiReservationsLabel').value = budget.roi.reservationsLabel || '';
+                document.getElementById('roiMetric3Value').value = budget.roi.metric3Value || '';
+                document.getElementById('roiMetric3Label').value = budget.roi.metric3Label || '';
+                document.getElementById('roiMetric4Value').value = budget.roi.metric4Value || '';
+                document.getElementById('roiMetric4Label').value = budget.roi.metric4Label || '';
+            }
+
+            // Prefill conditions
+            document.getElementById('conditions').value = budget.conditions || '';
+
+            // Change generate button text
+            const genBtn = document.querySelector('.actions button');
+            if (genBtn) {
+                genBtn.textContent = 'Actualizar Propuesta';
+            }
+
+            // Show editing indicator
+            const header = document.querySelector('.nav-header p');
+            if (header) {
+                header.innerHTML = `BarLi - Editando Propuesta #${currentBudgetId || 'Portable'}`;
+            }
+        }
+
+        async function loadBudgetForEditing(id) {
+            const apiUrl = getApiUrl();
+            const loc = window.location;
+            const cleanApiUrl = (apiUrl === loc.origin) ? '' : apiUrl;
+            let budget = null;
+
+            try {
+                if (cleanApiUrl) {
+                    const response = await fetch(`${cleanApiUrl}/api/budgets`);
+                    if (response.ok) {
+                        const budgets = await response.json();
+                        budget = budgets.find(b => b.id === id);
+                    }
+                }
+            } catch (err) {
+                console.warn("Could not load cloud budget for editing. Checking local backup.", err);
+            }
+
+            if (!budget) {
+                try {
+                    const localBudgets = JSON.parse(localStorage.getItem('barli_local_budgets') || '[]');
+                    budget = localBudgets.find(b => b.id === id);
+                } catch (e) {
+                    console.error("Error reading local backup for editing:", e);
+                }
+            }
+
+            if (budget) {
+                prefillFormWithBudgetData(budget);
+            } else {
+                alert('No se encontró la propuesta para editar.');
+            }
+        }
+
+        function addServiceRowWithData(service) {
+            const container = document.getElementById('services-container');
+            const row = document.createElement('div');
+            row.className = 'service-row';
+            
+            let options = CATALOG.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+            
+            row.innerHTML = `
+                <div class="service-row-header">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <select onchange="updateRow(this)" class="row-select">
+                            <option value="" disabled>Elige un servicio...</option>
+                            ${options}
+                        </select>
+                        <input type="text" placeholder="Nombre personalizado" class="row-name" style="display:none; font-weight:bold;">
+                    </div>
+                    <input type="number" placeholder="Precio" class="row-price">
+                    <button class="remove-btn" onclick="this.closest('.service-row').remove()">×</button>
+                </div>
+                <div class="service-row-body">
+                    <textarea placeholder="Descripción del servicio (puedes usar listas, viñetas, saltos de línea...)" class="row-desc" rows="3"></textarea>
+                </div>
+            `;
+            container.appendChild(row);
+
+            // Set values
+            const select = row.querySelector('.row-select');
+            const nameInput = row.querySelector('.row-name');
+            const descArea = row.querySelector('.row-desc');
+            const priceInput = row.querySelector('.row-price');
+
+            descArea.value = service.description || '';
+            priceInput.value = service.price || 0;
+
+            const catalogMatch = CATALOG.find(s => s.name === service.name);
+            if (catalogMatch && service.name !== "Otro (Personalizado)") {
+                select.value = service.name;
+                nameInput.style.display = "none";
+                nameInput.value = service.name;
+            } else {
+                select.value = "Otro (Personalizado)";
+                nameInput.style.display = "block";
+                nameInput.value = service.name;
+            }
+        }
 
         async function generateBudget() {
             const businessName = document.getElementById('businessName').value;
@@ -456,6 +615,8 @@
             const taxLabel = taxSelect === 'custom' ? document.getElementById('custom-tax').value : taxSelect;
 
             const budgetData = {
+                id: currentBudgetId || undefined,
+                createdAt: currentBudgetCreatedAt || undefined,
                 businessName,
                 clientCif,
                 clientEmail,
@@ -481,7 +642,15 @@
                 // Save locally first for CRM history
                 try {
                     let localBudgets = JSON.parse(localStorage.getItem('barli_local_budgets') || '[]');
-                    localBudgets.push(budgetData);
+                    if (!budgetData.id) {
+                        budgetData.id = Date.now().toString();
+                    }
+                    const existingIndex = localBudgets.findIndex(b => b.id === budgetData.id);
+                    if (existingIndex !== -1) {
+                        localBudgets[existingIndex] = budgetData;
+                    } else {
+                        localBudgets.push(budgetData);
+                    }
                     localStorage.setItem('barli_local_budgets', JSON.stringify(localBudgets));
                 } catch (e) {
                     console.error("Error saving local CRM backup:", e);
@@ -538,7 +707,15 @@
                 // Save locally first for CRM history
                 try {
                     let localBudgets = JSON.parse(localStorage.getItem('barli_local_budgets') || '[]');
-                    localBudgets.push(budgetData);
+                    if (!budgetData.id) {
+                        budgetData.id = Date.now().toString();
+                    }
+                    const existingIndex = localBudgets.findIndex(b => b.id === budgetData.id);
+                    if (existingIndex !== -1) {
+                        localBudgets[existingIndex] = budgetData;
+                    } else {
+                        localBudgets.push(budgetData);
+                    }
                     localStorage.setItem('barli_local_budgets', JSON.stringify(localBudgets));
                 } catch (e) {
                     console.error("Error saving local CRM backup:", e);
@@ -601,7 +778,7 @@
         }
 
         // CRM: Load query params and load past client data for autocomplete
-        function checkUrlParams() {
+        async function checkUrlParams() {
             const params = new URLSearchParams(window.location.search);
             const businessName = params.get('businessName');
             const clientCif = params.get('clientCif');
@@ -612,6 +789,22 @@
             if (clientCif) document.getElementById('clientCif').value = clientCif;
             if (clientEmail) document.getElementById('clientEmail').value = clientEmail;
             if (clientAddress) document.getElementById('clientAddress').value = clientAddress;
+
+            const editId = params.get('edit');
+            if (editId) {
+                await loadBudgetForEditing(editId);
+            }
+
+            const editDataParam = params.get('data');
+            if (editDataParam) {
+                try {
+                    const decodedJSON = decodeURIComponent(escape(atob(editDataParam)));
+                    const budget = JSON.parse(decodedJSON);
+                    prefillFormWithBudgetData(budget);
+                } catch (e) {
+                    console.error("Error loading portable proposal for editing:", e);
+                }
+            }
         }
 
         async function loadClientsForAutofill() {

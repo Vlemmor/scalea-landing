@@ -63,8 +63,13 @@ app.get('/app.js', (req, res) => {
 app.post('/api/budgets', async (req, res) => {
     try {
         const budgetData = req.body;
-        const budgetId = Date.now().toString();
-        const dataToSave = { ...budgetData, id: budgetId, createdAt: new Date() };
+        const budgetId = budgetData.id || Date.now().toString();
+        const dataToSave = { 
+            ...budgetData, 
+            id: budgetId, 
+            createdAt: budgetData.createdAt ? new Date(budgetData.createdAt) : new Date(),
+            updatedAt: new Date() 
+        };
 
         if (db) {
             await db.collection('budgets').doc(budgetId).set(dataToSave);
@@ -81,7 +86,16 @@ app.post('/api/budgets', async (req, res) => {
                     console.error("Error reading local budgets file:", e);
                 }
             }
-            budgets.push(dataToSave);
+            
+            // If editing, find and update the existing budget
+            const existingIndex = budgets.findIndex(b => b.id === budgetId);
+            if (existingIndex !== -1) {
+                budgets[existingIndex] = dataToSave;
+                console.log(`Local budget updated: ${budgetId}`);
+            } else {
+                budgets.push(dataToSave);
+                console.log(`Local budget created: ${budgetId}`);
+            }
             fs.writeFileSync(budgetsPath, JSON.stringify(budgets, null, 2), 'utf8');
         }
 
@@ -122,6 +136,14 @@ app.get('/api/budgets', async (req, res) => {
 // Serve paneladmin.html
 app.get('/paneladmin', (req, res) => {
     res.sendFile(path.join(__dirname, 'paneladmin.html'));
+});
+
+// Serve restaurantes and tpv landing page
+app.get('/restaurantes', (req, res) => {
+    res.sendFile(path.join(__dirname, 'restaurantes.html'));
+});
+app.get('/tpv', (req, res) => {
+    res.sendFile(path.join(__dirname, 'restaurantes.html'));
 });
 
 // API: Log Analytics Event
