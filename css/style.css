@@ -136,9 +136,21 @@ h1, h2, h3, h4 {
 /* Metrics Section */
 .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .metric-card {
@@ -176,7 +188,7 @@ h1, h2, h3, h4 {
 
 .service-row-header {
     display: grid;
-    grid-template-columns: 2fr 120px 40px;
+    grid-template-columns: 2fr 1.5fr 120px 40px;
     gap: 1rem;
     align-items: center;
 }

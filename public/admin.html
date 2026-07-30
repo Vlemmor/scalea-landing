@@ -108,9 +108,13 @@
                 </div>
 
                 <div class="form-grid" style="margin-top: 1rem;">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Título de la Propuesta</label>
+                        <input type="text" id="proposalTitle" placeholder="Ej. Propuesta de Transformación Digital" value="Propuesta de Transformación Digital">
+                    </div>
                     <div class="form-group">
                         <label>Nombre del Negocio / Cliente</label>
-                        <input type="text" id="businessName" placeholder="Ej. Restaurante La Cresta">
+                        <input type="text" id="businessName" placeholder="Ej. Restaurante La Cresta" oninput="updateProposalCode()">
                     </div>
                     <div class="form-group">
                         <label>CIF / NIF</label>
@@ -123,6 +127,26 @@
                     <div class="form-group">
                         <label>Dirección (Opcional)</label>
                         <input type="text" id="clientAddress" placeholder="Ej. Carrer de Balmes, 123">
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--primary);">Codificación del Presupuesto</h4>
+                <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr 2fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div class="form-group">
+                        <label>Prefijo</label>
+                        <input type="text" id="proposalPrefix" value="PTE" oninput="updateProposalCode()">
+                    </div>
+                    <div class="form-group">
+                        <label>Número</label>
+                        <input type="number" id="proposalNumber" value="10" oninput="updateProposalCode()">
+                    </div>
+                    <div class="form-group">
+                        <label>Año</label>
+                        <input type="number" id="proposalYear" value="2026" oninput="updateProposalCode()">
+                    </div>
+                    <div class="form-group">
+                        <label>Código Final (Autogenerado)</label>
+                        <input type="text" id="proposalCode" readonly style="background: #f1f5f9; font-weight: bold;">
                     </div>
                 </div>
             </div>
@@ -245,13 +269,14 @@
 
     <script>
         const CATALOG = [
-            { name: "Auditoría de Procesos", desc: "Análisis de flujos y detección de ineficiencias.", price: 300 },
-            { name: "Bot IA Aitana (WhatsApp)", desc: "Asistente inteligente 24/7 para reservas.", price: 1200 },
-            { name: "Optimización Google Business", desc: "SEO Local y gestión de reseñas.", price: 450 },
-            { name: "Gestión TPV & Analítica", desc: "Control total de ventas en tiempo real.", price: 800 },
-            { name: "Campañas Ads (Meta/Google)", desc: "Captación directa de clientes cualificados.", price: 600 },
-            { name: "Desarrollo Web / Landing", desc: "Sitio web optimizado para conversión.", price: 950 },
-            { name: "Otro (Personalizado)", desc: "Descripción del servicio...", price: 0 }
+            { name: "Auditoría de Procesos", desc: "Análisis de flujos y detección de ineficiencias.", price: 300, type: "pago_unico" },
+            { name: "Bot IA Aitana (WhatsApp)", desc: "Asistente inteligente 24/7 para reservas.", price: 1200, type: "pago_unico" },
+            { name: "Optimización Google Business", desc: "SEO Local y gestión de reseñas.", price: 450, type: "pago_unico" },
+            { name: "Gestión TPV & Analítica", desc: "Control total de ventas en tiempo real.", price: 800, type: "pago_unico" },
+            { name: "Campañas Ads (Meta/Google)", desc: "Captación directa de clientes cualificados.", price: 600, type: "pago_unico" },
+            { name: "Desarrollo Web / Landing", desc: "Sitio web optimizado para conversión.", price: 950, type: "pago_unico" },
+            { name: "Soporte y Mantenimiento", desc: "Costo de soporte mensual y pago de herramientas digitales.", price: 150, type: "mensual" },
+            { name: "Otro (Personalizado)", desc: "Descripción del servicio...", price: 0, type: "pago_unico" }
         ];
 
         const getDefaultApiUrl = () => {
@@ -280,10 +305,16 @@
                             <option value="" disabled selected>Elige un servicio...</option>
                             ${options}
                         </select>
-                        <input type="text" placeholder="Nombre personalizado" class="row-name" style="display:none; font-weight:bold;">
+                        <input type="text" placeholder="Nombre personalizado" class="row-name" style="display:none; font-weight:bold;" oninput="updateProposalCode()">
                     </div>
-                    <input type="number" placeholder="Precio" class="row-price">
-                    <button class="remove-btn" onclick="this.closest('.service-row').remove()">×</button>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <select class="row-type" onchange="updateProposalCode()">
+                            <option value="pago_unico">Pago único (Implementación)</option>
+                            <option value="mensual">Mensual (Mantenimiento)</option>
+                        </select>
+                    </div>
+                    <input type="number" placeholder="Precio" class="row-price" oninput="updateProposalCode()">
+                    <button class="remove-btn" onclick="this.closest('.service-row').remove(); updateProposalCode();">×</button>
                 </div>
                 <div class="service-row-body">
                     <textarea placeholder="Descripción del servicio (puedes usar listas, viñetas, saltos de línea...)" class="row-desc" rows="3"></textarea>
@@ -308,7 +339,34 @@
             if (service) {
                 row.querySelector('.row-desc').value = service.desc;
                 row.querySelector('.row-price').value = service.price;
+                if (service.type) {
+                    row.querySelector('.row-type').value = service.type;
+                }
             }
+            updateProposalCode();
+        }
+
+        function updateProposalCode() {
+            const prefix = document.getElementById('proposalPrefix').value || 'PTE';
+            const number = document.getElementById('proposalNumber').value || '10';
+            const year = document.getElementById('proposalYear').value || '2026';
+            const businessName = document.getElementById('businessName').value || 'Cliente';
+            
+            // Get first service name
+            const rows = document.querySelectorAll('.service-row');
+            let firstService = 'Servicio';
+            if (rows.length > 0) {
+                const selectVal = rows[0].querySelector('.row-select').value;
+                const customName = rows[0].querySelector('.row-name').value;
+                if (selectVal && selectVal !== "Otro (Personalizado)") {
+                    firstService = selectVal;
+                } else if (customName) {
+                    firstService = customName;
+                }
+            }
+            
+            const code = `${prefix} - ${number} - ${year} ${businessName} - ${firstService}`;
+            document.getElementById('proposalCode').value = code;
         }
 
         function handleCurrencyChange(select) {
@@ -431,6 +489,11 @@
             document.getElementById('clientCif').value = budget.clientCif || '';
             document.getElementById('clientEmail').value = budget.clientEmail || '';
             document.getElementById('clientAddress').value = budget.clientAddress || '';
+            document.getElementById('proposalTitle').value = budget.proposalTitle || 'Propuesta de Transformación Digital';
+            document.getElementById('proposalPrefix').value = budget.proposalPrefix || 'PTE';
+            document.getElementById('proposalNumber').value = budget.proposalNumber || '10';
+            document.getElementById('proposalYear').value = budget.proposalYear || '2026';
+            document.getElementById('proposalCode').value = budget.proposalCode || '';
 
             // Prefill currency and tax
             if (budget.currencySymbol) {
@@ -507,7 +570,7 @@
             let budget = null;
 
             try {
-                if (cleanApiUrl) {
+                if (window.location.protocol !== 'file:') {
                     const response = await fetch(`${cleanApiUrl}/api/budgets`);
                     if (response.ok) {
                         const budgets = await response.json();
@@ -548,10 +611,16 @@
                             <option value="" disabled>Elige un servicio...</option>
                             ${options}
                         </select>
-                        <input type="text" placeholder="Nombre personalizado" class="row-name" style="display:none; font-weight:bold;">
+                        <input type="text" placeholder="Nombre personalizado" class="row-name" style="display:none; font-weight:bold;" oninput="updateProposalCode()">
                     </div>
-                    <input type="number" placeholder="Precio" class="row-price">
-                    <button class="remove-btn" onclick="this.closest('.service-row').remove()">×</button>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <select class="row-type" onchange="updateProposalCode()">
+                            <option value="pago_unico">Pago único (Implementación)</option>
+                            <option value="mensual">Mensual (Mantenimiento)</option>
+                        </select>
+                    </div>
+                    <input type="number" placeholder="Precio" class="row-price" oninput="updateProposalCode()">
+                    <button class="remove-btn" onclick="this.closest('.service-row').remove(); updateProposalCode();">×</button>
                 </div>
                 <div class="service-row-body">
                     <textarea placeholder="Descripción del servicio (puedes usar listas, viñetas, saltos de línea...)" class="row-desc" rows="3"></textarea>
@@ -564,9 +633,21 @@
             const nameInput = row.querySelector('.row-name');
             const descArea = row.querySelector('.row-desc');
             const priceInput = row.querySelector('.row-price');
+            const typeSelect = row.querySelector('.row-type');
 
             descArea.value = service.description || '';
             priceInput.value = service.price || 0;
+
+            let serviceType = service.type;
+            if (!serviceType) {
+                const nameLower = (service.name || '').toLowerCase();
+                if (nameLower.includes('mantenimiento') || nameLower.includes('soporte') || nameLower.includes('mensual') || nameLower.includes('mantto')) {
+                    serviceType = 'mensual';
+                } else {
+                    serviceType = 'pago_unico';
+                }
+            }
+            typeSelect.value = serviceType;
 
             const catalogMatch = CATALOG.find(s => s.name === service.name);
             if (catalogMatch && service.name !== "Otro (Personalizado)") {
@@ -592,8 +673,9 @@
                 const nameInput = row.querySelector('.row-name').value;
                 const name = selectValue === "Otro (Personalizado)" ? nameInput : selectValue;
                 const desc = row.querySelector('.row-desc').value;
-                const price = parseFloat(row.querySelector('.row-price').value);
-                if (name) services.push({ name, description: desc, price });
+                const price = parseFloat(row.querySelector('.row-price').value) || 0;
+                const type = row.querySelector('.row-type').value;
+                if (name) services.push({ name, description: desc, price, type });
             });
 
             const roi = {
@@ -615,6 +697,12 @@
             const taxSelect = document.getElementById('tax-select').value;
             const taxLabel = taxSelect === 'custom' ? document.getElementById('custom-tax').value : taxSelect;
 
+            const proposalTitle = document.getElementById('proposalTitle').value;
+            const proposalPrefix = document.getElementById('proposalPrefix').value;
+            const proposalNumber = document.getElementById('proposalNumber').value;
+            const proposalYear = document.getElementById('proposalYear').value;
+            const proposalCode = document.getElementById('proposalCode').value;
+
             const budgetData = {
                 id: currentBudgetId || undefined,
                 createdAt: currentBudgetCreatedAt || undefined,
@@ -622,6 +710,11 @@
                 clientCif,
                 clientEmail,
                 clientAddress,
+                proposalTitle: proposalTitle || 'Propuesta de Transformación Digital',
+                proposalPrefix: proposalPrefix || 'PTE',
+                proposalNumber: proposalNumber || '10',
+                proposalYear: proposalYear || '2026',
+                proposalCode: proposalCode || '',
                 services,
                 roi,
                 conditions,
@@ -639,7 +732,7 @@
             const apiUrl = getApiUrl();
             const cleanApiUrl = (apiUrl === loc.origin) ? '' : apiUrl; // Ignore default fallback if it points to github pages
 
-            if (!cleanApiUrl) {
+            if (window.location.protocol === 'file:') {
                 // Save locally first for CRM history
                 try {
                     let localBudgets = JSON.parse(localStorage.getItem('barli_local_budgets') || '[]');
@@ -815,7 +908,7 @@
             const cleanApiUrl = (apiUrl === loc.origin) ? '' : apiUrl;
 
             try {
-                if (cleanApiUrl) {
+                if (window.location.protocol !== 'file:') {
                     const response = await fetch(`${cleanApiUrl}/api/budgets`);
                     if (response.ok) {
                         budgets = await response.json();
@@ -832,6 +925,15 @@
                 console.error(e);
             }
             budgets = [...budgets, ...localBudgets];
+
+            // Set default proposal number based on count of existing budgets
+            const params = new URLSearchParams(window.location.search);
+            const isEditing = params.get('edit') || params.get('data');
+            if (!isEditing) {
+                const totalBudgets = budgets.length;
+                document.getElementById('proposalNumber').value = 10 + totalBudgets;
+                updateProposalCode();
+            }
 
             const uniqueClients = {};
             budgets.forEach(b => {
@@ -869,12 +971,14 @@
             document.getElementById('clientCif').value = client.cif || '';
             document.getElementById('clientEmail').value = client.email || '';
             document.getElementById('clientAddress').value = client.address || '';
+            updateProposalCode();
         }
 
         // Initialize with one row and load CRM tools
         addServiceRow();
         checkUrlParams();
         loadClientsForAutofill();
+        updateProposalCode();
 
         // Bind custom tax input event listener
         const customTaxInput = document.getElementById('custom-tax');
